@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE tiles-definitions PUBLIC  
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<definition name="DefaultTemplate" template="/WEB-INF/pages/template/SiteTemplate.jsp">
+		<put-attribute name="title" 	value="PATHway" />
+		<put-attribute name="header" 	value="/WEB-INF/pages/template/header.jsp" />
+		<put-attribute name="subheader" value="/WEB-INF/pages/template/subheader.jsp"/>
+		<put-attribute name="menu" 		value="/WEB-INF/pages/template/menu.jsp" />
+		<put-attribute name="body" 		value="/WEB-INF/pages/template/landing.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/pages/template/footer.jsp" />
+		
+	</definition>
+	
+	<definition name="hello.world" extends="DefaultTemplate">  
+        <put-attribute name="title" value="PATHway - Home" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/hello.jsp" />  
+    </definition>
+    
+    <definition name="aggregate" template="/WEB-INF/pages/template/AggregateTemplate.jsp">  
+        <put-attribute name="title" value="PATHway - Home" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/calculate.jsp" />
+		<put-attribute name="header" 	value="/WEB-INF/pages/template/header.jsp" />
+		<put-attribute name="menu" 		value="/WEB-INF/pages/template/menu.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/pages/template/footer.jsp" />
+		<put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/calculate_js.jsp" />  
+    </definition>
+    
+    <definition name="singleSession" extends="DefaultTemplate">  
+        <put-attribute name="title" value="PATHway - Session Analysis" />
+        <put-attribute name="header" 	value="/WEB-INF/pages/template/header.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/singleSession.jsp" />
+        <put-attribute name="menu" 		value="/WEB-INF/pages/template/menu.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/pages/template/footer.jsp" />
+        <put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/singleSession_js.jsp" />
+    </definition>
+    
+    <definition name="singleSessionHR" extends="DefaultTemplate">  
+        <put-attribute name="title" value="PATHway - Session Analysis" />
+        <put-attribute name="header" 	value="/WEB-INF/pages/template/header.jsp" />  
+        <put-attribute name="menu" 		value="/WEB-INF/pages/template/menu.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/pages/template/footer.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/template/singleSessionHR.jsp" />
+        <put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/singleSessionHR_js.jsp" />
+    </definition>
+    
+    <definition name="singleSessionEX" extends="DefaultTemplate">  
+        <put-attribute name="title" value="PATHway - Session Analysis" />
+        <put-attribute name="header" 	value="/WEB-INF/pages/template/header.jsp" />  
+        <put-attribute name="menu" 		value="/WEB-INF/pages/template/menu.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/pages/template/footer.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/template/singleSessionEX.jsp" />
+    </definition>
+    
+    <definition name="aggregateAdmin" template="/WEB-INF/pages/template/AggregateTemplate.jsp">  
+        <put-attribute name="title" value="PATHway - Home" />  
+        <put-attribute name="body" value="WELCOME ADMIN" />
+		<put-attribute name="header" 	value="/WEB-INF/pages/template/header.jsp" />
+		<put-attribute name="menu" 		value="/WEB-INF/pages/template/menu.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/pages/template/footer.jsp" />
+		<put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/calculate_js.jsp" />  
+    </definition>
+    
+    <definition name="risks" extends="aggregate">  
+        <put-attribute name="title" value="PATHway - Home" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/risks.jsp" />
+<!-- 		<put-attribute name="header" 	value="/WEB-INF/pages/template/header.jsp" /> -->
+<!-- 		<put-attribute name="menu" 		value="/WEB-INF/pages/template/menu.jsp" /> -->
+<!-- 		<put-attribute name="footer" 	value="/WEB-INF/pages/template/footer.jsp" /> -->
+<!-- 		<put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/calculate_js.jsp" />   -->
+    </definition>
+    
+     <definition name="healty" template="/WEB-INF/pages/template/HealthyTemplate.jsp">  
+        <put-attribute name="title" value="PATHway - Home" />  
+		<put-attribute name="header" 	value="/WEB-INF/pages/template/header.jsp" />
+		<put-attribute name="menu" 		value="/WEB-INF/pages/template/menu.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/pages/template/footer.jsp" />
+		<put-attribute name="inlinescript" 	value="" />
+    </definition>
+    
+    <definition name="healthyPage" extends="healty">  
+        <put-attribute name="title" value="PATHway - Home" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/healthy.jsp" />
+<!-- 		<put-attribute name="header" 	value="/WEB-INF/pages/template/header.jsp" /> -->
+<!-- 		<put-attribute name="menu" 		value="/WEB-INF/pages/template/menu.jsp" /> -->
+<!-- 		<put-attribute name="footer" 	value="/WEB-INF/pages/template/footer.jsp" /> -->
+<!-- 		<put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/calculate_js.jsp" />   -->
+    </definition>
+    
+        <definition name="physicalActivityPage" extends="healty">  
+        <put-attribute name="title" value="PATHway - Active Lifestyle" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/physicalActivity.jsp" />
+<!-- 		<put-attribute name="header" 	value="/WEB-INF/pages/template/header.jsp" /> -->
+<!-- 		<put-attribute name="menu" 		value="/WEB-INF/pages/template/menu.jsp" /> -->
+<!-- 		<put-attribute name="footer" 	value="/WEB-INF/pages/template/footer.jsp" /> -->
+		<put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/physicalActivity_js.jsp" />  
+    </definition>
+    
+     <definition name="smokingPage" extends="healty">  
+        <put-attribute name="title" value="PATHway - Active Lifestyle" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/smoking.jsp" />
+        <put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/smoking_js.jsp" />
+    </definition>
+    
+    <definition name="msLoginPage" template="/WEB-INF/pages/template/VoidTemplate.jsp">  
+        <put-attribute name="wholepage" value="/WEB-INF/pages/template/ms.jsp" />
+    </definition>
+    
+    <definition name="profilePage" extends="aggregate">  
+        <put-attribute name="title" value="PATHway - Profile Page" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/profile.jsp" />
+    </definition>
+    
+    <definition name="testPage" extends="aggregate">  
+        <put-attribute name="title" value="PATHway" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/testAPI.jsp" />
+    </definition>
+    
+     <definition name="tokenPage" extends="aggregate">  
+        <put-attribute name="title" value="PATHway" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/token.jsp" />
+    </definition>
+    
+     <definition name="alcoholPage" extends="healty">  
+        <put-attribute name="title" value="PATHway - Active Lifestyle" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/alcohol.jsp" />
+        <put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/alcohol_js.jsp" /> 
+    </definition>
+    
+     <definition name="dietPage" extends="healty">  
+        <put-attribute name="title" value="PATHway - Active Lifestyle" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/diet.jsp" />
+        <put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/diet_js.jsp" />  
+    </definition>
+    
+     <definition name="stressPage" extends="healty">  
+        <put-attribute name="title" value="PATHway - Active Lifestyle" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/stress.jsp" />
+    </definition>
+    
+    <definition name="medicinePage" extends="healty">  
+        <put-attribute name="title" value="PATHway - Active Lifestyle" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/medicine.jsp" />
+    </definition>
+    
+    <definition name="editingPage" template="/WEB-INF/pages/template/EditingTemplate.jsp">  
+        <put-attribute name="title" value="PATHway - Editing" />  
+        <put-attribute name="header" 	value="/WEB-INF/pages/template/header.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/template/editing.jsp" />
+    </definition>
+    
+     <definition name="outdoor" template="/WEB-INF/pages/template/OutdoorTemplate.jsp">  
+		<put-attribute name="header" 	value="/WEB-INF/pages/template/header.jsp" />
+		<put-attribute name="menu" 		value="/WEB-INF/pages/template/menu.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/pages/template/footer.jsp" />
+		<put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/outdoor_js.jsp" />  
+    </definition>
+	
+	<definition name="outdoorPage" extends="outdoor">  
+        <put-attribute name="title" value="PATHway - Active Lifestyle" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/outdoor.jsp" />
+        <put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/outdoor_js.jsp" />  
+    </definition>
+    
+    <definition name="newDashboard" extends="aggregate">  
+        <put-attribute name="title" value="PATHway - Home" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/newDash.jsp" />
+		<put-attribute name="header" 	value="/WEB-INF/pages/template/header.jsp" />
+		<put-attribute name="menu" 		value="/WEB-INF/pages/template/menu.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/pages/template/footer.jsp" />
+		<put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/newDash_js.jsp" />  
+    </definition>
+    
+     <definition name="managerLogin" template="/WEB-INF/pages/template/VoidTemplate.jsp">  
+        <put-attribute name="wholepage" value="/WEB-INF/pages/template/contentLogin.jsp" />
+    </definition>
+    
+    <definition name="scriptForm" extends="outdoor">  
+        <put-attribute name="title" value="PATHway - Superuser page" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/script.jsp" />
+        <put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/script_js.jsp" />  
+    </definition>
+    
+    <definition name="errorPage" template="/WEB-INF/pages/template/VoidTemplate.jsp">  
+        <put-attribute name="wholepage" value="/WEB-INF/pages/template/error.jsp" />
+    </definition>
+    
+     <definition name="testPage" template="/WEB-INF/pages/template/VoidTemplate.jsp">  
+        <put-attribute name="wholepage" value="/WEB-INF/pages/template/testDiet.jsp" />
+    </definition>
+    
+    <definition name="OnlyBodyTemplate" template="/WEB-INF/pages/template/BodyTemplate.jsp">
+		<put-attribute name="title" 	value="PATHway" />
+		<put-attribute name="body" 		value="/WEB-INF/pages/template/landing.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/pages/template/footer.jsp" />
+		
+	</definition>
+    
+     <definition name="questionnaires" extends="OnlyBodyTemplate">  
+        <put-attribute name="title" value="PATHway - Superuser page" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/questionnaire.jsp" />
+        <put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/questionnaire_js.jsp" />  
+    </definition>
+    
+    <definition name="zones" extends="DefaultTemplate">  
+        <put-attribute name="title" value="PATHway - Home" />  
+        <put-attribute name="body" value="/WEB-INF/pages/template/hrZones.jsp" />
+		<put-attribute name="header" 	value="/WEB-INF/pages/template/header.jsp" />
+		<put-attribute name="menu" 		value="/WEB-INF/pages/template/menu.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/pages/template/footer.jsp" />
+		<put-attribute name="inlinescript" 	value="/WEB-INF/pages/template/hrZones_js.jsp" />  
+    </definition>
+	
+</tiles-definitions>

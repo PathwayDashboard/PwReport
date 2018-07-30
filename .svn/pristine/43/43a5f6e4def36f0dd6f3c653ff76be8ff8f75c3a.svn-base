@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1" trimDirectiveWhitespaces="true"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
+<form method="POST" enctype="multipart/form-data" action="saveDoc.html">
+	<table>
+		<tr>
+			<td>File to upload:</td>
+			<td><input type="file" name="file" /></td>
+		</tr>
+		<tr>
+			<td>Dimension</td>
+			<td><input type="text" name="dimension" /></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" value="Upload" /></td>
+		</tr>
+	</table>
+
+</form>
+
+
+<h4>
+	<spring:message code="lifestyle.download" />
+</h4>
+
+<div class="list-group">
+	<c:forEach items="${docs}" var="current">
+	 <div class="row">
+                <div class="col-lg-4">
+					<a class="list-group-item" href="downloadDoc/${current.id}"	target="_blank">${current.filename}</a>
+				</div>  
+				<div class="col-lg-4">
+					<a href="removeDoc?documentId=${current.id}" class="btn btn-danger"> <i class="fa fa-trash-o" aria-hidden="true"></i></a>
+				</div> 
+	</div>
+	</c:forEach>
+</div>

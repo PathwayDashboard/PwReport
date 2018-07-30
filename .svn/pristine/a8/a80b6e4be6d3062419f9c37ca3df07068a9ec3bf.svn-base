@@ -1,0 +1,1154 @@
+package it.eng.pathway.controller;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Random;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
+import com.google.gson.Gson;
+
+import it.eng.pathway.fake.model.ActiveLifestylePASession;
+import it.eng.pathway.fake.model.DailyActivity;
+import it.eng.pathway.fake.model.ExerciseSession;
+import it.eng.pathway.frontend.business.FrontEndPatientBusiness;
+import it.eng.pathway.frontend.dao.ActivityDAO;
+import it.eng.pathway.frontend.exception.NoRefreshTokenException;
+import it.eng.pathway.frontend.model.Activity;
+import it.eng.pathway.frontend.model.FrontEndPatient;
+import it.eng.pathway.utility.DateMgt;
+import it.eng.pathway.utility.PwLogger;
+import it.eng.pathway.utility.StringUtil;
+import it.eng.pathway.utilitymodel.ActiveLifestyleReverseComparator;
+import it.eng.pathway.utilitymodel.CustomSession;
+import it.eng.pathway.utilitymodel.HoursRange;
+import it.eng.pathway.utilitymodel.MSActivitiesComparator;
+import it.eng.sensors.home.gateway.Provider;
+import it.eng.sensors.home.gateway.SensorsHomeGatewayFactory;
+import it.eng.sensors.home.gateway.SensorsHomeGatewayImpl;
+import it.eng.sensors.home.gateway.exception.UnauthorizedException;
+import ms.client.ApiException;
+import ms.client.api.ActivitiesApi;
+import ms.client.model.ActivitiesResponse;
+import ms.client.model.CaloriesBurnedSummary;
+import ms.client.model.DistanceSummary;
+import ms.client.model.DistanceSummary.PeriodEnum;
+import ms.client.model.HeartRateSummary;
+import ms.client.model.RunActivity;
+import ms.client.model.RunActivity.ActivityTypeEnum;
+import ms.client.model.Summary;
+
+@Controller
+@SessionAttributes({ "xSessionId", "sin", "username", "mstoken", "mscode", "msrefresh","patient" ,"lastPresent", "mssessions", "activitysessions", "notTagged", "aLabels"})
+@Transactional
+public class MSController {
+
+//	private static final String FORMATTER_STRING = "yyyy-MM-dd";
+//	private static final String READABLE_STRING = "dd-MM-yyyy hh:mm";
+//	private static String SESSIONS_FREQ;
+//	private static String SESSIONS_TOTAL_DURATION;
+//	private static String SESSIONS_AVG_DURATION;
+	// static ArrayList<String> labels;
+	static ArrayList<CustomSession> sessions;
+	static int idFilter = 3;
+	
+	private static ActivitiesResponse activitiesResponse;
+
+//	private MessageSource msg;
+	
+	@Autowired
+	private FrontEndPatientBusiness patientBusiness;
+	
+	@Autowired
+	private ActivityDAO activityDAO;
+
+//	@Autowired
+//	public void AccountsController(MessageSource msgSrc) {
+//		this.msg = msgSrc;
+//	}
+//
+//	private static String CLIENTID = "000000004818E620";
+//	private static String SECRET = "XMXDpUWNgPoBxtMaDenPriFkarhyC0Wy";
+////	private static final String REDIRECTURI = "http://health.esl.eng.it/PwReport/msapi";
+//	private static String REDIRECTURIURLENCODED = "http%3A%2F%2Fwellness.esl.eng.it%2FPwReport%2Fmsapi";
+//	private static String SCOPE = "mshealth.ReadProfile%20mshealth.ReadActivityHistory%20offline_access";
+////	private static final String OAUTH_URL = "https://login.live.com/oauth20_authorize.srf";
+////	private static final String TOKEN_URL = "https://login.live.com/oauth20_token.srf";
+	private static final String MSCALLBACKMETHOD = "msapi";
+	private static String CLIENTID;
+	private static String SECRET;
+	private static String REDIRECTURIURLENCODED;
+	private static String SCOPE="mshealth.ReadProfile%20mshealth.ReadActivityHistory%20offline_access";
+	
+	private SensorsHomeGatewayImpl gateway;
+	
+	private Properties prop;
+	private String filename = "config.properties";
+
+	@RequestMapping(value = "/mslogin", method = RequestMethod.GET)
+	public String mslogin(Model model, Locale locale) {
+		try {
+			PwLogger.printMethod();
+			String sin=(String) model.asMap().get("sin");
+				gateway=getGateway();
+			
+			String page=gateway.getAuthCode(sin);
+			model.addAttribute("mspage", page);
+			
+		} catch (Exception e) {
+			PwLogger.errorLogger.fine(e.toString());
+			PwLogger.logger.fine("MSLOGIN error. Check the errors log");
+			PwLogger.logger.fine("[ERROR] Check the errors log");
+//			e.printStackTrace();
+		}
+		PwLogger.logger.fine("return to MSLoginPage");
+		return "msLoginPage";
+	}
+
+	@RequestMapping(value = "/msapi", method = RequestMethod.GET)
+	public String msapi(String code,String state, Model model, Locale locale) {
+		PwLogger.printMethod();
+		PwLogger.logger.fine("mscode: "+code);
+		String patientId=state;
+		PwLogger.logger.fine("patientId: "+patientId);
+		model.addAttribute("mscode", code);
+		
+		FrontEndPatient patient=patientBusiness.getPatient(patientId);
+
+		String token;
+		try {
+			gateway = getGateway();
+			PwLogger.logger.fine("Trying to get the access token using CODE GRANT");
+			Map<String, String> tokens = gateway.getAccessToken(code);
+			token = "";
+			String refreshToken = patient.getMsRefreshToken();
+			if (tokens != null) {
+				token = tokens.get(gateway.getAccesTokenKey());
+				refreshToken = tokens.get(gateway.getRefreshTokenKey());
+			} else {
+				PwLogger.logger.fine("Trying to get the access token using REFRESH TOKEN GRANT");
+				tokens = gateway.refreshToken(refreshToken);
+				if (tokens != null) {
+					token = tokens.get(gateway.getAccesTokenKey());
+					refreshToken = tokens.get(gateway.getRefreshTokenKey());
+				}
+			}
+			
+			patient.setMsToken(token);
+			patient.setMsRefreshToken(refreshToken);
+			
+			model.addAttribute("mstoken", token);
+			model.addAttribute("msrefresh", refreshToken);
+			
+			PwLogger.logger.fine("I'm going to return from msapi to profile");
+			return profile(token, model, locale);
+			
+		} catch (MalformedURLException e) {
+			PwLogger.errorLogger.fine(e.toString());
+			PwLogger.logger.fine("[ERROR] Check the errors log");
+//			e.printStackTrace();
+		} catch (IOException e) {
+			PwLogger.errorLogger.fine(e.toString());
+			PwLogger.logger.fine("[ERROR] Check the errors log");
+//			e.printStackTrace();
+		}
+		
+			return null;
+		
+	}
+
+	private SensorsHomeGatewayImpl getGateway() {
+		if (gateway==null){
+//			gateway=new SensorsHomeGatewayImpl(Provider.MICROSOFT, CLIENTID, SECRET, SCOPE, REDIRECTURIURLENCODED);
+			prop = new Properties();
+			try {
+				InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filename);
+				 if (inputStream == null) {
+					 String msg="property file '" + filename
+							 + "' not found in the classpath";
+				PwLogger.errorLogger.severe(msg);
+				throw new FileNotFoundException(msg);
+				 }
+				 prop.load(inputStream);
+			} catch (FileNotFoundException e) {
+				PwLogger.errorLogger.fine(e.toString());
+				PwLogger.logger.fine("[ERROR] Check the errors log");
+//				e.printStackTrace();
+			} catch (IOException e) {
+				PwLogger.errorLogger.fine(e.toString());
+				PwLogger.logger.fine("[ERROR] Check the errors log");
+//				e.printStackTrace();
+			}
+			
+			CLIENTID=prop.getProperty("MSCLIENTID");
+			SECRET=prop.getProperty("MSSECRET");
+			REDIRECTURIURLENCODED=prop.getProperty("MSURLCALLBACK")+MSCALLBACKMETHOD;
+			
+			gateway=SensorsHomeGatewayFactory.getGateway(Provider.MICROSOFT, null, CLIENTID, SECRET, SCOPE, REDIRECTURIURLENCODED);
+		}
+		return gateway;
+	}
+
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public String profile(String token, Model model, Locale locale) {
+		PwLogger.printMethod();
+		// String output="";
+		// String last="";
+		// try {
+		// String req = "https://api.microsofthealth.net/v1/me/Profile";
+		// URL url = new URL(req);
+		// HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		// conn.setRequestMethod("GET");
+		// conn.setRequestProperty("Accept", "application/json");
+		// conn.setRequestProperty("Authorization", "bearer "+token);
+		// if (conn.getResponseCode() != 200) {
+		// throw new RuntimeException("Failed : HTTP error code : " +
+		// conn.getResponseCode());
+		// }
+		// BufferedReader br = new BufferedReader(new
+		// InputStreamReader((conn.getInputStream())));
+		//
+		// System.out.println("Output from Server .... \n");
+		// while ((output = br.readLine()) != null) {
+		// System.out.println(output);
+		// last=output;
+		// }
+		// conn.disconnect();
+		// } catch (MalformedURLException e) {
+		// e.printStackTrace();
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+
+//		try {
+//			ProfileApi profileApi = new ProfileApi();
+//			profileApi.getApiClient().addDefaultHeader("Authorization", "bearer " + model.asMap().get("mstoken"));
+//			UserProfile profile = profileApi.profileGet();
+//			model.addAttribute("profile", profile.toString());
+//		} catch (ApiException e) {
+//			e.printStackTrace();
+//		}
+		PwLogger.logger.fine("Invoking TestAPI");
+		String test="";
+		try {
+			test = getGateway().testApi((String) model.asMap().get("mstoken"));
+		} catch (UnauthorizedException e) {
+			PwLogger.errorLogger.fine(e.toString());
+			PwLogger.logger.fine("[ERROR] Check the errors log");
+//			e.printStackTrace();
+		}
+		
+		model.addAttribute("profile", getFirstName(test));
+
+		// model.addAttribute("profile",last);
+		return "profilePage";
+	}
+	
+	private String getFirstName(String profile){
+		if(profile!=null && profile.length()>0){
+		int index=profile.indexOf("firstName");
+		int virgolette=index+11;
+		int altreviroglette=profile.indexOf("\n", virgolette+1);
+		String name=profile.substring(virgolette, altreviroglette);
+		return name;
+		}
+		return "";
+	}
+
+	@RequestMapping(value = "/activities", method = RequestMethod.GET)
+	public String activities(String token, Model model, Locale locale) {
+		// String output="";
+		// String last="";
+		// try {
+		// String req = "https://api.microsofthealth.net/v1/me/Activities";
+		// URL url = new URL(req);
+		// HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		// conn.setRequestMethod("GET");
+		// conn.setRequestProperty("Accept", "application/json");
+		// conn.setRequestProperty("Authorization", "bearer "+token);
+		// if (conn.getResponseCode() != 200) {
+		// throw new RuntimeException("Failed : HTTP error code : " +
+		// conn.getResponseCode());
+		// }
+		// BufferedReader br = new BufferedReader(new
+		// InputStreamReader((conn.getInputStream())));
+		//
+		// System.out.println("Output from Server .... \n");
+		// while ((output = br.readLine()) != null) {
+		// System.out.println(output);
+		// last=output;
+		// }
+		// conn.disconnect();
+		// } catch (MalformedURLException e) {
+		// e.printStackTrace();
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+		
+		try {
+			ActivitiesApi actApi = new ActivitiesApi();
+			actApi.getApiClient().addDefaultHeader("Authorization", "bearer " + model.asMap().get("mstoken"));
+			ActivitiesResponse actResp = actApi.activitiesGet(null, null, null, null, null, null, null, null);
+			model.addAttribute("activities", actResp.toString());
+		} catch (ApiException e) {
+			e.printStackTrace();
+		}
+
+		return "profilePage";
+	}
+	
+
+	@RequestMapping(value = "/token", method = RequestMethod.GET)
+	public String token(Model model, Locale locale) {
+		FrontEndPatient patient=patientBusiness.getSomePatient();
+		
+		model.addAttribute("patient", patient);
+		
+		return "tokenPage";
+	}
+	
+	@RequestMapping(value = "/test", method = RequestMethod.POST)
+	public String test(String token, String refresh,Model model, Locale locale) {
+		String sin=(String) model.asMap().get("sin");
+		boolean toRefresh=true;
+		if (token!=null && token.length()>0){
+			System.out.println("MSTOKEN from POST"+token);
+			model.addAttribute("mstoken", token);
+			toRefresh=false;
+		}else{
+			System.out.println("MSTOKEN from POST - null");
+		}
+		
+		if (refresh!=null && refresh.length()>0){
+			System.out.println("MSREFRESH from POST"+refresh);
+			model.addAttribute("msrefresh", refresh);
+			toRefresh=true && toRefresh;
+		}else{
+			System.out.println("MSREFRESH from POST - null");
+			toRefresh=false;
+		}
+		String profile="";
+		UnauthorizedException e=null;
+		try {
+			profile=getGateway().testApi(token);
+		} catch (UnauthorizedException ex) {
+//			ex.printStackTrace();
+			e=ex;
+			PwLogger.errorLogger.fine(e.toString());
+			PwLogger.logger.fine("[ERROR] TestAPI UnauthorizedException. Check the errors log");
+//			e.printStackTrace();
+		}
+		
+		if (e!=null){
+			PwLogger.logger.fine("Exception: "+e.getCode()+" "+e.getMsg());
+			try {
+				Map<String,String> tokens=getGateway().refreshToken(refresh);
+				token=tokens.get(getGateway().getAccesTokenKey());
+				refresh=tokens.get(getGateway().getRefreshTokenKey());
+				profile=getGateway().testApi(token);
+			} catch (IOException ioe) {
+				PwLogger.errorLogger.fine(ioe.toString());
+				PwLogger.logger.fine("[ERROR] Check the errors log");
+//				ioe.printStackTrace();
+			} catch (UnauthorizedException e1) {
+				PwLogger.errorLogger.fine(e1.toString());
+				PwLogger.logger.fine("[ERROR] Check the errors log");
+//				e1.printStackTrace();
+			}
+		}
+		
+		PwLogger.logger.fine(profile);
+		model.addAttribute("profile", profile);
+		
+//		if (toRefresh){
+//			this.refreshToken(refresh, model);
+//		}
+//		try {
+//			ActivitiesApi actApi = new ActivitiesApi();
+//			actApi.getApiClient().addDefaultHeader("Authorization", "bearer " + model.asMap().get("mstoken"));
+//			ActivitiesResponse actResp = actApi.activitiesGet(null, null, null, null, null, null, null, null);
+//			model.addAttribute("activities", actResp.toString());
+//		} catch (ApiException e) {
+//			e.printStackTrace();
+//			System.out.println(e.getCode());
+//			System.out.println(e.getResponseBody());
+//		}
+//		
+//		try {
+//			ProfileApi profileApi = new ProfileApi();
+//			profileApi.getApiClient().addDefaultHeader("Authorization", "bearer " + model.asMap().get("mstoken"));
+//			UserProfile profile = profileApi.profileGet();
+//			model.addAttribute("profile", profile.toString());
+//		} catch (ApiException e) {
+////			e.printStackTrace();
+//			System.out.println(e.getCode());
+//			System.out.println(e.getResponseBody());
+//		}
+		
+		
+		return "testPage";
+	}
+	
+	private String refreshToken(String msRefreshToken, Model model){
+		try {
+			String msrefresh = (String) model.asMap().get("msrefresh");
+			String sin=(String) model.asMap().get("sin");
+			if (msrefresh != null)
+				msrefresh=msRefreshToken;
+			if (msrefresh != null) {
+				String token="",refresh="";
+				Map<String, String> tokens=getGateway().refreshToken(msrefresh);
+				
+				if (tokens!=null){
+					token=tokens.get(gateway.getAccesTokenKey());
+					refresh=tokens.get(gateway.getRefreshTokenKey());
+				}
+				
+				model.addAttribute("mstoken", token);
+				model.addAttribute("msrefresh", refresh);
+				
+				FrontEndPatient patient=(FrontEndPatient) model.asMap().get("patient");
+				patient.setMsToken(token);
+				patient.setMsRefreshToken(msRefreshToken);
+//				patientBusiness.update(patient);
+				
+				
+				return refresh;
+				
+			} 
+		} catch (Exception e) {
+			PwLogger.errorLogger.fine(e.toString());
+			PwLogger.logger.fine("[ERROR] Check the errors log");
+//			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/importFromMS", method = RequestMethod.POST)
+	public String importFromMS(String day,Model model, Locale locale) {
+		PwLogger.printMethod();
+		PwLogger.logger.fine("Day for MSCloud: "+day);
+		
+		//verifica se nel model ci sono già le sessioni
+		//nel caso creale
+		HashMap<String, ActivitiesResponse> mapResp=(HashMap<String, ActivitiesResponse>) model.asMap().get("mssessions");
+		if (mapResp==null){
+			model=createAllMSSessions(day, model);
+		}
+		mapResp=(HashMap<String, ActivitiesResponse>) model.asMap().get("mssessions");
+		ActivitiesResponse resp=mapResp.get(DateMgt.getComparableDayString(DateMgt.getDate(day)));
+		model.addAttribute("resp", resp);
+//		PwLogger.logger.fine("Resp-RunActivity.size()"+ resp.getRunActivities().size());
+		//crea in ogni caso le non taggate per il giorno richiesto
+		model=createNotTaggedSessions(day,model);
+		if(resp==null){
+			return "outdoorPage";
+		}
+		//logica per l'esclusione
+		List<RunActivity> runs=resp.getRunActivities();
+//		PwLogger.logger.fine("Runs lette dal modello [map] per il giorno: "+ runs.size()+" "+day);
+		List<HoursRange> notTagged=(List<HoursRange>) model.asMap().get("notTagged");
+		Map<String,ArrayList<ActiveLifestylePASession>> mapsaved=(Map<String,ArrayList<ActiveLifestylePASession>>) model.asMap().get("activitysessions");
+		
+		ArrayList<RunActivity> runsSaved=new ArrayList<RunActivity>();
+		
+		if (mapsaved!=null){
+			List<RunActivity> runsToSet=new ArrayList<RunActivity>();
+			
+			ArrayList<ActiveLifestylePASession> saved = mapsaved.get(DateMgt.getComparableDayString(DateMgt.getDate(day)));
+			if (saved!=null){
+				ActiveLifestyleReverseComparator comparator=new ActiveLifestyleReverseComparator();
+				Collections.sort(saved,comparator);
+				model.addAttribute("saved", saved);
+			for (RunActivity crun : runs) {
+//				String id=DateMgt.getComparableRangeDayTimeString(crun.getStartTime())+DateMgt.getComparableRangeTimeString(crun.getEndTime());
+				String id=getIdComparableRunActivity(crun);
+				//PwLogger.logger.fine("ID MS: "+id);
+				//PwLogger.logger.fine("Saved Size: "+saved.size());
+				boolean trovato=false;
+				for (ActiveLifestylePASession cpa : saved) {
+					if (cpa.isMonitored()){
+//						Date savedDay=cpa.getDate();
+//						String startS=cpa.getStart_time();
+//						String endS=cpa.getEnd_time();
+//						Date s=DateMgt.getDate(DateMgt.getReadableDate(savedDay)+" "+startS);
+//						Date e=DateMgt.getDate(DateMgt.getReadableDate(savedDay)+" "+endS);
+//						String toCompare=DateMgt.getComparableRangeDayTimeString(s)+DateMgt.getComparableRangeTimeString(e);
+						String toCompare=getIdComparableSession(cpa);
+//						PwLogger.logger.fine("ID saved: "+toCompare);
+						//creo le runs per la generazione delle nuove fasce - da quelle salvate, per poter splittare le non taggate se ritorno su quel giorno
+						
+						
+						if (id.equals(toCompare)){
+							trovato=true;
+						}
+					}
+//					else{
+//						RunActivity newRun=new RunActivity();
+//						newRun.setStartTime(s);
+//						newRun.setEndTime(e);
+//						runsSaved.add(newRun);
+//					}
+				}
+				if (!trovato)
+					runsToSet.add(crun);
+				else{
+					
+				}
+			}
+			for (ActiveLifestylePASession cpa : saved) {
+				if (cpa.isMonitored()){
+					RunActivity newRun=new RunActivity();
+					Date savedDay=cpa.getDate();
+					String startS=cpa.getStartTime();
+					String endS=cpa.getEndTime();
+					Date s=DateMgt.getDate(DateMgt.getReadableDate(savedDay)+" "+startS);
+					Date e=DateMgt.getDate(DateMgt.getReadableDate(savedDay)+" "+endS);
+					newRun.setStartTime(s);
+					newRun.setEndTime(e);
+					runsSaved.add(newRun);
+					//PwLogger.logger.fine(getIdComparableRunActivity(newRun));
+				}
+			}
+			
+		}
+			//PwLogger.logger.fine("Saved Size After Loop: "+runsSaved.size());
+//			resp.getRunActivities().addAll(runsSaved); // non va bene - aggiunge tutto, quindi mi trovo duplicata la sessione da non visualizzare [imputtana i range complementari]
+			
+			List<RunActivity> toAdd=new ArrayList<RunActivity>();
+			List<RunActivity> present=resp.getRunActivities();
+			MSActivitiesComparator comparator=new MSActivitiesComparator();
+			for (RunActivity sav : runsSaved) {
+				boolean toadd=true;
+				for (RunActivity pres : present) {
+					if (comparator.compare(sav,pres)==0){
+						toadd=false;
+						break;
+					}
+				}
+				if(toadd) toAdd.add(sav);
+			}
+			
+			//PwLogger.logger.fine("Saved Size After Loop: "+toAdd.size());
+			
+			present.addAll(toAdd);
+			model.addAttribute("resp",resp);
+			createNotTaggedSessions(day, model);
+			if(saved!=null)
+				resp.setRunActivities(runsToSet);
+		}
+		
+		
+		
+		model.addAttribute("toInvoke", DateMgt.getDate(day));
+		
+		List<Activity> as=activityDAO.findAll(locale.getLanguage());
+		model.addAttribute("sports",as);
+		
+		Map<String,String> aLabels = new HashMap<String, String>();
+		for (Activity curr : as) {
+			aLabels.put(curr.getCode(), curr.getName());
+		}
+		model.addAttribute("aLabels",aLabels);
+		
+//		activitiesResponse=resp;
+		//PwLogger.logger.fine("Last Present: "+(String) model.asMap().get("lastPresent"));
+		
+		return "outdoorPage";
+	}
+	
+	
+	/**
+	 * Connection Init 
+	 * 
+	 * @param model
+	 * @return
+	 * @throws NoRefreshTokenException 
+	 */
+	public String setUpConnection(Model model, Locale locale) throws NoRefreshTokenException{
+		PwLogger.printMethod();
+		
+//		recuperare il paziente e verificare che abbia il refresh token,
+//		altrimenti reindirizzarlo alla pagina per l'oauth
+		FrontEndPatient patient= patientBusiness.getPatient((String) model.asMap().get("sin"));
+		String refresh=patient.getMsRefreshToken();
+		if (refresh==null){
+			throw new NoRefreshTokenException();
+		}
+		else{
+			model.addAttribute("msrefresh", refresh);
+		}
+		
+		
+		//invocare il gateway per ricevere la lista di ActiveLifestylePASessions
+		String token = patient.getMsToken();
+		if (token!=null){
+			model.addAttribute("mstoken", token);
+		}
+		String refreshToken = (String) model.asMap().get("msrefresh");
+		boolean toRefresh=false;
+		String testString=null;
+		try {
+			testString=getGateway().testApi(token);
+		} catch (UnauthorizedException e1) {
+			PwLogger.logger.fine(e1.getCode()+" "+e1.getMsg());
+			PwLogger.errorLogger.severe(e1.getCode()+" "+e1.getMsg());
+			PwLogger.errorLogger.severe(e1.getMessage());
+			toRefresh=true;
+		}
+		if (toRefresh){
+			try {
+				PwLogger.logger.fine("You have to refresh the token");
+				Map<String, String> tokens=getGateway().refreshToken(refreshToken);
+				token=tokens.get(getGateway().getAccesTokenKey());
+				refreshToken=tokens.get(getGateway().getRefreshTokenKey());
+				model.addAttribute("mstoken", token);
+				model.addAttribute("msrefresh", refreshToken);
+				PwLogger.logger.fine("Refresh token: "+refreshToken);
+				PwLogger.logger.fine("new token: "+token);
+				
+				patient.setMsToken(token);
+				patient.setMsRefreshToken(refreshToken);
+				patientBusiness.update(patient);
+				
+				testString=getGateway().testApi(token);
+				
+			} catch (IOException e) {
+				PwLogger.errorLogger.fine(e.toString());
+				PwLogger.logger.fine("[ERROR] Check the errors log");
+//				e.printStackTrace();
+			} catch (UnauthorizedException e) {
+				PwLogger.errorLogger.fine(e.toString());
+				PwLogger.logger.fine("[ERROR] Check the errors log");
+//				e.printStackTrace();
+			}
+		}
+		return testString;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/importFromMSGateway", method = RequestMethod.POST)
+	public String importFromMSGateway(String day,Model model, Locale locale) {
+		PwLogger.printMethod();
+		PwLogger.logger.fine("Day for MSCloud: "+day);
+		
+////		recuperare il paziente e verificare che abbia il refresh token,
+////		altrimenti reindirizzarlo alla pagina per l'oauth
+//		FrontEndPatient patient= patientBusiness.getPatient((String) model.asMap().get("sin"));
+//		String refresh=patient.getMsRefreshToken();
+//		if (refresh==null){
+//			return mslogin(model, locale);
+//		}
+//		else{
+//			model.addAttribute("msrefresh", refresh);
+//		}
+//		
+//		
+//		//invocare il gateway per ricevere la lista di ActiveLifestylePASessions
+//		String token = patient.getMsToken();
+//		if (token!=null){
+//			model.addAttribute("mstoken", token);
+//		}
+//		String refreshToken = (String) model.asMap().get("msrefresh");
+//		boolean toRefresh=false;
+//		List<ActiveLifestylePASession> sessions=null;
+//		try {
+//			sessions=getGateway().getSessions(token, DateMgt.getDate(day));
+//		} catch (UnauthorizedException e1) {
+//			PwLogger.logger.fine(e1.getCode()+" "+e1.getMsg());
+//			PwLogger.errorLogger.severe(e1.getCode()+" "+e1.getMsg());
+//			PwLogger.errorLogger.severe(e1.getMessage());
+//			toRefresh=true;
+//		}
+//		if (toRefresh){
+//			try {
+//				PwLogger.logger.fine("You have to refresh the token");
+//				Map<String, String> tokens=getGateway().refreshToken(refreshToken);
+//				token=tokens.get(getGateway().getAccesTokenKey());
+//				refreshToken=tokens.get(getGateway().getRefreshTokenKey());
+//				model.addAttribute("mstoken", token);
+//				model.addAttribute("msrefresh", refreshToken);
+//				PwLogger.logger.fine("token refreshed: "+refreshToken);
+//				PwLogger.logger.fine("new token: "+token);
+//				
+//				patient.setMsToken(token);
+//				patient.setMsRefreshToken(refreshToken);
+//				patientBusiness.update(patient);
+//				
+//				sessions=getGateway().getSessions(token, DateMgt.getDate(day));
+//				
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			} catch (UnauthorizedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+		
+		try {
+			setUpConnection(model, locale);
+		} catch (NoRefreshTokenException e1) {
+			PwLogger.errorLogger.severe("NO REFRESH TOKEN RETRIEVED -> redirecting to msLogin Page");
+			PwLogger.errorLogger.fine(e1.toString());
+			PwLogger.logger.fine("[ERROR] Check the errors log");
+//			e1.printStackTrace();
+			return mslogin(model, locale);
+		}
+		
+//		una volta inizializzata la connessione
+		List<ActiveLifestylePASession> sessions=null;
+		String token=(String) model.asMap().get("mstoken");
+		try {
+			sessions=getGateway().getSessions(token, DateMgt.getDate(day));
+		} catch (UnauthorizedException e) {
+			PwLogger.errorLogger.fine(e.toString());
+			PwLogger.logger.fine("[ERROR] Check the errors log");
+//			e.printStackTrace();
+		}
+		
+		
+		//leggi le PAsessions dal model - sarebbero quelle salvate
+		//la key della sessione è la comparabledaystring [quindi tutte quelle del giorno]
+		Map<String,ArrayList<ActiveLifestylePASession>> mapsaved=(Map<String,ArrayList<ActiveLifestylePASession>>) model.asMap().get("activitysessions");
+		ArrayList<ActiveLifestylePASession> saved=new ArrayList<ActiveLifestylePASession>();
+		if (mapsaved!=null){
+			saved = mapsaved.get(DateMgt.getComparableDayString(DateMgt.getDate(day)));
+			if (saved!=null){
+				ActiveLifestyleReverseComparator comparator=new ActiveLifestyleReverseComparator();
+				Collections.sort(saved,comparator);
+	//			saved Sessions added to the model
+				model.addAttribute("saved", saved);
+			}
+			//in saved ci sono tutte quelle già salvate
+		}
+		
+		//creare le fasce non coperte
+		ArrayList<HoursRange> untagged = createUntaggedSession(day,sessions,saved);
+		
+
+		//aggiungere MSSESSIONS - SAVED - UNTAGGED al model
+//		SESSIONS from microsoft
+		HashMap<String, List<ActiveLifestylePASession>> mapMs=new HashMap<String,  List<ActiveLifestylePASession>>();
+		mapMs.put(DateMgt.getComparableDayString(DateMgt.getDate(day)), sessions);
+		model.addAttribute("mssessions", mapMs);
+		model.addAttribute("cloudsessions", sessions); //cambiare nome
+		Gson gson=new Gson();
+		model.addAttribute("jsonSessions", gson.toJson(sessions));
+		
+//		hour range untagged
+		model.addAttribute("notTagged",untagged);
+		
+//		sessions saved - già aggiunte
+		
+		model.addAttribute("toInvoke", DateMgt.getDate(day));
+//		model.addAttribute("sports",activityDAO.findAll(locale.getLanguage()));
+		
+		List<Activity> as=activityDAO.findAll(locale.getLanguage());
+		model.addAttribute("sports",as);
+		
+		String jsonLabels = (String) model.asMap().get("aLabels");
+		Map<String,String> aLabels = new HashMap<String, String>();
+		if (!StringUtil.isValid(jsonLabels)){
+			for (Activity curr : as) {
+				aLabels.put(curr.getCode(), curr.getName()); //da modificare se si vuole inviare la posizione e non il codice all'HDMS
+			}
+			model.addAttribute("aLabels",gson.toJson(aLabels));
+		}
+		
+		
+		
+		//PwLogger.logger.fine("Last Present: "+(String) model.asMap().get("lastPresent"));
+		
+		return "outdoorPage";
+	}
+	
+	private ArrayList<HoursRange> createUntaggedSession(String day,List<ActiveLifestylePASession> sessions, ArrayList<ActiveLifestylePASession> saved) {
+		Date date=DateMgt.getDate(day);
+		ArrayList<HoursRange> rangesNonTaggati=new ArrayList<HoursRange>();
+		if (sessions==null && (saved==null || saved.size()==0)){
+			HoursRange hr=new HoursRange();
+			
+			Calendar startNT=GregorianCalendar.getInstance();
+			startNT.setTime(date);
+			startNT.set(Calendar.HOUR_OF_DAY, 0);
+			startNT.set(Calendar.MINUTE, 0);
+			
+			Calendar endNT=GregorianCalendar.getInstance();
+			endNT.setTime(date);
+			endNT.set(Calendar.HOUR_OF_DAY, 23);
+			endNT.set(Calendar.MINUTE, 59);
+			
+			hr.setStartDate(startNT.getTime());
+			hr.setEndDate(endNT.getTime());
+			
+			rangesNonTaggati.add(hr);
+			return rangesNonTaggati;
+		}
+		else{
+			//join delle due liste - senza duplicati
+			ArrayList<ActiveLifestylePASession> toExclude=new ArrayList<ActiveLifestylePASession>();
+			for (ActiveLifestylePASession currms : sessions) {
+				String keyms=getIdComparableSession(currms);
+					boolean trovato=false;
+					for (ActiveLifestylePASession cpa : saved) {
+						if (cpa.isMonitored()){
+							String keysaved=getIdComparableSession(cpa);
+							if (keyms.equals(keysaved)){
+								trovato=true;
+							}
+						}
+					}
+					if (!trovato)
+						toExclude.add(currms);
+				}
+			
+			int hStartNT=0;
+			int mStartNT=0;
+			//PwLogger.logger.fine("Runs size nel modello all'interno di RESP: "+runs.size());
+			for (int k=0;k<=toExclude.size();k++) {
+				boolean last=false;
+				ActiveLifestylePASession curr=null;
+				if (k==toExclude.size()){
+					last=true;
+					if(toExclude.size()>0)
+						curr=toExclude.get(k-1);
+				} else
+						curr=toExclude.get(k);
+						//check delle fasce orarie e creazione delle fasce non taggate
+						
+						Calendar startNT=GregorianCalendar.getInstance();
+						startNT.setTime(date);
+						startNT.set(Calendar.HOUR_OF_DAY, hStartNT);
+						startNT.set(Calendar.MINUTE, mStartNT);
+						
+						Calendar endNT=GregorianCalendar.getInstance();
+						if(last){
+							endNT.setTime(date);
+							endNT.set(Calendar.HOUR_OF_DAY, 23);
+							endNT.set(Calendar.MINUTE, 59);
+						}else{
+							Date startSession=DateMgt.getDate(curr.getStartTime());
+							endNT.setTime(startSession);
+							endNT.add(Calendar.MINUTE, -1);
+						}
+						
+						HoursRange range=new HoursRange();
+						
+						range.setStartDate(startNT.getTime());
+						range.setEndDate(endNT.getTime()); //un minuto prima dell'inizio della sessione
+						
+						rangesNonTaggati.add(range);
+						if (!last){
+							Date endSession=DateMgt.getDate(curr.getEndTime());
+							Calendar newStart=GregorianCalendar.getInstance();
+							newStart.setTime(endSession);
+							hStartNT=newStart.get(Calendar.HOUR_OF_DAY);
+							mStartNT=newStart.get(Calendar.MINUTE);
+						}
+					}//fine for non taggate
+					
+				return rangesNonTaggati;
+			}
+		
+	}
+
+	private String getIdComparableSession(ExerciseSession session){
+		Date savedDay=session.getDate();
+		String startS=session.getStartTime();
+		String endS=session.getEndTime();
+		Date s=DateMgt.getDate(DateMgt.getReadableDate(savedDay)+" "+startS);
+		Date e=DateMgt.getDate(DateMgt.getReadableDate(savedDay)+" "+endS);
+		String toCompare=DateMgt.getComparableRangeDayTimeString(s)+DateMgt.getComparableRangeTimeString(e);
+		return toCompare;
+	}
+	
+	private String getIdComparableRunActivity(RunActivity run){
+		String id=DateMgt.getComparableRangeDayTimeString(run.getStartTime())+DateMgt.getComparableRangeTimeString(run.getEndTime());
+		return id;
+	}
+	
+	private Model createAllMSSessions(String day,Model model){
+		
+		PwLogger.logger.fine("Day for MSCloud: "+day);
+		Calendar today=GregorianCalendar.getInstance();
+		PwLogger.logger.fine("Until: "+DateMgt.getReadableDate(today.getTime()));
+		
+		HashMap<String, ActivitiesResponse> mapResp=new HashMap<String, ActivitiesResponse>(); 
+		
+		ActivitiesResponse resp=new ActivitiesResponse();
+		RunActivity run;
+		ArrayList<RunActivity> runs=new ArrayList<RunActivity>();
+		
+		//creazione dinamica allenamenti
+		Random r=new Random();
+		int n=1+r.nextInt(2);
+		int startHour=7;
+		Date date=DateMgt.getDate(day);
+		
+		//for per i giorni
+		int d=DateMgt.getDays(date, today.getTime());
+		PwLogger.logger.fine("Days: "+d);
+		for (int m=0;m<d;m++){
+			resp=new ActivitiesResponse();
+			runs=new ArrayList<RunActivity>();
+			//for per le sessioni al giorno
+			for(int i=0;i<n;i++){
+				run=new RunActivity();
+				run.setActivityType(ActivityTypeEnum.RUN);
+				
+				DistanceSummary dsum=new DistanceSummary();
+				long cm=200000+r.nextInt(500000); //2km di base più random altri 5km
+				dsum.setTotalDistanceOnFoot(cm); //cm - 5km e spicci
+				dsum.setTotalDistance(cm);
+				int pace=360000+r.nextInt(1000000); //360.000 =6 minuti al kilometro, fino a 20 minuti al kilometro [in ms/km]
+				dsum.setPace(pace); // ms/m - creare convertitore per visualizzare minuti al kilometro (/60.000)
+				dsum.setSpeed((1/pace)*100*1000*1000);
+				dsum.setPeriod(PeriodEnum.ACTIVITY);
+//				rseg.setDistanceSummary(dsum);
+				run.setDistanceSummary(dsum);
+				// met=1kcal/kg/h - ipotizzo peso di 80kg
+				
+				int duration = 20+r.nextInt(46);
+				
+				double met= pace<=780000 ? 3 : 3.5;
+				double calCalculated= met * 80 * ((double) duration/ (double) 60);
+				
+				CaloriesBurnedSummary cal=new CaloriesBurnedSummary();
+				cal.setPeriod(ms.client.model.CaloriesBurnedSummary.PeriodEnum.ACTIVITY);
+				cal.setTotalCalories((int) calCalculated);
+//				rseg.setCaloriesBurnedSummary(cal);
+				run.setCaloriesBurnedSummary(cal);
+				
+				HeartRateSummary hrsum=new HeartRateSummary();
+				hrsum.setPeriod(ms.client.model.HeartRateSummary.PeriodEnum.ACTIVITY);
+				int low=80+r.nextInt(20);
+				int peak=100+r.nextInt(20);
+				int avg=(low+peak)/2;
+				hrsum.setAverageHeartRate(avg);
+				hrsum.setLowestHeartRate(low);
+				hrsum.setPeakHeartRate(peak);
+//				rseg.setHeartRateSummary(hrsum);
+				run.setHeartRateSummary(hrsum);
+				
+				int min=duration%60;
+				int hours=duration/60;
+				run.setDuration("PT"+hours+"H"+min+"m");
+				Calendar start=GregorianCalendar.getInstance();
+				
+				int hstart=startHour+r.nextInt(startHour<20 ? 22-startHour : 1 );
+				int mstart=r.nextInt(60);
+				start.setTime(date);
+				start.set(Calendar.HOUR_OF_DAY, hstart);
+				start.set(Calendar.MINUTE, mstart);
+//				start.set(2016, 01, 18, 17, 00, 00);
+				Calendar end=GregorianCalendar.getInstance();
+				end.setTime(start.getTime());
+				end.add(Calendar.MINUTE, duration);
+//				rseg.setStartTime(start.getTime());
+//				rseg.setEndTime(end.getTime());
+				run.setStartTime(start.getTime());
+				run.setEndTime(end.getTime());
+				
+				Summary s=new Summary();
+				List<Summary> minuteSummaries=new ArrayList<Summary>();
+				//ipotizzo 75cm a passo
+				int steps=(int) ((cm/duration)/60);
+				for (int j=0;j<120;j++){
+					s.setStepsTaken(steps);
+					minuteSummaries.add(s);
+					s=new Summary();
+				}
+				run.setMinuteSummaries(minuteSummaries);
+				
+				runs.add(run);
+				
+				startHour=end.get(Calendar.HOUR_OF_DAY)+1;
+			}//fine for fasce
+			
+			resp.setRunActivities(runs);
+			mapResp.put(DateMgt.getComparableDayString(date), resp);
+			//PwLogger.logger.fine("Put: "+DateMgt.getComparableDayString(date));
+			date.setTime(date.getTime()+1000*60*60*24); //vado al giorno successivo
+		}//fine for giorni
+		
+		
+//		Gson gson=new Gson();
+//		return gson.toJson(rseg);
+		model.addAttribute("mssessions", mapResp);
+		
+		return model;
+	}
+	
+	private Model createNotTaggedSessions(String day,Model model){
+		ArrayList<HoursRange> rangesNonTaggati=new ArrayList<HoursRange>();
+		ActivitiesResponse resp=(ActivitiesResponse) model.asMap().get("resp");
+		if(resp==null)
+			return model;
+		List<RunActivity> runs=resp.getRunActivities();
+		int hStartNT=0;
+		int mStartNT=-1;
+		//PwLogger.logger.fine("Runs size nel modello all'interno di RESP: "+runs.size());
+		
+		MSActivitiesComparator comparator=new MSActivitiesComparator();
+		Collections.sort(runs, comparator);
+		
+		for (int k=0;k<=runs.size();k++) {
+			boolean last=false;
+			RunActivity curr=null;
+			if (k==runs.size()){
+				last=true;
+				if(runs.size()>0)
+					curr=runs.get(k-1);
+			} else
+				curr=runs.get(k);
+			Date date=DateMgt.getDate(day);
+			//check delle fasce orarie e creazione delle fasce non taggate
+			
+			Calendar startNT=GregorianCalendar.getInstance();
+			startNT.setTime(date);
+			startNT.set(Calendar.HOUR_OF_DAY, hStartNT);
+			startNT.set(Calendar.MINUTE, mStartNT+1);
+			
+			Calendar endNT=GregorianCalendar.getInstance();
+			if(last){
+				endNT.setTime(date);
+				endNT.set(Calendar.HOUR_OF_DAY, 23);
+				endNT.set(Calendar.MINUTE, 59);
+			}else{
+				Date startSession=curr.getStartTime();
+				endNT.setTime(startSession);
+				endNT.add(Calendar.MINUTE, -1);
+			}
+			
+			HoursRange range=new HoursRange();
+			
+			range.setStartDate(startNT.getTime());
+			range.setEndDate(endNT.getTime()); //un minuto prima dell'inizio della sessione
+			
+			rangesNonTaggati.add(range);
+			if (!last){
+				Date endSession=curr.getEndTime();
+				Calendar newStart=GregorianCalendar.getInstance();
+				newStart.setTime(endSession);
+				hStartNT=newStart.get(Calendar.HOUR_OF_DAY);
+				mStartNT=newStart.get(Calendar.MINUTE);
+			}
+		}//fine for non taggate
+		
+		model.addAttribute("notTagged",rangesNonTaggati);
+		return model;
+	}
+	
+	
+	public static int passoInmAkm(int msAkm){
+		return msAkm/60000;
+	}
+
+	public String createSummary(Date from, Date to, Model model, Locale locale) {
+		
+		
+		try {
+			setUpConnection(model, locale);
+		} catch (NoRefreshTokenException e1) {
+			PwLogger.errorLogger.fine(e1.toString());
+			PwLogger.logger.fine("[ERROR] Check the errors log");
+//			e1.printStackTrace();
+			return mslogin(model, locale);
+		}
+		
+		
+//		una volta inizializzata la connessione
+		ActiveLifestylePASession summary=null;
+		String token=(String) model.asMap().get("mstoken");
+		try {
+			summary=getGateway().getSummary(token, from, to);
+		} catch (UnauthorizedException e) {
+			PwLogger.errorLogger.fine(e.toString());
+			PwLogger.logger.fine("[ERROR] Check the errors log");
+//			e.printStackTrace();
+		}
+		
+		
+		Gson gson=new Gson();
+		return gson.toJson(summary);
+		
+	}
+	
+	public ActiveLifestylePASession createPathwaySummary(Date from, Date to, Model model, Locale locale) {
+		
+		
+		try {
+			setUpConnection(model, locale);
+		} catch (NoRefreshTokenException e1) {
+			PwLogger.errorLogger.fine(e1.toString());
+			PwLogger.logger.fine("[ERROR] Check the errors log");
+//			e1.printStackTrace();
+			return null;
+		}
+		
+		
+//		una volta inizializzata la connessione
+		ActiveLifestylePASession summary=null;
+		String token=(String) model.asMap().get("mstoken");
+		try {
+			summary=getGateway().getSummary(token, from, to);
+		} catch (UnauthorizedException e) {
+			PwLogger.errorLogger.fine(e.toString());
+			PwLogger.logger.fine("[ERROR] Check the errors log");
+//			e.printStackTrace();
+		}
+		
+		return summary;
+		
+	}
+	
+	public List<DailyActivity> getDailyActivities(Date from, Date to,  Model model, Locale locale){
+		
+		try {
+			setUpConnection(model, locale);
+		} catch (NoRefreshTokenException e1) {
+			PwLogger.errorLogger.fine(e1.toString());
+			PwLogger.logger.fine("[ERROR] Check the errors log");
+//			e1.printStackTrace();
+			return null;
+		}
+		
+		
+//		una volta inizializzata la connessione
+		List<DailyActivity> das = new ArrayList<DailyActivity>();
+		String token=(String) model.asMap().get("mstoken");
+		try {
+			das=getGateway().getDailyActivities(token, from, to);
+		} catch (UnauthorizedException e) {
+			PwLogger.errorLogger.fine(e.toString());
+			PwLogger.logger.fine("[ERROR] Check the errors log");
+//			e.printStackTrace();
+		}
+		
+		return das;
+		
+	}
+
+}

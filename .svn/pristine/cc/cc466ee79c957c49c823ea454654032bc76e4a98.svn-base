@@ -1,0 +1,405 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">
+			<spring:message code="alcohol" />
+		</h1>
+		<img class="img-responsive img-rounded center-block"
+			alt=<spring:message code="alcohol" />
+			src="http://www.businesstoday.org/wp-content/uploads/2014/12/alcohol-bar.jpg"
+			width="80%" height="80%"> <br>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel-group" id="accordion" role="tablist"
+			aria-multiselectable="true">
+			<div class="panel panel-success">
+				<div class="panel-heading" role="tab" id="headingOne">
+					<h4 class="panel-title">
+						<a role="button" data-toggle="collapse" data-parent="#accordion"
+							href="#collapseOne" aria-expanded="true"
+							aria-controls="collapseOne"> <!-- 							<img alt="" height="16" width="16" src="resources/images/png/glyphicons-592-person-running.png"/> -->
+							<spring:message code="healthy.recom" /></a>
+
+					</h4>
+				</div>
+				<div id="collapseOne" class="panel-collapse collapse in"
+					role="tabpanel" aria-labelledby="headingOne">
+					<div class="panel-body">
+						<b></b>
+						<%-- 						<%@ include file="resources/../../static/staticAlcoholR.html" %> --%>
+						${recomm}
+
+						<div align="right">
+							<form action="edit.html" method="post">
+								<input type="hidden" name="id" value=${recommId}>
+								<button type="submit" class="btn btn-primary btn-xs">
+									<spring:message code="edit" />
+								</button>
+							</form>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="panel-group" id="accordion" role="tablist"
+			aria-multiselectable="true">
+			<div class="panel panel-info">
+				<div class="panel-heading" role="tab" id="headingTips">
+					<h4 class="panel-title">
+						<a role="button" data-toggle="collapse" data-parent="#accordion"
+							href="#collapseTips" aria-expanded="true"
+							aria-controls="collapseOne"> <!-- 							<img alt="" height="16" width="16" src="resources/images/png/glyphicons-592-person-running.png"/> -->
+							<spring:message code="healthy.tips" /></a>
+					</h4>
+				</div>
+				<div id="collapseTips" class="panel-collapse collapse"
+					role="tabpanel" aria-labelledby="headingTips">
+					<div class="panel-body">
+						<%-- 						<%@ include file="resources/../../static/staticAlcoholT.html" %> --%>
+						${tips}
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+		<div class="panel-group" id="accordion" role="tablist"
+			aria-multiselectable="true">
+			<div class="panel panel-info">
+				<div class="panel-heading" role="tab" id="headingInfo">
+					<h4 class="panel-title">
+						<a role="button" data-toggle="collapse" data-parent="#accordion"
+							href="#collapseInfo" aria-expanded="true"
+							aria-controls="collapseOne"> <!-- 							<img alt="" height="16" width="16" src="resources/images/png/glyphicons-592-person-running.png"/> -->
+							<spring:message code="healthy.info" /></a>
+					</h4>
+				</div>
+				<div id="collapseInfo" class="panel-collapse collapse"
+					role="tabpanel" aria-labelledby="headingInfo">
+					<div class="panel-body">
+						<%-- 						<%@ include file="resources/../../static/staticAlcoholT.html" %> --%>
+						${other}
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+<div id="imgModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<spring:message code="alcohol" />
+				</h4>
+			</div>
+			<div class="modal-body">
+				<img class="img-responsive img-rounded center-block"
+					alt=<spring:message code="alcohol" />
+					src="resources/images/jpg/alcoholUnits.png" width="100%"
+					height="100%">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-6">
+		<div class="panel panel-info">
+			<div class="panel-heading" align="center">
+				<spring:message code="healthy.peers" />
+			</div>
+			<div class="panel-footer" align="center">
+				<!-- 		Video Carousel -->
+				<div id="carousel-1" class="carousel slide" data-ride="carousel"
+					data-interval="false">
+					<ol class="carousel-indicators">
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="0" class="active"></li> -->
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="1"></li> -->
+						<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
+						<li data-target="#carousel-1" data-slide-to="1"></li>
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="3"></li> -->
+					</ol>
+
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner" role="listbox">
+
+						<!-- 				<div class="item active"> -->
+						<!-- 					<div align="center"> -->
+						<!-- 						<video controls width="100%"> -->
+						<!-- 							<source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" -->
+						<!-- 								type="video/mp4"> -->
+						<!-- 							Your browser does not support the video tag. -->
+						<!-- 						</video> -->
+						<!-- 					</div> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p /> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<!-- 				<div class="item"> -->
+						<!-- 					<img src="http://dummyimage.com/1024x552/000/fff" -->
+						<!-- 						class="img-responsive" alt="asfds"> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<div class="item active">
+							<div align="center">
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item"
+										src="https://www.youtube.com/embed/C92dVS8NIw4"
+										frameborder="0"></iframe>
+								</div>
+							</div>
+							<div class="carousel-caption">
+								<p />
+								<p></p>
+							</div>
+						</div>
+						<div class="item">
+							<div align="center">
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item"
+										src="https://www.youtube.com/embed/ll3bSP5l5KM"
+										frameborder="0"></iframe>
+								</div>
+							</div>
+							<div class="carousel-caption">
+								<p />
+								<p></p>
+							</div>
+						</div>
+						<!-- 				<div class="item"> -->
+						<!-- 					<div align="center"> -->
+						<!-- 						<div class="embed-responsive embed-responsive-16by9"> -->
+						<!-- 							<iframe class="embed-responsive-item" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" frameborder="0"></iframe> -->
+						<!-- 						</div> -->
+						<!-- 					</div> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p /> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<a class="left carousel-control" href="#carousel-1" role="button"
+							data-slide="prev"> <span
+							class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a> <a class="right carousel-control" href="#carousel-1"
+							role="button" data-slide="next"> <span
+							class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="panel panel-success">
+			<div class="panel-heading" align="center">
+				<spring:message code="healthy.expert" />
+			</div>
+			<div class="panel-footer" align="center">
+				<!-- 		Video Carousel -->
+				<div id="carousel-2" class="carousel slide" data-ride="carousel"
+					data-interval="false">
+					<ol class="carousel-indicators">
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="0" class="active"></li> -->
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="1"></li> -->
+						<li data-target="#carousel-2" data-slide-to="0"></li>
+						<li data-target="#carousel-2" data-slide-to="1" class="active"></li>
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="3"></li> -->
+					</ol>
+
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner" role="listbox">
+
+						<!-- 				<div class="item active"> -->
+						<!-- 					<div align="center"> -->
+						<!-- 						<video controls width="100%"> -->
+						<!-- 							<source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" -->
+						<!-- 								type="video/mp4"> -->
+						<!-- 							Your browser does not support the video tag. -->
+						<!-- 						</video> -->
+						<!-- 					</div> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p /> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<!-- 				<div class="item"> -->
+						<!-- 					<img src="http://dummyimage.com/1024x552/000/fff" -->
+						<!-- 						class="img-responsive" alt="asfds"> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<div class="item">
+							<div align="center">
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item"
+										src="https://www.youtube.com/embed/C92dVS8NIw4"
+										frameborder="0"></iframe>
+								</div>
+							</div>
+							<div class="carousel-caption">
+								<p />
+								<p></p>
+							</div>
+						</div>
+						<div class="item active">
+							<div align="center">
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item"
+										src="https://www.youtube.com/embed/ll3bSP5l5KM"
+										frameborder="0"></iframe>
+								</div>
+							</div>
+							<div class="carousel-caption">
+								<p />
+								<p></p>
+							</div>
+						</div>
+						<!-- 				<div class="item"> -->
+						<!-- 					<div align="center"> -->
+						<!-- 						<div class="embed-responsive embed-responsive-16by9"> -->
+						<!-- 							<iframe class="embed-responsive-item" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" frameborder="0"></iframe> -->
+						<!-- 						</div> -->
+						<!-- 					</div> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p /> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<a class="left carousel-control" href="#carousel-2" role="button"
+							data-slide="prev"> <span
+							class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a> <a class="right carousel-control" href="#carousel-2"
+							role="button" data-slide="next"> <span
+							class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<!-- <div class="row"> -->
+<!-- 	<h3> -->
+<%-- 		<spring:message code="healthy.goal" /> --%>
+<!-- 	</h3> -->
+<!-- 	TBD based on the goals available in the Behavioural change Programme of -->
+<!-- 	the patient -->
+<!-- </div> -->
+
+<div class="row">
+	<div class="col-lg-12">
+		<div>
+			<c:forEach items="${goals}" var="current">
+				<div class="row">
+					<div class="col-lg-12">
+						<span>${current}</span>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+	</div>
+</div>
+
+
+<div class="row" style="margin-top: 2%">
+	<div class="col-lg-12">
+		<!-- Responsive calendar - START -->
+		<div id='calendar'></div>
+		<!-- Responsive calendar - END -->
+	</div>
+</div>
+
+
+<!--   MODAL INPUT -->
+<div id="input" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+				<div class="col-lg-12 col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="modal-title" style="text-align: center">
+								<span id="day"></span>
+							</h4>
+						</div>
+					</div>
+				</div>
+
+				<div id="goalsSummary">
+					<c:forEach items="${goals}" var="current">
+						<div class="row">
+							<div class="col-lg-12">
+								<span>${current}</span>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+
+			</div>
+			<div class="modal-body">
+
+				<div class="row">
+					<c:set var="count" value="0" scope="page" />
+					<c:forEach items="${goalsQuestions}" var="current">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="col-lg-8">
+									<span>${current}</span>
+								</div>
+								<div class="col-lg-4">
+									<input type="number" class="form-control" id="goal_${count}">
+								</div>
+							</div>
+						</div>
+
+						<c:set var="count" value="${count + 1}" scope="page" />
+					</c:forEach>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+
+				<button type="button" class="btn btn-success" id="saveGoals">
+					<spring:message code="outdoor.save.monitored.tagged"
+						htmlEscape="false" />
+				</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">
+					<spring:message code="close" />
+				</button>
+
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,106 @@
+package it.eng.pathway.hdms.connection;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Properties;
+
+import io.swagger.client.ApiException;
+import io.swagger.client.api.CardiacRehabilitationProgrammeApi;
+import io.swagger.client.api.PatientDemographicsApi;
+import io.swagger.client.model.CardiacRehabilitationProgramme;
+import io.swagger.client.model.ExerciseProgrammes;
+import io.swagger.client.model.PatientDemographics;
+import io.swagger.client.model.TrainingProfile;
+import it.eng.pathway.utility.DateMgt;
+import it.eng.pathway.utility.PwLogger;
+
+public class CRProgramme {
+	
+	private static Properties prop;
+	private static String filename = "config.properties";
+
+	public static CardiacRehabilitationProgramme getProgramme(String patientNumber, String xSessionId) throws ApiException, IOException{
+//		try {
+//			InetAddress iaddr=InetAddress.getLocalHost();
+//			String address=String.valueOf(iaddr);
+//			if (!address.startsWith("wellness")){
+//				PwLogger.logger.fine("SQUIDMAN proxy set");
+//				System.setProperty("http.proxyHost", "localhost");
+//				System.setProperty("http.proxyPort", "13128");
+//			}
+//		} catch (UnknownHostException e) {
+//			e.printStackTrace();
+//		}
+		
+		prop = new Properties();
+		InputStream inputStream = CRProgramme.class.getClassLoader().getResourceAsStream(filename);
+		prop.load(inputStream);
+		
+		CardiacRehabilitationProgrammeApi api=new CardiacRehabilitationProgrammeApi();
+		api.getApiClient().setBasePath(prop.getProperty("HDMSURL"));
+		PwLogger.logger.fine("Connecting to... "+api.getApiClient().getBasePath());
+		
+		CardiacRehabilitationProgramme result=new CardiacRehabilitationProgramme();
+		try {
+			result=api.cardiacRehabilitationProgrammeGetCardiacRehabilitationProgramme(patientNumber, xSessionId);
+			PwLogger.logger.fine(result.toString());
+		} catch (ApiException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (result==null || result.getExerciseProgrammes()==null || result.getExerciseProgrammes().getExerciseProgrammeWeeklyTime()==null){
+			result=createFakeProgramme(180);
+		}
+		
+		return result;
+	}
+	
+	
+	//TO DELETE when integrated
+	
+	private static int WEEKLY_FREQ = 3;
+	private static int N=2;
+	private static int TOTALDURATION=50;
+	private static double wutp=0.12;
+	private static double aetp=0.77;
+	private static double cdtp=0.12;
+
+	public static CardiacRehabilitationProgramme createFakeProgramme(int maxFreq) {
+			PwLogger.printMethod();
+			PwLogger.logger.fine("FAKE PROGRAMME CREATED");
+			CardiacRehabilitationProgramme crp=new CardiacRehabilitationProgramme();
+			crp.setCardiacrehabilitationProgrammecreationDate(DateMgt.getDate("2016-01-23"));
+			TrainingProfile tp=new TrainingProfile();
+			tp.setWarmingUpDuration((int) (TOTALDURATION*wutp));
+			tp.setWarmingHRzoneMax((int) (0.6*maxFreq));
+			tp.setWarmingHRzoneMin((int) (0.5*maxFreq));
+			
+			tp.setMainDuration((int) (TOTALDURATION*aetp));
+			tp.setMainHRzoneMax((int) (0.85*maxFreq));
+			tp.setMainHRzoneMin((int) (0.6*maxFreq));
+			
+			tp.setCooldownDuration((int) (TOTALDURATION*cdtp));
+			tp.setCooldownHRZoneMax((int) (0.7*maxFreq));
+			tp.setCooldownHRZoneMin((int) (0.5*maxFreq));
+
+			crp.setTrainingProfile(tp);
+			
+			
+			ExerciseProgrammes ex=new ExerciseProgrammes();
+			ex.setExerciseProgrammeWeeklyFrequency(WEEKLY_FREQ);
+			ex.setExerciseProgrammeExerciseIntensity(1);
+			ex.setExerciseProgrammeWeeklyTime(WEEKLY_FREQ*TOTALDURATION);
+			ex.setExerciseProgrammeSessionDuration(TOTALDURATION);
+			ex.setExerciseProgrammeNumberOfExerClass(2);
+			ex.setExerciseProgrammeNumberOfExerGame(0);
+			ex.setExerciseProgrammeNumberOfActiveLifeStyleActivity(1);
+			
+			crp.setExerciseProgrammes(ex);
+			
+			return crp;
+	}
+	
+}

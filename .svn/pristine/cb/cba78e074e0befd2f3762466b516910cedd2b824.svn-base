@@ -1,0 +1,17 @@
+package it.eng.pathway.utilitymodel;
+
+import java.util.Comparator;
+
+import io.swagger.client.model.ExerciseProgramme;
+
+public class ExerciseProgrammeComparator implements Comparator<ExerciseProgramme> {
+
+	@Override
+	public int compare(ExerciseProgramme e1, ExerciseProgramme e2) {
+		int res=0;
+		res = e1.getExerciseProgrammeDate().compareTo(e2.getExerciseProgrammeDate());
+		return res;
+	}
+	
+
+}

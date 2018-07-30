@@ -1,0 +1,236 @@
+kcal.total=kcal bruciate
+date.format=yyyy-MM-dd
+date.read=dd-MM-yyyy hh:mm
+kcal.avg=kcal medie bruciate
+bpm.avg=Frequenza cardiaca media [bpm]
+bpm.max=Frequenza cardiaca massima [bpm]
+steps.avg=Passi medi giornalieri
+sessions.number=Numero di allenamenti
+sessions.duration.total=Durata totale delle sessioni (in minuti)
+sessions.duration.avg=Durata media delle sessioni (in minutes)
+esempio=Ti sei allenato tante volte ma non hai raggiunto il tempo prefissato. Aumenta la durata degli allenamenti e riducine la frequenza
+activity=Attività Fisica
+diet=Dieta Salutare
+alcohol=Alcohol
+smoke=Fumo
+stress=Gestione dello stress
+medication=Aderenza alle terapie
+healthy=Il mio stile di vita salutare
+healthy.recom=Raccomandazioni
+healthy.tips=Consigli
+healthy.info=Informazioni Aggiuntive
+healthy.recipes=Ricette
+healthy.peers=Chiedi agli altri
+healthy.expert=Chiedi agli esperti
+healthy.goal=Il tuo obiettivo
+error.msg=Oooops. Scusa...Non sei tu.E' colpa nostra.
+edit=Modifica
+outdoor.title=Inserisci attività all'aria aperta
+dashboard.title=PATHway
+sessions.title=Sessioni
+steps.total=10.000
+msg.welldone=Ben fatto!
+msg.saved=La sessione che hai selezionato è stata salvata in <b>PATHway</b>
+close=Chiudi
+save=Salva
+minutes=[minuti]
+unit.kcal=[kcal]
+unit.minutes=[minuti]
+error.expired=Sessione scaduta. Per favore accedi di nuovo.
+from=Da:
+to=A:
+error.dates=<b>Controlla l'orario.</b> L'orario di fine è precedente all'orario di inizio
+details=Clicca qui per maggiori informazioni
+welcome=Ciao  
+
+dashboard.label.all=Tutte
+dashboard.label.class=Class
+dashboard.label.game=Game
+dashboard.label.pa=Active Lifestyle
+dashboard.label.range1=Questa settimana
+dashboard.label.range2=Settimana scorsa
+dashboard.label.range3=Ultimo mese
+dashboard.label.range4=Personalizza intervallo
+dashboard.label.filter=Filtra
+dashboard.label.todo=DaFare
+dashboard.label.todo.title=DaFare ancora questa settimana
+dashboard.label.chart.sessions.label=Grafico delle sessioni
+
+session.label.title=Sessione del
+
+session.label.hr.minmax=Frequenza Cardiaca [min/max]
+session.label.chart.bpm.title=Diagramma riassuntivo della Frequenza cardiaca
+session.label.chart.bpm.max=Frequenza Cardiaca massima
+session.label.chart.bpm.min=Frequenza Cardiaca minima
+session.label.chart.bpm.values=La Tua Frequenza Cardiaca
+session.label.chart.bpm.achieved=Obiettivo RAGGIUNTO
+session.label.chart.bpm.notReached=Obiettivo MANCATO
+session.label.chart.bpm.exceeded=Obiettivo SUPERATO
+session.chart.info.1=Questo grafico mostra la media delle frequenze cardiache che <b>tu</b> hai ottenuto (<i><b>
+session.chart.info.2=</b></i>)<br>Mostra inoltre la zona ideale di allenamento per ogni fase, tra l'ideale <i><b>  
+session.chart.info.3=</b></i> e la <i><b>  
+session.chart.info.4=</b></i><br> Se sposti il mouse sopra il diagramma vedrai se sei rimasto all'interno dell'intervallo di frequenze cardiache ottimale o meno.  
+
+session.label.summary.title=Riassunto
+session.label.gauge.wu.title=Riscaldamento
+session.label.gauge.st.title=Stretching
+session.label.gauge.ae.title=Aerobica
+session.label.gauge.cd.title=Defaticamento
+session.label.gauge.rx.title=Relax
+session.label.gauge.title=Fasi della sessione
+session.label.status.title=Stato: 
+session.label.satisfaction.title=Soddisfazione: 
+session.label.totalDuration.title=Durata Totale:
+session.label.rpe.title=Sforzo percepito
+
+
+session.label.hr.title=Frequenze Cardiache*
+session.label.hrchart.title=Grafico delle Frequenze Cardiache [FC]
+session.label.hrchart.timeOnTarget.title=Frequenze cardiache - Minuti nell'obiettivo
+session.label.hrchart.timeOnTarget.values=Minuti nell'obiettivo
+session.label.hrchart.goal.values=Goal
+session.label.hrchart.unit=FC
+
+session.label.pie.onTarget=Nell\'obiettivo
+session.label.pie.outOfTarget=Fuori obiettivo
+
+session.label.gauge.wu.title.duration=Durata del riscaldamento (totale in minuti)
+session.label.gauge.wu.title.hr=Frequenza cardiaca del riscaldamento (media in bpm)
+session.label.gauge.st.title.duration=Durata dello stretching (totale in minuti)
+session.label.gauge.st.title.hr=Frequenza cardiaca dello stretching (media in bpm)
+session.label.gauge.ae.title.duration=Durata della fase principale (totale in minuti)
+session.label.gauge.ae.title.hr=Frequenza cardiaca della fase principale (media in bpm)
+session.label.gauge.cd.title.duration=Durata del defaticamento (totale in minuti)
+session.label.gauge.cd.title.hr=Frequenza cardiaca del defaticamento (media in bpm)
+session.label.gauge.rx.title.duration=Durata del rilassamento (totale in minuti)
+session.label.gauge.rx.title.hr=Frequenza cardiaca del rilassamento (media in bpm)
+
+
+outdoor.tagged.title=Attività monitorate dalla MS Band
+outdoor.notTagged.title=Attività monitorate dalla MS Band <b>ma sconosciute</b>
+outdoor.notMonitored.title=Attività non monitorate
+
+outdoor.tagged.info=Queste attività sono state registrate dal tuo dispositivo <b>MS Band</b> <br>Seleziona quelle che vuoi salvere <b>in PATHway</b> e clicka sul pulsante per il salvataggio
+outdoor.notTagged.info=Il dispositivo <b>MS band</b> ha registrato dei dati in questi intervalli, ma non è stata specificata l'attività svolta (e.g. walking, running, etc...)<br>Clicka sul pulsante "<b>Specifica un'attività</b>" per farlo ora
+outdoor.notMonitored.info=Qui hai la possibilità di aggiungere un'attività fisica che hai svolto <b>senza il dispositivo MS Band</b> (e.g. nuoto)<br>Clicka sul pulsante per procedere
+
+outdoor.save.monitored.tagged=Salva in PATHway
+outdoor.save.monitored.tagged.checked=Salva le selezionate in PATHway
+outdoor.add.notTagged=Specifica un'attività
+outdoor.add.notTagged.title=Seleziona un intervallo di tempo
+outdoor.add.notTagged.infos=Dopo aver selezionato l'intervallo di tempo, clicka sul pulsante per creare il riassunto dell'attività svolta
+outdoor.add.notTagged.button=Crea il riassunto dell'attività
+outdoor.add.notMonitored.button=Aggiungi un'attività non monitorata
+
+outdoor.saved=Attività salvate: 
+outdoor.duration=Durata: 
+outdoor.hr=Frequenza Cardiaca Media: 
+outdoor.energy=Energia spesa: 
+outdoor.steps=Numero di passi: 
+outdoor.type=Tipo: 
+outdoor.notes=Note: 
+outdoor.notes.hint=scrivi qui le tue note relative alla sessione di allenamento
+outdoor.intensity=Intensità
+outdoor.intensity.light=Lieve
+outdoor.intensity.moderate=Moderata
+outdoor.intensity.vigorous=Vigorosa
+outdoor.info.1=La tua ultima attività fisica risale al 
+outdoor.info.2=Inserisci le sessioni che hai effettuato durante i giorni successivi
+outdoor.getfromms=Giorno successivo
+
+hover.kcal=kcal sono le unità di energia, presente nei cibi
+hover.bpm=bpm (Battiti Per Minuto) è l'unità per la misura della velocità del battito cardiaco 
+hover.hr=HR (Heart Rate - Frequenza Cardiaca) E' la velocità del battito cardiaco misurata dal numero di contrazioni del cuore al minuto (bpm)
+
+day.1 = Lun
+day.2 = Mar
+day.3 = Mer
+day.4 = Gio
+day.5 = Ven
+day.6 = Sab
+day.7 = Dom
+
+lifestyle.veg.event=Veg
+lifestyle.fat.event=Grassi
+lifestyle.salt.event=Sale
+
+slogan.m0= 
+slogan.m1=Per ottenere il massimo dal tuo esercizio, cercare di avere sessioni più frequenti e aumenta il tempo dedicato all'esercizio.
+slogan.m2=Per ottenere il massimo dal tuo esercizio, cercare di avere sessioni più frequenti e aumenta il tempo dedicato all'esercizio.
+slogan.m3=Per ottenere il massimo dal tuo esercizio, cercare di avere sessioni più frequenti e aumenta il tempo dedicato all'esercizio.
+slogan.m4=Aumentare la lunghezza delle sessioni di esercizio ti aiuterà a raggiungere i tuoi obiettivi di attività fisica. Fai una prova per vedere cosa succede!
+slogan.m5=Aumentare la lunghezza delle sessioni di esercizio ti aiuterà a raggiungere i tuoi obiettivi di attività fisica. Fai una prova per vedere cosa succede!
+slogan.m6=Aumentare la lunghezza delle sessioni di esercizio ti aiuterà a raggiungere i tuoi obiettivi di attività fisica. Fai una prova per vedere cosa succede!
+slogan.m7=Ben fatto hai preso parte ad un elevato numero di sessioni! Ora che l'attività fisica è divetata  una parte della tua routine, cercare di aumentare il tempo speso nelle sessioni!
+slogan.m8=Per ottenere il massimo dal tuo esercizio, cercare di avere sessioni più frequenti e aumenta il tempo dedicato all'esercizio.
+slogan.m9=Per ottenere il massimo dal tuo esercizio, cercare di avere sessioni più frequenti e aumenta il tempo dedicato all'esercizio.
+slogan.m10=Per ottenere il massimo dal tuo esercizio, cercare di avere sessioni pi\uFFFD\uFFFD frequenti e aumenta il tempo dedicato all'esercizio.
+slogan.m11=Aumentare la lunghezza delle sessioni di esercizio ti aiuterà a raggiungere i tuoi obiettivi di attività fisica. Fai una prova per vedere cosa succede!
+slogan.m12=Aumentare la lunghezza delle sessioni di esercizio ti aiuterà a raggiungere i tuoi obiettivi di attività fisica. Fai una prova per vedere cosa succede!
+slogan.m13=Aumentare la lunghezza delle sessioni di esercizio ti aiuterà a raggiungere i tuoi obiettivi di attività fisica. Fai una prova per vedere cosa succede!
+slogan.m14=Ben fatto hai preso parte ad un elevato numero di sessioni! Ora che l'attività fisica è divetata  una parte della tua routine, cercare di aumentare il tempo speso nelle sessioni!
+slogan.m15=Per ottenere il massimo dal tuo esercizio, cercare di avere sessioni più frequenti e aumenta il tempo dedicato all'esercizio.
+slogan.m16=Per ottenere il massimo dal tuo esercizio, cercare di avere sessioni più frequenti e aumenta il tempo dedicato all'esercizio.
+slogan.m17=Per ottenere il massimo dal tuo esercizio, cercare di avere sessioni più frequenti e aumenta il tempo dedicato all'esercizio.
+slogan.m18=Aumentare la lunghezza delle sessioni di esercizio ti aiuterà a raggiungere i tuoi obiettivi di attività fisica. Fai una prova per vedere cosa succede!
+slogan.m19=Aumentare la lunghezza delle sessioni di esercizio ti aiuterà a raggiungere i tuoi obiettivi di attività fisica. Fai una prova per vedere cosa succede!
+slogan.m20=Aumentare la lunghezza delle sessioni di esercizio ti aiuterà a raggiungere i tuoi obiettivi di attività fisica. Fai una prova per vedere cosa succede!
+slogan.m21=Ben fatto hai preso parte ad un elevato numero di sessioni! Ora che l'attività fisica è divetata  una parte della tua routine, cercare di aumentare il tempo speso nelle sessioni!
+slogan.m22=Hai completato alcune ottime sessioni lunghe! Per cercare di raggiungere il tuo obiettivo di attività fisica perché non provare ad avere sessioni di allenamento più brevi e regolari
+slogan.m23=Hai completato alcune ottime sessioni lunghe! Per cercare di raggiungere il tuo obiettivo di attività fisica perché non provare ad avere sessioni di allenamento più brevi e regolari
+slogan.m24=Hai completato alcune ottime sessioni lunghe! Per cercare di raggiungere il tuo obiettivo di attività fisica perché non provare ad avere sessioni di allenamento più brevi e regolari
+slogan.m25=Sei a metà strada! Prova ad aumentare il numero di sessioni e la quantità di tempo che spendi per ognuna. Sei arrivato fino a questo punto, si può fare!
+slogan.m26=Sei a metà strada! Prova ad aumentare il numero di sessioni e la quantità di tempo che spendi per ognuna. Sei arrivato fino a questo punto, si può fare!
+slogan.m27=Congratulazioni hai avuto diverse sessioni! Per cercare di raggiungere il tuo obiettivo di attività fisica perché non cerchi di effettuare queste sessioni più a lungo? Questo ti aiuterà a essere più regolarmente attivo e a dare tanto valore alle sessioni effettuate!
+slogan.m28=Ben fatto hai preso parte ad un elevato numero di sessioni! Ora che l'attività fisica è divetata  una parte della tua routine, cercare di aumentare il tempo speso nelle sessioni!
+slogan.m29=Hai completato alcune ottime sessioni lunghe! Per cercare di raggiungere il tuo obiettivo di attività fisica perché non provare ad avere sessioni di allenamento più brevi e regolari
+slogan.m30=Hai completato alcune ottime sessioni lunghe! Per cercare di raggiungere il tuo obiettivo di attività fisica perché non provare ad avere sessioni di allenamento più brevi e regolari
+slogan.m31=Hai completato alcune ottime sessioni lunghe! Per cercare di raggiungere il tuo obiettivo di attività fisica perché non provare ad avere sessioni di allenamento più brevi e regolari
+slogan.m32=Sei a metà strada! Prova ad aumentare il numero di sessioni e la quantità di tempo che spendi per ognuna. Sei arrivato fino a questo punto, si può fare!
+slogan.m33=Sei a metà strada! Prova ad aumentare il numero di sessioni e la quantità di tempo che spendi per ognuna. Sei arrivato fino a questo punto, si può fare!
+slogan.m34=Congratulazioni hai avuto diverse sessioni! Per cercare di raggiungere il tuo obiettivo di attività fisica perché non cerchi di effettuare queste sessioni più a lungo? Questo ti aiuterà a essere più regolarmente attivo e a dare tanto valore alle sessioni effettuate!
+slogan.m35=Ben fatto hai preso parte ad un elevato numero di sessioni! Ora che l'attività fisica è divetata  una parte della tua routine, cercare di aumentare il tempo speso nelle sessioni!
+slogan.m36=Hai completato alcune ottime sessioni lunghe! Per cercare di raggiungere il tuo obiettivo di attività fisica perché non provare ad avere sessioni di allenamento più brevi e regolari
+slogan.m37=Hai completato alcune ottime sessioni lunghe! Per cercare di raggiungere il tuo obiettivo di attività fisica perché non provare ad avere sessioni di allenamento più brevi e regolari
+slogan.m38=Hai completato alcune ottime sessioni lunghe! Per cercare di raggiungere il tuo obiettivo di attività fisica perché non provare ad avere sessioni di allenamento più brevi e regolari
+slogan.m39=Congratulazioni!!!  Hai raggiunto i tuoi obiettivi di attività fisica! Mantenere questa striscia vincente si può fare.
+slogan.m40=Congratulazioni!!!  Hai raggiunto i tuoi obiettivi di attività fisica! Mantenere questa striscia vincente si può fare.
+slogan.m41=Congratulazioni!!!  Hai raggiunto i tuoi obiettivi di attività fisica! Mantenere questa striscia vincente si può fare.
+slogan.m42=GRANDE!!!
+slogan.m43=Congratulazioni hai avuto diverse sessioni grandiose!E' importante essere regolarmente attivo per tutta la settimana, perché non cercare di raggiungere il tuo obiettivo di attività fisica avendo sessioni di allenamento più regolari e più brevi.
+slogan.m44=Congratulazioni hai avuto diverse sessioni grandiose!E' importante essere regolarmente attivo per tutta la settimana, perché non cercare di raggiungere il tuo obiettivo di attività fisica avendo sessioni di allenamento più regolari e più brevi.
+slogan.m45=Congratulazioni hai avuto diverse sessioni grandiose!E' importante essere regolarmente attivo per tutta la settimana, perché non cercare di raggiungere il tuo obiettivo di attività fisica avendo sessioni di allenamento più regolari e più brevi.
+slogan.m46=Congratulazioni hai avuto diverse sessioni grandiose!E' importante essere regolarmente attivo per tutta la settimana, perché non cercare di raggiungere il tuo obiettivo di attività fisica avendo sessioni di allenamento più regolari e più brevi.
+slogan.m47=Congratulazioni hai avuto diverse sessioni grandiose!E' importante essere regolarmente attivo per tutta la settimana, perché non cercare di raggiungere il tuo obiettivo di attività fisica avendo sessioni di allenamento più regolari e più brevi.
+slogan.m48=Congratulazioni hai avuto diverse sessioni grandiose!E' importante essere regolarmente attivo per tutta la settimana, perché non cercare di raggiungere il tuo obiettivo di attività fisica avendo sessioni di allenamento più regolari e più brevi.
+slogan.m49=SEI FANTASTICO!
+
+aNothingAtAll=0 - Nulla
+bVeryVeryWeak=0.5 - Molto molto leggero
+cVeryWeak=1 - Molto leggero
+dWeak=2 - Leggero
+eModerate=3 - Moderato
+fSomewhatStrong=4 - Un po' pesante
+gStrong=5 - Pesante
+h=6
+iVeryStrong=7 - Molto pesante
+j=8
+k=9
+lMaximal=10 - Sforzo massimale
+
+aNotAtAllEnjoyable=1 - Per niente bello
+b2=2
+c3=3
+d4=4
+eVeryEnjoyable=5 - Molto bello
+
+completed=Completa
+incompleted_stopped=Fermata
+incompleted_paues_timeout=Scaduta
+prescreening_failed=Prescreening Fallito
+
+notAcceptable=[Non accettabile]
+
+LIGHT=Leggera
+MODERATE=Moderata
+VIGOROUS=Vigorosa

@@ -1,0 +1,44 @@
+package it.eng.pathway.hdms.connection;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Properties;
+
+import io.swagger.client.ApiException;
+import io.swagger.client.api.PatientDemographicsApi;
+import io.swagger.client.model.PatientDemographics;
+import it.eng.pathway.utility.PwLogger;
+
+public class Demographic {
+	
+	private static Properties prop;
+	private static String filename = "config.properties";
+
+	public static PatientDemographics getDemographics(String patientNumber, String xSessionId) throws ApiException, IOException{
+//		try {
+//			InetAddress iaddr=InetAddress.getLocalHost();
+//			String address=String.valueOf(iaddr);
+//			if (!address.startsWith("wellness")){
+//				PwLogger.logger.fine("SQUIDMAN proxy set");
+//				System.setProperty("http.proxyHost", "localhost");
+//				System.setProperty("http.proxyPort", "13128");
+//			}
+//		} catch (UnknownHostException e) {
+//			e.printStackTrace();
+//		}
+//		
+		prop = new Properties();
+		InputStream inputStream = Demographic.class.getClassLoader().getResourceAsStream(filename);
+		prop.load(inputStream);
+		
+		PatientDemographicsApi api=new PatientDemographicsApi();
+		api.getApiClient().setBasePath(prop.getProperty("HDMSURL"));
+		PwLogger.logger.fine("Connecting to... "+api.getApiClient().getBasePath());
+		
+		PatientDemographics result=api.patientDemographicsGetCardiacRehabilitationProgrammes(patientNumber, xSessionId);
+		return result;
+	}
+	
+}

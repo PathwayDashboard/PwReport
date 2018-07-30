@@ -1,0 +1,84 @@
+package it.eng.pathway.controller;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import it.eng.pathway.frontend.business.ContentBusiness;
+import it.eng.pathway.frontend.business.ContentManagerBusiness;
+import it.eng.pathway.frontend.model.Content;
+import it.eng.pathway.frontend.model.ContentManager;
+import it.eng.pathway.utility.PwLogger;
+import it.eng.pathway.utilitymodel.LoginForm;
+
+@Controller
+@SessionAttributes({"contentId", "xSessionId", "role", "sin"})
+public class EditingController {
+
+	@Autowired
+	private ContentBusiness contentBusiness;
+	
+	@Autowired
+	private ContentManagerBusiness contentManagerBusiness;
+	
+	@RequestMapping(value = "/contentManager", method = RequestMethod.GET)
+	public String contentManager(Model model, Locale locale){
+		return "managerLogin";
+	}
+	
+	@RequestMapping(value = "/contentManagerLogin", method = RequestMethod.POST)
+	public String contentManagerLogin(@ModelAttribute LoginForm form, Model model, Locale locale){
+		PwLogger.printMethod();
+		PwLogger.logger.fine("ContentManager LoginForm: "+form);
+		PwLogger.logger.fine("Language: "+locale.getLanguage());
+		String username=null;
+		String password=null;
+		if (form!=null && form.getUsername()!=null){
+			username=form.getUsername();
+			password=form.getPassword();
+		}
+		
+		ContentManager manager=contentManagerBusiness.getManager(username, password);
+		if (manager==null){
+			String msg="Access Denied! Please check your Username/Password";
+			model.addAttribute("msg", msg);
+			return "managerLogin";
+		}
+		
+		return "healthyPage";
+	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public String editing(String id,Model model, Locale locale) {
+		Content content=contentBusiness.find(Long.parseLong(id));
+		if (content!=null){
+			model.addAttribute("contentToModify", content.getHtml());
+			model.addAttribute("contentId", content.getId());
+			HttpServletRequest req=((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+			System.out.println(req.getRequestURI());
+			System.out.println(req.getRequestURL());
+		}
+		return "editingPage";
+	}
+	
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String saving(String modified, Model model, Locale locale) {
+		long id=(long) model.asMap().get("contentId");
+		
+		contentBusiness.update(id,modified);
+		
+//		return this.editing(String.valueOf(id),model,locale);
+		return "healthyPage";
+	}
+
+}

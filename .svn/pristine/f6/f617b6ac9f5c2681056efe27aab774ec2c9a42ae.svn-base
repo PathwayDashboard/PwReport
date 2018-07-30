@@ -1,0 +1,186 @@
+
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">
+			<spring:message code="healthy" />
+		</h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-4 col-md-4">
+		<div class="panel panel-default">
+			<a href="phisicalActivity.html">
+				<div class="panel-heading" align="center">
+					<img class="img-responsive img-rounded center-block"
+						alt=<spring:message code="activity" />
+						src="resources/images/jpg/activity.jpg" width="80%" height="80%">
+				</div>
+
+				<div class="panel-footer" align="center">
+					<spring:message code="activity" />
+				</div>
+			</a>
+		</div>
+	</div>
+
+
+	<div class="col-lg-4 col-md-4">
+		<div class="panel panel-default">
+			<a href="diet.html" >
+				<div class="panel-heading" align="center">
+					<img class="img-responsive img-rounded center-block"
+						alt=<spring:message code="diet" />
+						src="resources/images/jpg/diet.jpg" width="80%" height="80%">
+				</div>
+				<div class="panel-footer" align="center">
+					<spring:message code="diet" />
+				</div>
+			</a>
+		</div>
+	</div>
+
+
+	<div class="col-lg-4 col-md-4">
+		<div class="panel panel-default">
+			<a href="alcohol.html">
+				<div class="panel-heading" align="center">
+					<img class="img-responsive img-rounded center-block"
+						alt=<spring:message code="alcohol" />
+						src="resources/images/jpg/alcohol.jpg" width="80%" height="80%">
+				</div>
+				<div class="panel-footer" align="center">
+					<spring:message code="alcohol" />
+				</div>
+			</a>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-lg-4 col-md-4">
+		<div class="panel panel-default">
+			<a href="smoking.html" >
+				<div class="panel-heading" align="center">
+					<img class="img-responsive img-rounded center-block"
+						alt=<spring:message code="smoke" />
+						src="resources/images/jpg/breathing.jpg" width="80%" height="80%">
+				</div>
+				<div class="panel-footer" align="center">
+					<spring:message code="smoke" />
+				</div>
+			</a>
+		</div>
+	</div>
+
+
+
+	<div class="col-lg-4 col-md-4">
+		<div class="panel panel-default">
+			<a href="stress.html">
+				<div class="panel-heading" align="center">
+					<img class="img-responsive img-rounded center-block"
+						alt=<spring:message code="stress" />
+						src="resources/images/jpg/stress.jpg" width="80%" height="80%">
+				</div>
+				<div class="panel-footer" align="center">
+					<spring:message code="stress" />
+				</div>
+			</a>
+		</div>
+	</div>
+
+	<div id="stressModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">
+						<spring:message code="stress" />
+					</h4>
+				</div>
+				<div class="modal-body">
+					<p align="justify">
+						<img class="img-responsive img-rounded center-block"
+							alt=<spring:message code="stress" />
+							src="http://yogaisyouth.com/wp-content/uploads/2015/02/breathing1.jpg">
+					<p align="justify">What is stress? First it is important to
+						note that stress is something of all ages. A very long time ago,
+						when mankind still lived in caves, stress occurred when we were
+						threatened by danger. As a normal reaction to this danger a lot of
+						things happen in our body. Our heartbeat accelerates, our
+						breathing intensifies, blood pressure rises, adrenaline and
+						cortisol levels climb etc... This resulted in a reaction
+						consisting of fighting the danger or running away from it, also
+						called the fight-or-flight response. Then, when the threat was
+						eliminated, everything went back to normal and the stress-level
+						decreased again. This reaction is still present when we find
+						ourselves in immediate danger and generally causes no long lasting
+						discomfort. However, nowadays we don't find ourselves that often
+						in those acute situations. Rather, we find ourselves in situations
+						that "agitate" us for longer periods of time, like weeks or
+						months. These small "agitations" can be caused by familial or
+						social problems, a huge workload at work, etc. Thus, rendering in
+						a small but long-lasting stress-response with elevated hormone
+						levels. These elevated hormone levels eventually will cause
+						physical symptoms and can lead to heart and vessel problems. It is
+						still a common misconception that stress is something that is only
+						inside your head. From the previous paragraphs it may be clear
+						that mental stress indeed can cause bodily complaints. Because
+						stress links the brain and the body with each other, both entities
+						can be used to reduce stress. When trying to reduce stress it is
+						important to do this with a method you like. If you use a method
+						you don't like, or you perceive this type of effort to be a
+						burden, than this will only lead to more stress. Below are a
+						couple of methods that are proven effective in reducing stress
+						levels.
+					<ul>
+						<li>It is important to identify in a very specific manner the
+							cause of your stress. Maybe when you think about it, the actual
+							cause isn't that big a problem to solve.</li>
+						<li>Relaxation techniques. Some forms of relaxation are
+							offered in the PATHway platform. Feel free to try them out, maybe
+							one of them suits you well!</li>
+						<li>Behavioral training such as time management. Keeping
+							things organized and well planned may give you more certainty
+							about what you are doing.</li>
+						<li>Physical Exercise. Use your body as a gate towards your
+							brain. While doing exercise hormones are released that counteract
+							the stress-hormones or help them get back in balance. PATHway
+							offers you exercise adapted to your level.</li>
+						<li>When you really feel helpless or your environment has
+							already brought to your attention that professionals might help
+							you better, please contact your general practitioner for a talk
+							and see if you can be referred to a specialist.</li>
+					</ul>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+	<div class="col-lg-4 col-md-4">
+		<div class="panel panel-default">
+			<a href="#" data-target="#stressModal" data-toggle="modal">
+				<div class="panel-heading" align="center">
+					<img class="img-responsive img-rounded center-block"
+						alt=<spring:message code="medication" />
+						src="resources/images/jpg/medication.jpg" width="80%" height="80%">
+				</div>
+				<div class="panel-footer" align="center">
+					<spring:message code="medication" />
+				</div>
+			</a>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,49 @@
+/**
+ * 
+ */
+package it.eng.pathway.frontend.dao;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import it.eng.pathway.frontend.model.Activity;
+import it.eng.pathway.frontend.model.FrontEndPatient;
+
+/**
+ * @author fabiomelillo
+ *
+ */
+@Service
+public class ActivityDAOImpl extends GenericDAO<Activity> implements ActivityDAO {
+
+	@Autowired
+	private EntityManager em;
+	
+	@SuppressWarnings("unchecked")
+	public List<Activity> findAll(String locale) {
+		Query q = em.createQuery("select a from Activity a where a.locale= :locale order by a.name");
+		q.setParameter("locale", locale);
+		List<Activity> res = q.getResultList();
+		return res;
+	}
+
+	@Override
+	public String findActivityByCode(Integer code, String locale) {
+		Query q = em.createQuery("select a from Activity a where a.locale= :locale and a.code= :code");
+		q.setParameter("code", code);
+		q.setParameter("locale", locale);
+		List<Activity> res = q.getResultList();
+		if (res==null || res.size()==0){
+			return null;
+		}
+		else{
+			return res.get(0).getName();
+		}
+	}
+
+}

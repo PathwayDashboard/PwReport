@@ -1,0 +1,40 @@
+/**
+ * 
+ */
+package it.eng.pathway.frontend.dao;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import it.eng.pathway.frontend.model.ContentManager;
+
+/**
+ * @author fabiomelillo
+ *
+ */
+@Service
+public class ContentManagerDAOImpl extends GenericDAO<ContentManager> implements ContentManagerDAO {
+
+	@Autowired
+	private EntityManager em;
+
+	@Override
+	public ContentManager getContentManager(String username, String pwd) {
+		Query q = em.createQuery("select cm from ContentManager cm where cm.username=:username and cm.password=md5(:pwd)");
+		q.setParameter("username", username);
+		q.setParameter("pwd", pwd);
+		List<ContentManager> res = q.getResultList();
+		if (res==null || res.size()==0)
+			return null;
+		else
+			return res.get(0);
+	}
+
+
+
+}

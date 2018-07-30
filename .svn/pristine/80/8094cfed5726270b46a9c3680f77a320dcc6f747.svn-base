@@ -1,0 +1,552 @@
+
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">
+			<spring:message code="medication" />
+		</h1>
+		<img class="img-responsive img-rounded center-block"
+			alt=<spring:message code="medication" />
+			src="http://yogaisyouth.com/wp-content/uploads/2015/02/breathing1.jpg"
+			width="80%" height="80%"> <br>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel-group" id="accordion" role="tablist"
+			aria-multiselectable="true">
+			<div class="panel panel-success">
+				<div class="panel-heading" role="tab" id="headingOne">
+					<h4 class="panel-title">
+						<a role="button" data-toggle="collapse" data-parent="#accordion"
+							href="#collapseOne" aria-expanded="true"
+							aria-controls="collapseOne"> <!-- 							<img alt="" height="16" width="16" src="resources/images/png/glyphicons-592-person-running.png"/> -->
+							<spring:message code="healthy.recom" /></a>
+					</h4>
+				</div>
+				<div id="collapseOne" class="panel-collapse collapse in"
+					role="tabpanel" aria-labelledby="headingOne">
+					<div class="panel-body">
+						<b>Medicines are taken to help keep your symptoms under
+							control or to prevent or treat a heart condition.</b>
+
+
+						<p align="justify">What do the medicines do?</p>
+						<p align="justify">Most medicines used to treat heart
+							conditions change how the heart or the blood circulation works -
+							a bit like a mechanic tuning an engine that is not working as
+							well as it should. Several different medicines may be available
+							to treat your heart condition. People are all different and it
+							can be difficult to know exactly which medicine may suit you.
+							Your doctor will choose the one most likely to be safe and
+							effective for your condition. With the right medicines taken at
+							the right doses, it is often possible to reduce the symptoms of
+							heart-related conditions and help the heart to work better than
+							before.</p>
+
+						<h4>Understanding your medication</h4>
+
+						<p align="justify">It's important to know what you're taking,
+							why you are taking it, and how it will affect you.</p>
+
+
+						<p align="justify">
+							<b>When you're given a new prescription, speak to your doctor
+								about:</b>
+						</p>
+
+						<h4>How are heart medicines taken?</h4>
+						Heart medicines come in many shapes and sizes. The most common
+						are:
+
+						<ul>
+							<li><b>Tablets or capsules</b> - These need to be swallowed
+								with or possibly dissolved in water. Sometimes you have to keep
+								the tablet under your tongue until it dissolves.</li>
+							<li><b>Aerosol spray</b> - You spray the medicine under your
+								tongue</li>
+
+							<li><b>Self-adhesive patch</b> - A patch containing your
+								medicine is placed on your skin and the medicine is absorbed
+								over a period of time</li>
+						</ul>
+
+
+						<p align="justify">
+							Some people cope with stress with risky behaviour - such as <a
+								href="https://www.bhf.org.uk/heart-health/risk-factors/smoking">smoking</a>,
+							drinking too much <a
+								href="https://www.bhf.org.uk/heart-health/preventing-heart-disease/alcohol">alcohol</a>
+							and overeating.
+						</p>
+						<p align="justify">
+							All of these increase your risk of <a
+								href="https://www.bhf.org.uk/heart-health/conditions/cardiovascular-disease">cardiovascular
+								disease</a>.
+						</p>
+						<p align="justify">
+							If you have coronary heart disease and experience feelings of
+							anxiety or are under lots of stress, it may bring on symptoms
+							like <a
+								href="https://www.bhf.org.uk/heart-health/conditions/angina">angina</a>.
+						</p>
+
+						<h3>What makes you stressed?</h3>
+
+						The most common causes of stress are: <b>Thinking about which
+							areas of your life are most stressful is the first step to
+							finding ways to cope with them.</b>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="panel-group" id="accordion" role="tablist"
+			aria-multiselectable="true">
+			<div class="panel panel-info">
+				<div class="panel-heading" role="tab" id="headingTips">
+					<h4 class="panel-title">
+						<a role="button" data-toggle="collapse" data-parent="#accordion"
+							href="#collapseTips" aria-expanded="true"
+							aria-controls="collapseOne"> <!-- 							<img alt="" height="16" width="16" src="resources/images/png/glyphicons-592-person-running.png"/> -->
+							<spring:message code="healthy.tips" /></a>
+					</h4>
+				</div>
+
+				<!-- 				<div id="collapseTips" class="panel-collapse collapse" -->
+				<!-- 					role="tabpanel" aria-labelledby="headingTips"> -->
+				<!-- 					<div class="panel-body"> -->
+				<!-- 						<h3>Tips to manage stress</h3> -->
+				<!-- 						<ol> -->
+				<!-- 							<li>If you often feel stressed or anxious, it's important to -->
+				<!-- 								learn how to relax. This can allow you to take a step back from -->
+				<!-- 								the stress Click on one of the following options to try one our -->
+				<!-- 								guided relaxation (Script developed by KUL) -->
+				<!-- 								<ul> -->
+				<!-- 									<li>visualisation</li> -->
+				<!-- 									<li>deep breathing</li> -->
+				<!-- 								</ul> -->
+				<!-- 							</li> -->
+				<!-- 							<li>Physical activity, eating well and getting plenty of -->
+				<!-- 								rest can all help you to feel less stressed.</li> -->
+				<!-- 							<li>Make a list of things that help you to relax and -->
+				<!-- 								schedule one every day.</li> -->
+				<!-- 							<li>Identify situations that make you feel stressed at home -->
+				<!-- 								or at work and try and work the problem out by talking things -->
+				<!-- 								through before they become more of a problem.</li> -->
+				<!-- 							<li>Change how you react to stressful situations- If you -->
+				<!-- 								feel you can't change the stressful situation, try changing your -->
+				<!-- 								attitude towards them.</li> -->
+				<!-- 							<li>Challenging stressful thoughts- If you feel stressed and -->
+				<!-- 								tense, or you feel frustrated, angry or depressed, take a step -->
+				<!-- 								back. -->
+				<!-- 								<ul> -->
+				<!-- 									<li>Give yourself some space, remind yourself that getting -->
+				<!-- 										stressed won't help, and take a couple of minutes to think -->
+				<!-- 										about what you can do to change your situation.</li> -->
+				<!-- 								</ul> -->
+				<!-- 							</li> -->
+				<!-- 							<li>If you have negative thoughts going through your mind - -->
+				<!-- 								like 'I can't cope', or 'I'm useless' - try challenging them -->
+				<!-- 								with more positive thoughts, like 'I know I will get through -->
+				<!-- 								this in time' or 'there are lots of things I am good at'. -->
+				<!-- 						</ol> -->
+				<!-- 					</div> -->
+				<!-- 				</div> -->
+
+			</div>
+		</div>
+		
+		
+		<div class="panel-group" id="accordion" role="tablist"
+			aria-multiselectable="true">
+			<div class="panel panel-info">
+				<div class="panel-heading" role="tab" id="headingInfo">
+					<h4 class="panel-title">
+						<a role="button" data-toggle="collapse" data-parent="#accordion"
+							href="#collapseInfo" aria-expanded="true"
+							aria-controls="collapseOne"> 
+							<spring:message code="healthy.info" /></a>
+					</h4>
+				</div>
+				<div id="collapseInfo" class="panel-collapse collapse"
+					role="tabpanel" aria-labelledby="headingInfo">
+					<div class="panel-body">
+								<%@ include file="resources/../../static/infos.html" %>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+<div id="imgModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<spring:message code="diet" />
+				</h4>
+			</div>
+			<div class="modal-body">
+				<img class="img-responsive img-rounded center-block"
+					alt=<spring:message code="diet" />
+					src="resources/images/jpg/dietPlate.jpg" width="100%" height="100%">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+<div id="imgModal2" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<spring:message code="diet" />
+				</h4>
+			</div>
+			<div class="modal-body">
+				<img class="img-responsive img-rounded center-block"
+					alt=<spring:message code="diet" />
+					src="resources/images/jpg/portions.png" width="100%" height="100%">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+<div id="imgModal3" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<spring:message code="diet" />
+				</h4>
+			</div>
+			<div class="modal-body">
+				<!-- 				<img class="img-responsive img-rounded center-block" -->
+				<!-- 					alt=<spring:message code="diet" /> -->
+				<!-- 					src="resources/images/jpg/fats.png" width="100%" height="100%"> -->
+
+				<table>
+					<tbody>
+						<tr>
+							<td style="padding: 10px;">
+								<h2>Type of fats</h2>
+							</td>
+							<td style="padding: 10px;">&nbsp;</td>
+							<td style="padding: 10px;">
+								<h2>Found in</h2>
+							</td>
+						</tr>
+						<tr>
+							<td style="padding: 10px;">
+								<h3>
+									<span style="color: #00b050;">Monounsaturated</span>
+								</h3>Have these in small amounts. They can help to maintain healthy
+								cholesterol levels.&nbsp;
+							</td>
+							<td style="padding: 10px;">&nbsp;<img alt="" height="137"
+								width="111"
+								src="https://www.bhf.org.uk/~/media/images/heart-health/preventing-heart-disease/healthy-eating/monounsaturated-fats2.jpg?la=en&amp;h=137&amp;w=111"
+								style="height: 137px; width: 111px;"></td>
+							<td style="padding: 10px;">Avocados, olives, olive oil,
+								rapeseed oil. Almonds, cashews, hazelnuts, peanuts, pistachios
+								and spreads made from these nuts.</td>
+						</tr>
+						<tr>
+							<td style="padding: 10px;">
+								<h3>
+									<span style="color: #00b050;">Polyunsaturated</span>
+								</h3>Have these in small amounts.&nbsp;Polyunsaturated fats help to
+								maintain healthy cholesterol levels and provide essential fatty
+								acids.<br>
+							</td>
+							<td style="padding: 10px;"><img alt="" height="137"
+								width="111"
+								src="https://www.bhf.org.uk/~/media/images/heart-health/preventing-heart-disease/healthy-eating/polunsaturated-fats2.jpg?la=en&amp;h=137&amp;w=111"
+								style="height: 137px; width: 111px;"></td>
+							<td style="padding: 10px;">Oily fish, corn oil, sesame oil,
+								soya oil, and spreads made from those oils. Flaxseed, pine nuts,
+								sesame seeds, sunflower seeds, and walnuts.&nbsp;</td>
+						</tr>
+						<tr>
+							<td style="padding: 10px;">
+								<h3>
+									<span style="color: #e36c09;">Saturated</span>
+								</h3>Swap these for unsaturated fats. Eating too much saturated fat
+								increases the amount of cholesterol in your blood.<br />
+							</td>
+							<td style="padding: 10px;"><img alt=""
+								src="https://www.bhf.org.uk/~/media/images/heart-health/preventing-heart-disease/healthy-eating/saturated-fats2.jpg?la=en&amp;h=137&amp;w=111"
+								style="height: 137px; width: 111px;"></td>
+							<td style="padding: 10px;">Processed meats like sausages,
+								ham, burgers. Fatty meat. Hard cheeses including cheddar. Whole
+								milk and cream. Butter, lard, ghee, suet, palm oil and coconut
+								oil.</td>
+						</tr>
+						<tr>
+							<td style="padding: 10px;">
+								<h3>
+									<span style="color: #ff0000;">Trans</span>
+								</h3>Avoid wherever possible. They can increase cholesterol in your
+								blood. Foods with hydrogenated oils or fats in them likely
+								contain trans fats.&nbsp;<br>
+							</td>
+							<td style="padding: 10px;"><img alt=""
+								src="https://www.bhf.org.uk/~/media/images/heart-health/preventing-heart-disease/healthy-eating/trans-fats2.jpg?la=en&amp;h=137&amp;w=111"
+								style="height: 137px; width: 111px;"></td>
+							<td style="padding: 10px;">Fried foods, takeaways, snacks
+								like biscuits, cakes or pastries. Hard margarines.</td>
+						</tr>
+					</tbody>
+				</table>
+
+
+				<!-- 				<table> -->
+				<!-- 					<tr> -->
+				<!-- 						<td></td> -->
+				<!-- 						<td></td> -->
+				<!-- 						<td></td> -->
+				<!-- 					</tr> -->
+				<!-- 					<tr> -->
+				<!-- 						<td></td> -->
+				<!-- 						<td></td> -->
+				<!-- 						<td></td> -->
+				<!-- 					</tr> -->
+				<!-- 					<tr> -->
+				<!-- 						<td></td> -->
+				<!-- 						<td></td> -->
+				<!-- 						<td></td> -->
+				<!-- 					</tr> -->
+				<!-- 					<tr> -->
+				<!-- 						<td></td> -->
+				<!-- 						<td></td> -->
+				<!-- 						<td></td> -->
+				<!-- 					</tr> -->
+				<!-- 				</table> -->
+
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-6">
+		<div class="panel panel-info">
+			<div class="panel-heading" align="center">
+				<spring:message code="healthy.peers" />
+			</div>
+			<div class="panel-footer" align="center">
+				<!-- 		Video Carousel -->
+				<div id="carousel-1" class="carousel slide" data-ride="carousel"
+					data-interval="false">
+					<ol class="carousel-indicators">
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="0" class="active"></li> -->
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="1"></li> -->
+						<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
+						<li data-target="#carousel-1" data-slide-to="1"></li>
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="3"></li> -->
+					</ol>
+
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner" role="listbox">
+
+						<!-- 				<div class="item active"> -->
+						<!-- 					<div align="center"> -->
+						<!-- 						<video controls width="100%"> -->
+						<!-- 							<source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" -->
+						<!-- 								type="video/mp4"> -->
+						<!-- 							Your browser does not support the video tag. -->
+						<!-- 						</video> -->
+						<!-- 					</div> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p /> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<!-- 				<div class="item"> -->
+						<!-- 					<img src="http://dummyimage.com/1024x552/000/fff" -->
+						<!-- 						class="img-responsive" alt="asfds"> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<div class="item active">
+							<div align="center">
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item"
+										src="https://www.youtube.com/embed/C92dVS8NIw4"
+										frameborder="0"></iframe>
+								</div>
+							</div>
+							<div class="carousel-caption">
+								<p />
+								<p></p>
+							</div>
+						</div>
+						<div class="item">
+							<div align="center">
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item"
+										src="https://www.youtube.com/embed/ll3bSP5l5KM"
+										frameborder="0"></iframe>
+								</div>
+							</div>
+							<div class="carousel-caption">
+								<p />
+								<p></p>
+							</div>
+						</div>
+						<!-- 				<div class="item"> -->
+						<!-- 					<div align="center"> -->
+						<!-- 						<div class="embed-responsive embed-responsive-16by9"> -->
+						<!-- 							<iframe class="embed-responsive-item" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" frameborder="0"></iframe> -->
+						<!-- 						</div> -->
+						<!-- 					</div> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p /> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<a class="left carousel-control" href="#carousel-1" role="button"
+							data-slide="prev"> <span
+							class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a> <a class="right carousel-control" href="#carousel-1"
+							role="button" data-slide="next"> <span
+							class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="panel panel-success">
+			<div class="panel-heading" align="center">
+				<spring:message code="healthy.expert" />
+			</div>
+			<div class="panel-footer" align="center">
+				<!-- 		Video Carousel -->
+				<div id="carousel-2" class="carousel slide" data-ride="carousel"
+					data-interval="false">
+					<ol class="carousel-indicators">
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="0" class="active"></li> -->
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="1"></li> -->
+						<li data-target="#carousel-2" data-slide-to="0"></li>
+						<li data-target="#carousel-2" data-slide-to="1" class="active"></li>
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="3"></li> -->
+					</ol>
+
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner" role="listbox">
+
+						<!-- 				<div class="item active"> -->
+						<!-- 					<div align="center"> -->
+						<!-- 						<video controls width="100%"> -->
+						<!-- 							<source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" -->
+						<!-- 								type="video/mp4"> -->
+						<!-- 							Your browser does not support the video tag. -->
+						<!-- 						</video> -->
+						<!-- 					</div> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p /> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<!-- 				<div class="item"> -->
+						<!-- 					<img src="http://dummyimage.com/1024x552/000/fff" -->
+						<!-- 						class="img-responsive" alt="asfds"> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<div class="item">
+							<div align="center">
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item"
+										src="https://www.youtube.com/embed/C92dVS8NIw4"
+										frameborder="0"></iframe>
+								</div>
+							</div>
+							<div class="carousel-caption">
+								<p />
+								<p></p>
+							</div>
+						</div>
+						<div class="item active">
+							<div align="center">
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item"
+										src="https://www.youtube.com/embed/ll3bSP5l5KM"
+										frameborder="0"></iframe>
+								</div>
+							</div>
+							<div class="carousel-caption">
+								<p />
+								<p></p>
+							</div>
+						</div>
+						<!-- 				<div class="item"> -->
+						<!-- 					<div align="center"> -->
+						<!-- 						<div class="embed-responsive embed-responsive-16by9"> -->
+						<!-- 							<iframe class="embed-responsive-item" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" frameborder="0"></iframe> -->
+						<!-- 						</div> -->
+						<!-- 					</div> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p /> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<a class="left carousel-control" href="#carousel-2" role="button"
+							data-slide="prev"> <span
+							class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a> <a class="right carousel-control" href="#carousel-2"
+							role="button" data-slide="next"> <span
+							class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="row">
+	<h3>
+		<spring:message code="healthy.goal" />
+	</h3>
+	TBD based on the goals available in the Behavioural change Programme of the patient
+</div>

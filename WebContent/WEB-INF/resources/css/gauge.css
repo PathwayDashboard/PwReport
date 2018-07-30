@@ -1,0 +1,29 @@
+.container {
+	width: 450px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.gauge {
+	display: block;
+	float: left;
+}
+
+.clear {
+	*zoom: 1;
+}
+
+.wrapper {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: 30px;
+	border: 1px solid #cccccc;
+}
+
+a:link.button, a:active.button, a:visited.button, a:hover.button {
+	margin: 30px 5px 0 2px;
+	padding: 7px 13px;
+}

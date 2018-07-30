@@ -1,0 +1,133 @@
+package it.eng.pathway.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
+import com.google.gson.Gson;
+
+import it.eng.pathway.fake.model.AnswerType;
+import it.eng.pathway.fake.model.ClosedAnswer;
+import it.eng.pathway.fake.model.GoalCategoryType;
+import it.eng.pathway.fake.model.LifeStyleAssessmentQuestionnaire;
+import it.eng.pathway.fake.model.Question;
+import it.eng.pathway.frontend.business.ContentBusiness;
+
+@Controller
+@SessionAttributes({"lifestyleQ"})
+public class QuestionnaireController {
+	
+	@Autowired
+	private ContentBusiness contentBusiness;
+	
+	private MessageSource msg;
+	@Autowired
+    public void AccountsController(MessageSource msgSrc) {
+     this.msg = msgSrc;
+    }
+	
+	@RequestMapping(value="/smokingQuestionnaire", method=RequestMethod.GET)
+	public String homeRender(Model model, Locale locale){
+		
+		LifeStyleAssessmentQuestionnaire lifestyleQ=new LifeStyleAssessmentQuestionnaire();
+		lifestyleQ.setCategory(GoalCategoryType.smoking);
+		
+		ArrayList<Question> qs=new ArrayList<Question>();
+		lifestyleQ.setQuestionsList(qs);
+		
+		Question q=new Question();
+		q.setId(0);
+		q.setQuestionText("How soon after waking do you smoke your first cigarette?");
+		q.setAnswerType(AnswerType.STRING);
+		q.setMaxAnswersNumber(1);
+		List<ClosedAnswer> as=new ArrayList<ClosedAnswer>();
+		ClosedAnswer a=new ClosedAnswer();
+		a.setAnswerText("Within 5 minutes");
+		as.add(a);
+		a=new ClosedAnswer();
+		a.setAnswerText("5-30 minutes");
+		as.add(a);
+		a=new ClosedAnswer();
+		a.setAnswerText("31-60 minutes");
+		as.add(a);
+		q.setClosedAnswer(as);
+		qs.add(q);
+		
+		
+		q=new Question();
+		q.setId(1);
+		q.setQuestionText("Do you find it difficult to refrain from smoking in places where it is forbidden? E.g. Church, Library etc.");
+		q.setAnswerType(AnswerType.BOOLEAN);
+		q.setMaxAnswersNumber(1);
+		qs.add(q);
+		
+		q=new Question();
+		q.setId(2);
+		q.setQuestionText("Which cigarette would you hate to give up?");
+		q.setAnswerType(AnswerType.STRING);
+		q.setMaxAnswersNumber(1);
+		as=new ArrayList<ClosedAnswer>();
+		a=new ClosedAnswer();
+		a.setAnswerText("The first in the morning");
+		as.add(a);
+		a=new ClosedAnswer();
+		a.setAnswerText("Any other");
+		as.add(a);
+		q.setClosedAnswer(as);
+		qs.add(q);
+		
+		q=new Question();
+		q.setId(3);
+		q.setQuestionText("How many cigarettes a day do you smoke?");
+		q.setAnswerType(AnswerType.STRING);
+		q.setMaxAnswersNumber(1);
+		as=new ArrayList<ClosedAnswer>();
+		a=new ClosedAnswer();
+		a.setAnswerText("10 or less");
+		as.add(a);
+		a=new ClosedAnswer();
+		a.setAnswerText("11-20");
+		as.add(a);
+		a=new ClosedAnswer();
+		a.setAnswerText("21-30");
+		as.add(a);
+		a=new ClosedAnswer();
+		a.setAnswerText("31 or more");
+		as.add(a);
+		q.setClosedAnswer(as);
+		qs.add(q);
+		
+		q=new Question();
+		q.setId(4);
+		q.setQuestionText("Do you smoke more frequently in the morning?");
+		q.setAnswerType(AnswerType.BOOLEAN);
+		q.setMaxAnswersNumber(1);
+		qs.add(q);
+		
+		q=new Question();
+		q.setId(5);
+		q.setQuestionText("Do you smoke even if you are sick in bed most of the day?");
+		q.setAnswerType(AnswerType.BOOLEAN);
+		q.setMaxAnswersNumber(1);
+		qs.add(q);
+		
+		Gson gson=new Gson();
+		String lifestyleJ=gson.toJson(lifestyleQ);
+		
+		model.addAttribute("lifestyleJ", lifestyleJ);
+		model.addAttribute("lifestyleQ", lifestyleQ);
+		
+		
+		return "questionnaires";
+	}
+	
+		
+}

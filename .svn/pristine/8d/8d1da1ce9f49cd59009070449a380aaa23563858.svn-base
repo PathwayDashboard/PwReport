@@ -1,0 +1,461 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">
+			<spring:message code="activity" />
+		</h1>
+		<img class="img-responsive img-rounded center-block"
+			alt=<spring:message code="activity" />
+			src="http://www.cdc.gov/physicalactivity/images/pa_mainbanner.jpg"
+			width="80%" height="80%"> <br>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel-group" id="accordion" role="tablist"
+			aria-multiselectable="true">
+			<div class="panel panel-success">
+				<div class="panel-heading" role="tab" id="headingOne">
+					<h4 class="panel-title">
+						<a role="button" data-toggle="collapse" data-parent="#accordion"
+							href="#collapseOne" aria-expanded="true"
+							aria-controls="collapseOne"> <!-- 							<img alt="" height="16" width="16" src="resources/images/png/glyphicons-592-person-running.png"/> -->
+							<spring:message code="healthy.recom" /></a>
+					</h4>
+				</div>
+				<div id="collapseOne" class="panel-collapse collapse in"
+					role="tabpanel" aria-labelledby="headingOne">
+					<div class="panel-body">
+						${recomm}
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="panel-group" id="accordion" role="tablist"
+			aria-multiselectable="true">
+			<div class="panel panel-info">
+				<div class="panel-heading" role="tab" id="headingTips">
+					<h4 class="panel-title">
+						<a role="button" data-toggle="collapse" data-parent="#accordion"
+							href="#collapseTips" aria-expanded="true"
+							aria-controls="collapseOne"> <!-- 							<img alt="" height="16" width="16" src="resources/images/png/glyphicons-592-person-running.png"/> -->
+							<spring:message code="healthy.tips" /></a>
+					</h4>
+				</div>
+				<div id="collapseTips" class="panel-collapse collapse"
+					role="tabpanel" aria-labelledby="headingTips">
+					<div class="panel-body">
+<%-- 						<%@ include file="resources/../../static/staticPhysicalActivityT.html" %> --%>
+					${tips}
+					
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+		<div class="panel-group" id="accordion" role="tablist"
+			aria-multiselectable="true">
+			<div class="panel panel-info">
+				<div class="panel-heading" role="tab" id="headingInfo">
+					<h4 class="panel-title">
+						<a role="button" data-toggle="collapse" data-parent="#accordion"
+							href="#collapseInfo" aria-expanded="true"
+							aria-controls="collapseOne"> 
+							<spring:message code="healthy.info" /></a>
+					</h4>
+				</div>
+				<div id="collapseInfo" class="panel-collapse collapse"
+					role="tabpanel" aria-labelledby="headingInfo">
+					<div class="panel-body">
+<%-- 								<%@ include file="resources/../../static/infos.html" %> --%>
+<%-- 								<%@ include file="resources/../../static/staticPhysicalActivityDownloads.html" %> --%>
+
+							<h4>
+							<spring:message code="lifestyle.download" />
+							</h4>
+							<div class="list-group">
+							  <a class="list-group-item" href="getpdf/walking" target="_blank"><spring:message code="lifestyle.physical.download.walking"></spring:message></a> 
+							  <a class="list-group-item" href="getpdf/cycling" target="_blank"><spring:message code="lifestyle.physical.download.cycling"></spring:message></a> 
+							  <a class="list-group-item" href="getpdf/gym" target="_blank"><spring:message code="lifestyle.physical.download.gym"></spring:message></a> 
+							  <a class="list-group-item" href="getpdf/swimming" target="_blank"><spring:message code="lifestyle.physical.download.swimming"></spring:message></a>
+							</div>
+
+						
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+
+<!-- VIDEO ROW -->
+<div class="row">
+	<div class="col-lg-6">
+		<div class="panel panel-info">
+			<div class="panel-heading" align="center">
+				<spring:message code="healthy.peers" />
+			</div>
+			<div class="panel-footer" align="center">
+				<!-- 		Video Carousel -->
+				<div id="carousel-1" class="carousel slide" data-ride="carousel"
+					data-interval="false">
+					<ol class="carousel-indicators">
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="0" class="active"></li> -->
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="1"></li> -->
+						<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
+						<li data-target="#carousel-1" data-slide-to="1"></li>
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="3"></li> -->
+					</ol>
+
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner" role="listbox">
+
+						<!-- 				<div class="item active"> -->
+						<!-- 					<div align="center"> -->
+						<!-- 						<video controls width="100%"> -->
+						<!-- 							<source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" -->
+						<!-- 								type="video/mp4"> -->
+						<!-- 							Your browser does not support the video tag. -->
+						<!-- 						</video> -->
+						<!-- 					</div> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p /> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<!-- 				<div class="item"> -->
+						<!-- 					<img src="http://dummyimage.com/1024x552/000/fff" -->
+						<!-- 						class="img-responsive" alt="asfds"> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<div class="item active">
+							<div align="center">
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item"
+										src="https://www.youtube.com/embed/C92dVS8NIw4"
+										frameborder="0"></iframe>
+								</div>
+							</div>
+							<div class="carousel-caption">
+								<p />
+								<p></p>
+							</div>
+						</div>
+						<div class="item">
+							<div align="center">
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item"
+										src="https://www.youtube.com/embed/ll3bSP5l5KM"
+										frameborder="0"></iframe>
+								</div>
+							</div>
+							<div class="carousel-caption">
+								<p />
+								<p></p>
+							</div>
+						</div>
+						<!-- 				<div class="item"> -->
+						<!-- 					<div align="center"> -->
+						<!-- 						<div class="embed-responsive embed-responsive-16by9"> -->
+						<!-- 							<iframe class="embed-responsive-item" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" frameborder="0"></iframe> -->
+						<!-- 						</div> -->
+						<!-- 					</div> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p /> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<a class="left carousel-control" href="#carousel-1" role="button"
+							data-slide="prev"> <span
+							class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a> <a class="right carousel-control" href="#carousel-1"
+							role="button" data-slide="next"> <span
+							class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="panel panel-success">
+			<div class="panel-heading" align="center">
+				<spring:message code="healthy.expert" />
+			</div>
+			<div class="panel-footer" align="center">
+				<!-- 		Video Carousel -->
+				<div id="carousel-2" class="carousel slide" data-ride="carousel"
+					data-interval="false">
+					<ol class="carousel-indicators">
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="0" class="active"></li> -->
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="1"></li> -->
+						<li data-target="#carousel-2" data-slide-to="0"></li>
+						<li data-target="#carousel-2" data-slide-to="1" class="active"></li>
+						<!-- 				<li data-target="#carousel-pa" data-slide-to="3"></li> -->
+					</ol>
+
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner" role="listbox">
+
+						<!-- 				<div class="item active"> -->
+						<!-- 					<div align="center"> -->
+						<!-- 						<video controls width="100%"> -->
+						<!-- 							<source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" -->
+						<!-- 								type="video/mp4"> -->
+						<!-- 							Your browser does not support the video tag. -->
+						<!-- 						</video> -->
+						<!-- 					</div> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p /> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<!-- 				<div class="item"> -->
+						<!-- 					<img src="http://dummyimage.com/1024x552/000/fff" -->
+						<!-- 						class="img-responsive" alt="asfds"> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<div class="item">
+							<div align="center">
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item"
+										src="https://www.youtube.com/embed/C92dVS8NIw4"
+										frameborder="0"></iframe>
+								</div>
+							</div>
+							<div class="carousel-caption">
+								<p />
+								<p></p>
+							</div>
+						</div>
+						<div class="item active">
+							<div align="center">
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item"
+										src="https://www.youtube.com/embed/ll3bSP5l5KM"
+										frameborder="0"></iframe>
+								</div>
+							</div>
+							<div class="carousel-caption">
+								<p />
+								<p></p>
+							</div>
+						</div>
+						<!-- 				<div class="item"> -->
+						<!-- 					<div align="center"> -->
+						<!-- 						<div class="embed-responsive embed-responsive-16by9"> -->
+						<!-- 							<iframe class="embed-responsive-item" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" frameborder="0"></iframe> -->
+						<!-- 						</div> -->
+						<!-- 					</div> -->
+						<!-- 					<div class="carousel-caption"> -->
+						<!-- 						<p /> -->
+						<!-- 						<p></p> -->
+						<!-- 					</div> -->
+						<!-- 				</div> -->
+						<a class="left carousel-control" href="#carousel-2" role="button"
+							data-slide="prev"> <span
+							class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a> <a class="right carousel-control" href="#carousel-2"
+							role="button" data-slide="next"> <span
+							class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+
+
+<div class="row">
+
+	<div class="row well">
+		<div class="col-lg-12" style="color:#31708f">
+			<h4>
+				<spring:message code="lifestyle.physical.programme.title.well" />
+			</h4>
+		</div>
+	</div>
+	<!-- 	TEXTUAL -->
+<!-- 	<div class="row"> -->
+<!-- 		<div class="row"> -->
+<!-- 			<div class="col-lg-6 col-md-6"> -->
+<%-- 					<b><spring:message code="lifestyle.physical.programme.weeklyTime" /></b> --%>
+<!-- 			</div> -->
+<!-- 			<div class="col-lg-2 col-md-2"> -->
+<%-- 					<span id="weeklyTime">${exProgramme.weeklyTime}</span> --%>
+<!-- 			</div> -->
+<!-- 		</div> -->
+<%-- 		<c:choose> --%>
+<%-- 				<c:when test="${exProgramme.personalWeeklyTime gt 0}"> --%>
+<!-- 					<div class="row"> -->
+<!-- 						<div class="col-lg-6 col-md-6"> -->
+<%-- 								<b><spring:message code="lifestyle.physical.programme.weeklyTime.personal" /></b> --%>
+<!-- 						</div> -->
+<!-- 						<div class="col-lg-2 col-md-2"> -->
+<%-- 								<span id="personalWeeklyTime">${exProgramme.personalWeeklyTime}</span> --%>
+<!-- 						</div> -->
+<!-- 					</div> -->
+<%-- 				</c:when> --%>
+<%-- 		</c:choose> --%>
+		
+<!-- 		<div class="row"> -->
+<!-- 			<div class="col-lg-6 col-md-6"> -->
+<%-- 					<b><spring:message code="lifestyle.physical.programme.frequency" /></b> --%>
+<!-- 			</div> -->
+<!-- 			<div class="col-lg-2 col-md-2"> -->
+<%-- 					<span id="frequency">${exProgramme.weeklyFrequency}</span> --%>
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+
+
+<!-- CARD -->
+<!-- 	<div> -->
+<!-- 		<div class="card"> -->
+<!-- 		  <img class="card-img-top" data-src="..." alt="Card image cap"> -->
+<!-- 		  <div class="card-block"> -->
+<!-- 		    <h4 class="card-title">Card title</h4> -->
+<!-- 		    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+<!-- 		    <a href="#" class="btn btn-primary">Button</a> -->
+<!-- 		  </div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+	<div id="card" class="row" style="color:#009688;">
+			<div class="col-lg-4 col-xs-6 col-lg-offset-4 col-xs-offset-3">
+				<div class="w3-card-4 w3-hover-shadow w3-center">
+				<header class="w3-container w3-teal">
+						<div class="col-lg-12">
+							<h4>
+								<spring:message code="lifestyle.physical.programme.title" />
+								<br>
+								[
+								<fmt:formatDate value="${exProgramme.exerciseProgrammeDate}"
+									pattern="dd-MM-yyyy" />
+								]
+							</h4>
+						</div>
+				</header>
+					
+					<div class="col-lg-12">
+					<img src="resources/images/logo_trasparente.png"  height="136" alt="PATHway ExerciseProgramme">
+					</div>
+					
+					<div class="row"> &nbsp;</div>
+					
+					<div class="w3-container w3-center">
+							<div class="row">
+								<c:choose>
+								<c:when test="${exProgramme.personalWeeklyTime lt 1}">
+								<div class="col-lg-6 col-md-6 col-xs-6">
+										<i class="fa fa-clock-o fa-3x" aria-hidden="true"></i> 
+										<span id="weeklyTime">${exProgramme.weeklyTime}</span> <spring:message code="minutes" />
+								</div>
+								</c:when>
+								
+								
+									<c:when test="${exProgramme.personalWeeklyTime gt 0}">
+											<div class="col-lg-6 col-md-6 col-xs-6">
+													<i class="fa fa-clock-o fa-3x" aria-hidden="true"></i> 
+													<span id="personalWeeklyTime">${exProgramme.personalWeeklyTime}</span> <spring:message code="sessions.title" />
+											</div>
+									</c:when>
+								</c:choose>
+							
+								<div class="col-lg-6 col-md-6 col-xs-6">
+										<i class="fa fa-hashtag fa-3x" aria-hidden="true"></i> 
+										<span id="frequency">${exProgramme.weeklyFrequency}</span> <spring:message code="sessions.title" />
+								</div>
+							</div>
+							
+							<div class="row"> &nbsp;</div>
+							
+							<div class="row">
+								<div class="col-lg-4 col-md-4 col-xs-4">
+										<i class="fa fa-graduation-cap fa-2x"></i><br>
+										<spring:message code="dashboard.label.class" />
+								</div>
+								
+								<div class="col-lg-4 col-md-4 col-xs-4">
+										<i class="fa fa-clock-o" aria-hidden="true"></i> 
+										<span id="classTime">${exProgramme.classDuration}</span> <spring:message code="minutes" />
+								</div>
+							
+								<div class="col-lg-4 col-md-4 col-xs-4">
+										<i class="fa fa-hashtag" aria-hidden="true"></i> 
+										<span >${exProgramme.numberOfExerClass}</span> <spring:message code="sessions.title" />
+								</div>
+								
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-4 col-md-4 col-xs-4">
+										<i class="fa fa-gamepad fa-2x"></i><br>
+										<spring:message code="dashboard.label.game" />
+								</div>
+								
+								<div class="col-lg-4 col-md-4 col-xs-4">
+										<i class="fa fa-clock-o" aria-hidden="true"></i> 
+										<span id="gameTime">${exProgramme.gameDuration}</span> <spring:message code="minutes" />
+								</div>
+							
+								<div class="col-lg-4 col-md-4 col-xs-4">
+										<i class="fa fa-hashtag" aria-hidden="true"></i> 
+										<span >${exProgramme.numberOfExerGame}</span> <spring:message code="sessions.title" />
+								</div>
+								
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-4 col-md-4 col-xs-4">
+										<i class="fa fa-futbol-o fa-2x"></i><br>
+										<spring:message code="dashboard.label.pa" />
+								</div>
+								
+								<div class="col-lg-4 col-md-4 col-xs-4">
+										<i class="fa fa-clock-o" aria-hidden="true"></i> 
+										<span id="classTime">${exProgramme.classDuration}</span> <spring:message code="minutes" />
+								</div>
+							
+								<div class="col-lg-4 col-md-4 col-xs-4">
+										<i class="fa fa-hashtag" aria-hidden="true"></i> 
+										<span >${exProgramme.numberOfActiveLifeStyleActivity}</span> <spring:message code="sessions.title" />
+								</div>
+								
+							</div>
+							
+							
+  					</div>
+  					
+  					<div class="row"> &nbsp;</div>
+  					
+  					
+					<button class="w3-btn-block w3-teal" id="print"><i class="fa fa-print fa-2x" aria-hidden="true"></i> <spring:message code="print" /></button>
+  					
+				</div> 
+<!-- 				Fuori dalla card -->
+			</div>
+	</div>
+	
+</div>

@@ -1,0 +1,67 @@
+package it.eng.pathway.hdms.connection;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Properties;
+
+import io.swagger.client.ApiException;
+import io.swagger.client.api.PatientApi;
+import io.swagger.client.model.GenericPostputResult;
+import io.swagger.client.model.PATIENT;
+import it.eng.pathway.fake.model.DailyActivity;
+import it.eng.pathway.utility.PwLogger;
+
+public class Patient {
+	
+	private static Properties prop;
+	private static String filename = "config.properties";
+
+	public static PATIENT getDemographics(String patientNumber, String xSessionId) throws ApiException, IOException{
+//		try {
+//			InetAddress iaddr=InetAddress.getLocalHost();
+//			String address=String.valueOf(iaddr);
+//			if (!address.startsWith("wellness")){
+//				PwLogger.logger.fine("SQUIDMAN proxy set");
+//				System.setProperty("http.proxyHost", "localhost");
+//				System.setProperty("http.proxyPort", "13128");
+//			}
+//		} catch (UnknownHostException e) {
+//			e.printStackTrace();
+//		}
+//		
+		prop = new Properties();
+		InputStream inputStream = Patient.class.getClassLoader().getResourceAsStream(filename);
+		prop.load(inputStream);
+		
+		PatientApi api=new PatientApi();
+		api.getApiClient().setBasePath(prop.getProperty("HDMSURL"));
+		PwLogger.logger.fine("Connecting to... "+api.getApiClient().getBasePath());
+		
+		PATIENT result=api.patientGetPatient(patientNumber, xSessionId);
+		return result;
+	}
+	
+	
+	public static void putDailyActivities(String patientNumber, String xSessionId, List<DailyActivity> das) throws ApiException, IOException{
+//		
+		prop = new Properties();
+		InputStream inputStream = Patient.class.getClassLoader().getResourceAsStream(filename);
+		prop.load(inputStream);
+		
+		PatientApi api=new PatientApi();
+		api.getApiClient().setBasePath(prop.getProperty("HDMSURL"));
+		PwLogger.logger.fine("Connecting to... "+api.getApiClient().getBasePath());
+		
+		//TODO - aggiugnere la chiamata al metodo HDMS quando sarà pronto
+		if (das!=null){
+			for (DailyActivity da : das) {
+				io.swagger.client.model.DailyActivity d = da.getHDMSDA();
+				PwLogger.logger.fine("Storing... "+da.toString());
+				GenericPostputResult result = api.patientPostDailyActivity(patientNumber, d, xSessionId);
+				PwLogger.logger.fine(result.getResult());
+			}
+		}
+	}
+	
+}

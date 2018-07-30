@@ -1,0 +1,5 @@
+.fc-row .fc-bg {
+	background-color: #effef1;
+	z-index: 1;
+}
+

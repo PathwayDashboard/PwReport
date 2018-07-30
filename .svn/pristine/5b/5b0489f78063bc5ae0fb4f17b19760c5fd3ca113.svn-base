@@ -1,0 +1,213 @@
+package it.eng.pathway.controller;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
+import ers.test.Utility;
+import io.swagger.client.ApiException;
+import io.swagger.client.model.ActiveLifeStyleProgress;
+import io.swagger.client.model.CardiacRehabilitationProgramme;
+import io.swagger.client.model.CrProgressActiveLifestylePASessionSS;
+import io.swagger.client.model.ExerClassSessionProgress;
+import io.swagger.client.model.ExerClassSessionSS;
+import io.swagger.client.model.ExerGameSessionProgress;
+import io.swagger.client.model.GenericPostputResult;
+import it.eng.pathway.fake.model.ExerGameSession;
+import it.eng.pathway.frontend.business.ContentBusiness;
+import it.eng.pathway.frontend.dao.FrontEndPatientDAO;
+import it.eng.pathway.frontend.model.Content;
+import it.eng.pathway.frontend.model.FrontEndPatient;
+import it.eng.pathway.hdms.connection.Access;
+import it.eng.pathway.hdms.connection.CRProgramme;
+import it.eng.pathway.hdms.connection.CRProgress;
+import it.eng.pathway.utility.CRProgressCreator;
+import it.eng.pathway.utility.DateMgt;
+import it.eng.pathway.utility.PwLogger;
+
+@Controller
+@SessionAttributes({"contentId"})
+public class TestController {
+
+
+	
+//	@Autowired
+//	private FrontEndPatientBusiness patientBusiness;
+	
+	@Autowired
+	private FrontEndPatientDAO patientDAO;
+	
+	@Autowired
+	private ContentBusiness contentBusiness;
+	
+	private MessageSource msg;
+	@Autowired
+    public void AccountsController(MessageSource msgSrc) {
+     this.msg = msgSrc;
+    }
+	
+
+	@RequestMapping(value = "/createTransaction", method = RequestMethod.GET)
+	public String createTransaction(Model model, Locale locale) {
+		
+//		FrontEndPatient patient=patientBusiness.getFirst();
+//		if (patient!=null){
+//			model.addAttribute("patient", patient.toString());
+//			model.addAttribute("mstoken", patient.getMsToken());
+//			model.addAttribute("msrefresh", patient.getMsRefreshToken());
+//		}
+//		
+//		else{
+		FrontEndPatient patient=new FrontEndPatient("Fabio", "qwerty", null, null);
+//			patientBusiness.create(patient);
+			patientDAO.create(patient);
+//		}
+		
+		model.addAttribute("patient", patient);
+		model.addAttribute("mstoken", patient.getMsToken());
+		model.addAttribute("msrefresh", patient.getMsRefreshToken());
+		
+		return "tokenPage";
+	}
+	
+	
+	@RequestMapping(value = "/readTransaction", method = RequestMethod.GET)
+	public String readTransaction(Model model, Locale locale) {
+		
+		FrontEndPatient patient=patientDAO.getFirst();
+		if (patient!=null){
+			model.addAttribute("patient", patient.toString());
+			model.addAttribute("mstoken", patient.getMsToken());
+			model.addAttribute("msrefresh", patient.getMsRefreshToken());
+		}
+		
+		model.addAttribute("patient", patient);
+		
+		return "tokenPage";
+	}
+	
+	@RequestMapping(value = "/editing", method = RequestMethod.GET)
+	public String editing(Model model, Locale locale) {
+		Content content=contentBusiness.find("Alcohol", "Tips",locale);
+		if (content!=null){
+			model.addAttribute("contentToModify", content.getHtml());
+			model.addAttribute("contentId", content.getId());
+		}
+		return "editingPage";
+	}
+	
+	@RequestMapping(value = "/saving", method = RequestMethod.POST)
+	public String saving(String modified, Model model, Locale locale) {
+		long id=(long) model.asMap().get("contentId");
+		
+		contentBusiness.update(id,modified);
+		
+		return editing(model,locale);
+	}
+	
+	
+	@RequestMapping(value = "/script", method = RequestMethod.GET)
+	public String script(Model model, Locale locale) {
+		return "scriptForm";
+	}
+	
+	@RequestMapping(value ="/createSesions", method = RequestMethod.POST)
+	public String createSessioni(String username, String password, String from, String to, Model model, Locale locale) {
+		PwLogger.logger.fine(username);
+		PwLogger.logger.fine(password);
+		PwLogger.logger.fine(from);
+		PwLogger.logger.fine(to);
+		
+		model.addAttribute("msgToShow", "Richiesta ricevuta");
+		
+		PwLogger.logger.fine("Trying to contact HDMS");
+		Access access=new Access(); //imposta anche il proxy per le prove in locale
+		try{
+		GenericPostputResult result=access.login(username, password);
+		String uid=result.getUid();
+		model.addAttribute("xSessionId", uid);
+		model.addAttribute("username", username);
+		
+		
+		CardiacRehabilitationProgramme crp=CRProgramme.getProgramme(username, uid);
+		
+		HashMap<String, Object> map=CRProgressCreator.createProgress(crp, DateMgt.getDate(from), DateMgt.getDate(to));
+		
+		if (map!=null){
+			String chiaveClass="exerClass";
+			String chiaveGame="exerGame";
+			String chiavePa="paSessions";
+			
+			ExerClassSessionProgress exClass=(ExerClassSessionProgress) map.get(chiaveClass);
+			ExerGameSessionProgress exGame = (ExerGameSessionProgress) map.get(chiaveGame);
+			ActiveLifeStyleProgress paProgress=(ActiveLifeStyleProgress) map.get(chiavePa);
+			
+			PwLogger.logger.fine(exClass.toString());
+			PwLogger.logger.fine(exGame.toString());
+			PwLogger.logger.fine(paProgress.toString());
+			
+			model.addAttribute("msgToShow",map);
+			
+			if (exClass!=null){
+				List<ExerClassSessionSS> classes=exClass.getExerClassSessionSSs();
+				if (classes!=null){
+					for (ExerClassSessionSS current : classes) {
+						PwLogger.logger.fine(CRProgress.saveExerClass(username, uid, current));
+					}
+				}
+			}
+			
+			if (exGame!=null){
+//				List<ExerClassSessionSS> classes=exClass.getExerClassSessionSSs();
+//				if (classes!=null){
+//					for (ExerClassSessionSS current : classes) {
+						PwLogger.logger.fine(CRProgress.saveExerGame(username, uid, exGame));
+//					}
+//				}
+			}
+			
+			if(paProgress!=null){
+				List<CrProgressActiveLifestylePASessionSS> pas=paProgress.getCrProgressActiveLifestylePASessionSSs();
+				if (pas!=null){
+					for (CrProgressActiveLifestylePASessionSS current : pas) {
+						PwLogger.logger.fine(CRProgress.savePA(username, uid, current));
+					}
+				}
+			}
+			
+			
+			
+		}
+		
+		
+		}
+		catch (ApiException e){
+			String tester=this.msg.getMessage("error.msg.tester", null, locale);
+			String msg=Utility.getMessage(e)+ " " + tester;
+			PwLogger.logger.fine("FROM HDMS: "+msg);
+			PwLogger.errorLogger.severe("FROM HDMS: "+msg);
+//			model.addAttribute("msg", msg);
+//			return "redirect:/";
+			return HomeController.showErrorMsg(msg,"FROM HDMS: "+msg, model);	
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		return "scriptForm";
+	}	
+
+}

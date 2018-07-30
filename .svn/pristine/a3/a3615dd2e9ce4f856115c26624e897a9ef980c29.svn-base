@@ -1,0 +1,11 @@
+package it.eng.pathway.hdms.connection;
+
+import java.util.Properties;
+
+public class BCProgress {
+	
+	private static Properties prop;
+	private static String filename = "config.properties";
+	
+	
+}

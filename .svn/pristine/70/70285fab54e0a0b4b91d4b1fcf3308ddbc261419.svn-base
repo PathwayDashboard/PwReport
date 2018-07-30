@@ -1,0 +1,107 @@
+package it.eng.pathway.utilitymodel;
+
+public class CustomOutdoor {
+	
+	private String pos;
+	private String type;
+	private String description;
+	private String duration;
+	private String intensity;
+	private String hr;
+	private String kcal;
+	private String steps;
+	private String date;
+	private String startTime;
+	private String endTime;
+	private boolean monitored;
+	
+	
+	public String getHr() {
+		return hr;
+	}
+	public void setHr(String hr) {
+		this.hr = hr;
+	}
+	public String getKcal() {
+		return kcal;
+	}
+	public void setKcal(String kcal) {
+		this.kcal = kcal;
+	}
+	public String getSteps() {
+		return steps;
+	}
+	public void setSteps(String steps) {
+		this.steps = steps;
+	}
+	public CustomOutdoor() {
+		super();
+	}
+	public String getPos() {
+		return pos;
+	}
+	public void setPos(String pos) {
+		this.pos = pos;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public String getDuration() {
+		return duration;
+	}
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+	public String getIntensity() {
+		return intensity;
+	}
+	public void setIntensity(String intensity) {
+		this.intensity = intensity;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+	public boolean isMonitored() {
+		return monitored;
+	}
+	public void setMonitored(boolean monitored) {
+		this.monitored = monitored;
+	}
+	@Override
+	public String toString() {
+		return "CustomOutdoor [pos=" + pos + ", type=" + type + ", description=" + description + ", duration="
+				+ duration + ", intensity=" + intensity + ", hr=" + hr + ", kcal=" + kcal + ", steps=" + steps
+				+ ", date=" + date + ", startTime=" + startTime + ", endTime=" + endTime + ", monitored=" + monitored
+				+ "]";
+	}
+	
+
+	
+
+	
+}

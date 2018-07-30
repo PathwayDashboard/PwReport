@@ -1,0 +1,295 @@
+/* blu: #337ab7 */
+/* verde: #5cb85c */
+/* giallo: #f0ad4e */
+/* rosso: #d9534f */
+/* .green-light #EBFCE3*/
+/* .yellow-light #fefbdb;  */
+/* .red-light #ffebeb; */
+/* .blue-light #eff9ff; */
+/* verde-medium: #97C297 */
+/* blu-medium: */
+/* rosso-medium: #D9726F*/
+/* giallo-medium: #FFC573*/
+/* grey : #CCC */
+/* azzurrino minuti: #A5BDE8 */
+/* navy: #2C628C*/
+/* violet: #A854BF*/
+/* pink: #DCB4F2*/
+/* orange: #F98B28*/
+/* petrolioLite: #349681*/
+/* ocean: #006787*/
+/* purple: #551A8B */
+
+
+body{
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  background-color: #fff;
+}
+
+a.accordion-toggle
+, a.accordion-toggle:hover,
+ a.accordion-toggle:visited 
+{
+  color: #fff;
+/*   text-decoration: none; */
+}
+
+.timeline-title{
+	color: #000;
+	text-decoration: underline;
+}
+
+/* se interna ad un a - il testo sarà bianco, quindi uso un colore non troppo chiaro */
+.timeline-badge.success:hover  {
+	background: #97C297 !important;
+}
+
+.timeline-badge.warning:hover  {
+	background: #FFC573 !important;
+}
+
+.timeline-badge.danger:hover  {
+	background: #D9726F !important;
+}
+
+.goalArea {
+	 fill: #d9534f;
+	 fill-opacity: 0.40;
+}
+.greenArea {
+	 fill: #5cb85c;
+	 fill-opacity: 0.50;
+}
+.yellowArea {
+	 fill: #f0ad4e;
+	 fill-opacity: 0.50;
+}
+.blueArea {
+	 fill: #337ab7;
+	 fill-opacity: 0.50;
+}
+.greyArea {
+	 fill: #111111;
+	 fill-opacity: 0.50;
+}
+
+
+.darkgoalArea {
+	 fill: #d9534f;
+	 fill-opacity: 1;
+}
+.darkgreenArea {
+	 fill: #5cb85c;
+	 fill-opacity: 1;
+}
+.darkyellowArea {
+	 fill: #f0ad4e;
+	 fill-opacity: 1;
+}
+.darkblueArea {
+	 fill: #337ab7;
+	 fill-opacity: 1;
+}
+.darkgreyArea {
+	 fill: #111111;
+	 fill-opacity: 1;
+}
+
+/*
+ * Highlighted Icon 
+ */
+.higlighted-icon, .higlighted-icon-large {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  -ms-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  border: 2px solid #337ab7;
+  color: #337ab7;
+  cursor: pointer;
+  padding: 10px;
+  width: 2em;
+  text-align: center;
+}
+
+.higlighted-icon-large{
+  padding: 34px;
+  width: 104px;
+}
+
+.higlighted-icon:hover, .higlighted-icon-large:hover {
+  color: #ffffff;
+  background: #337ab7;
+}
+
+.blueicon {
+	 color: #337ab7;
+	 border: 2px solid #337ab7;
+}
+.blueicon:hover {
+	 background: #337ab7;
+}
+
+.greenicon {
+	 color: #5cb85c;
+	 border: 2px solid #5cb85c;
+}
+.greenicon:hover {
+	 background: #5cb85c;
+}
+
+.yellowicon {
+	 color: #f0ad4e;
+	 border: 2px solid #f0ad4e;
+}
+.yellowicon:hover {
+	 background: #f0ad4e;
+}
+
+.redicon {
+	 color: #d9534f;
+	 border: 2px solid #d9534f;
+}
+.redicon:hover {
+	 background: #d9534f;
+}
+.panel-no-border{
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 20px;
+	text-align: center;
+}
+
+.panel-no-border-title{
+	padding-right:15px;
+}
+
+.panel-no-border-element{
+	padding-bottom:20px;
+}
+
+.panelDiv{
+	border-radius: 8px;
+}
+.green-light{
+	background-color: #EBFCE3;
+	font-weight: 300;
+}
+.yellow-light{
+	background-color: #fefbdb;
+	font-weight: 300;
+}
+.red-light{
+	background-color: #ffebeb;
+	font-weight: 300;
+}
+.blue-light{
+	background-color: #eff9ff;
+	font-weight: 300;
+}
+.grey-light{
+	background-color: #E5E5E5;
+	font-weight: 300;
+}
+
+
+.timeline > li.timeline-inverted > .timeline-panel {
+	margin-left: 12%;
+	float: left;
+}
+.timeline > li > .timeline-badge {
+	left: 5%;
+}
+.timeline:before{
+	left: 5%;
+}
+
+.timeline > li > .timeline-panel {
+	width: 88%;
+}
+
+.chartdiv {
+	width	: 100%;
+	height	: 200px;
+}
+
+
+.spinner {
+  width: 100px;
+}
+
+.spinner input {
+  text-align: right;
+}
+
+.input-group-btn-vertical {
+  position: relative;
+  white-space: nowrap;
+  width: 1%;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.input-group-btn-vertical > .btn {
+  display: block;
+  float: none;
+  width: 100%;
+  max-width: 100%;
+  padding: 8px;
+  margin-left: -1px;
+  position: relative;
+  border-radius: 0;
+}
+
+.input-group-btn-vertical > .btn:first-child {
+  border-top-right-radius: 4px;
+}
+
+.input-group-btn-vertical > .btn:last-child {
+  margin-top: -2px;
+  border-bottom-right-radius: 4px;
+}
+
+.input-group-btn-vertical i {
+  position: absolute;
+  top: 0;
+  left: 4px;
+}
+
+#overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+/*     width: 50%; */
+/*     height: 50%; */
+    background: #FFF;
+    opacity: 0.6;
+    filter: alpha(opacity=80);
+    z-index: 80;
+}
+#loading {
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -28px 0 0 -25px;
+    z-index: 85;
+}
+
+.white-tooltip + .tooltip > .tooltip-inner {
+	background-color: #DDD;
+	color: #000;
+	}
+.white-tooltip + .tooltip > .tooltip-arrow { border-bottom-color:#DDD; }

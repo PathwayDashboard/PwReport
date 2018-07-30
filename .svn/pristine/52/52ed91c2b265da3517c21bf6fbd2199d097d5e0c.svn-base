@@ -1,0 +1,248 @@
+kcal.total=Total burned kcal
+date.format=yyyy-MM-dd
+date.read=dd-MM-yyyy hh\:mm
+kcal.avg=Average burned kcal
+bpm.avg=Average Heart Rate [bpm]
+bpm.max=Maximum Heart Rate [bpm]
+steps.avg=Average daily steps
+sessions.number=Number of sessions
+sessions.duration.total=Sessions Duration (total in minutes)
+sessions.duration.avg=Sessions Duration (average in minutes)
+esempio=You trained many times but have not reached the preset time. Increases the duration of training and reduce the frequency
+activity=Physical activity
+diet=Healthy Eating
+alcohol=Alcohol
+smoke=Smoking
+stress=Stress management
+medication=Medication Adherence
+healthy=My Healthy Lifestyle
+healthy.recom=Recommendations
+healthy.tips=Tips
+healthy.info=Further Information
+healthy.recipes=Recipes
+healthy.peers=Ask your Peers
+healthy.expert=Ask the Expert
+healthy.goal=Your Goal
+error.msg=Sorry...It's not you. It's us.
+edit=Edit
+outdoor.title=Enter Outdoor Activities
+dashboard.title=PATHway Dashboard
+sessions.title=Sessions
+steps.total=10.000
+msg.welldone=Well Done!
+msg.saved=Sessions you selected have been saved into <b>PATHway</b>
+close=Close
+save=Save
+minutes=[minutes]
+unit.kcal=[kcal]
+unit.minutes=[minutes]
+error.expired=Session expired. Please log-in.
+from=From:
+to=To:
+error.dates=<b>Check out the hours.</b> End time is earlier than the initial
+details=Click here for more info
+welcome=Welcome  
+hdmsNotIntegrated=HDMS integration parameter is false. Contact the WebApp Admin to switch it on.  
+hdms.error.msg=[ERROR] Error occurs during the interaction with the HDMS
+error.msg.tester=<br>
+hr.of.label= of 
+
+dashboard.label.all=All
+dashboard.label.class=Class
+dashboard.label.game=Game
+dashboard.label.pa=Active Lifestyle
+dashboard.label.range1=This Week
+dashboard.label.range2=Last Week
+dashboard.label.range3=Last Month
+dashboard.label.range4=Custom
+dashboard.label.filter=Filter
+dashboard.label.todo=ToDo
+dashboard.label.todo.title=ToDo list for this week
+dashboard.label.chart.sessions.label=Sessions chart
+dashboard.label.todo.class=ExerClass
+dashboard.label.todo.game=ExerGame
+dashboard.label.todo.pa=Physical Activity
+
+dashboard.label.chart.weekly.x=Week
+dashboard.label.chart.weekly.y=Minutes
+dashboard.label.chart.weekly.goal=Weekly Goal
+dashboard.label.chart.weekly.duration=Duration
+
+session.label.title=Session
+
+session.label.hr.minmax=Heart Rates [min/max]
+session.label.chart.bpm.title=Heart Rate Summary Chart
+session.label.chart.bpm.max=Heart Rate Maximum
+session.label.chart.bpm.min=Heart Rate Minimum
+session.label.chart.bpm.values=Your Heart Rate
+session.label.chart.bpm.achieved=Goal ACHIEVED
+session.label.chart.bpm.notReached=Goal NOT REACHED
+session.label.chart.bpm.exceeded=Goal EXCEEDED
+session.chart.info.1=The following chart shows the average heart rate that <b>you</b> have reached (<i><b>
+session.chart.info.2=</b></i>)<br>Also displayed is the ideal training zones for each phase, between ideal <i><b>  
+session.chart.info.3=</b></i> and <i><b>  
+session.chart.info.4=</b></i><br> If you hover the mouse over the graph you'll see if you stayed within the ideal heart rate range or not.  
+
+session.label.summary.title=Summary
+session.label.gauge.wu.title=Warm Up
+session.label.gauge.st.title=Stretching
+session.label.gauge.ae.title=Aerobic
+session.label.gauge.cd.title=Cool Down
+session.label.gauge.rx.title=Relax
+session.label.gauge.title=Session Phases
+session.label.status.title=Status: 
+session.label.satisfaction.title=Satisfaction: 
+session.label.totalDuration.title=Total Duration: 
+
+session.label.hr.title=Heart Rates*
+session.label.hrchart.title=Heart Rates Chart
+session.label.hrchart.timeOnTarget.title=Heart Rates - Time on Target
+session.label.hrchart.timeOnTarget.values=Time On Target
+session.label.hrchart.goal.values=Goal
+session.label.hrchart.unit=Heart Rates
+session.label.hrchart.targetzone=Target Zone
+
+session.label.pie.onTarget=On Target
+session.label.pie.outOfTarget=Out Of Target
+
+
+session.label.gauge.wu.title.duration=Warm Up Duration (total in minutes)
+session.label.gauge.wu.title.hr=Warm Up HeartRate (avg in bpm)
+session.label.gauge.st.title.duration=Stretching Duration (total in minutes)
+session.label.gauge.st.title.hr=Stretching HeartRate (avg in bpm)
+session.label.gauge.ae.title.duration=Aerobic Duration (total in minutes)
+session.label.gauge.ae.title.hr=Aerobic HeartRate (avg in bpm)
+session.label.gauge.cd.title.duration=CoolDown Duration (total in minutes)
+session.label.gauge.cd.title.hr=Cool Down HeartRate (avg in bpm)
+session.label.gauge.rx.title.duration=Relax Duration (total in minutes)
+session.label.gauge.rx.title.hr=Relax HeartRate (avg in bpm)
+
+
+outdoor.tagged.title=Activities monitored by MS Band
+outdoor.notTagged.title=Activities monitored by MS Band <b>but unknown</b>
+outdoor.notMonitored.title=Not monitored activity
+
+outdoor.tagged.info=The following activities have been recorded by your device <b>MS Band</b> <br>Select the ones you want to transmit <b>into PATHway</b> and click on the save button
+outdoor.notTagged.info=The <b>MS band</b> device recorded data in the following intervals, but you did not specify the type of activity you had (e.g. walking, running, etc...)<br>Click on the button "<b>Tag an activity</b>" to do it now!
+outdoor.notMonitored.info=Here you have the possibility to add a physical activity you had <b>without wearing the MS Band</b> device (e.g. swimming)<br>Please click on the button to proceed
+
+outdoor.save.monitored.tagged=Save into PATHway
+outdoor.save.monitored.tagged.checked=Save checked into PATHway
+outdoor.add.notTagged=Tag an activity
+outdoor.add.notTagged.title=Select the time interval
+outdoor.add.notTagged.infos=After selecting time interval, click the button to create an activity summary
+outdoor.add.notTagged.button=Create Activity Summary
+outdoor.add.notMonitored.button=Add a not monitored activity
+
+outdoor.saved=Saved Activities
+outdoor.duration=Duration: 
+outdoor.hr=Average Heart Rate: 
+outdoor.energy=Energy Expenditure: 
+outdoor.steps=Steps number: 
+outdoor.type=Type: 
+outdoor.notes=Activity notes: 
+outdoor.notes.hint=write here your notes about the session
+outdoor.intensity=Intensity
+outdoor.intensity.light=Light
+outdoor.intensity.moderate=Moderate
+outdoor.intensity.vigorous=Vigorous
+outdoor.info.1=Your last activity dates back to 
+outdoor.info.2=Enter the sessions you've performed in the following days
+outdoor.getfromms=Next Day
+
+outdoor.intensity.description.light=Light activities refer to activities that take light/small physical effort and your breathing is close to normal (e.g. your normal walking pace)
+outdoor.intensity.description.moderate=Moderate activities refer to activities that take moderate physical effort and make you breathe somewhat harder than normal (e.g. brisk walking)
+outdoor.intensity.description.vigorous=Vigorous physical activities refer to activities that take hard physical effort and make you breathe much harder than normal (e.g. running)
+
+hover.kcal=kcal are units of food energy
+hover.bpm=bpm (Beats Per Minute) is the unit for measuring the speed of the heartbeat 
+hover.hr=HR (Heart Rate) Heart rate is the speed of the heartbeat measured by the number of contractions of the heart per minute (bpm)
+
+day.1 = Mon
+day.2 = Tue
+day.3 = Wed
+day.4 = Thu
+day.5 = Fri
+day.6 = Sat
+day.7 = Sun
+
+lifestyle.veg.event=Veg
+lifestyle.fat.event=Fat
+lifestyle.salt.event=Salt
+
+lifestyle.cig.event=Cigarettes
+
+lifestyle.alc.event=Alcohol
+
+lifestyle.eating.plate=The Plate
+lifestyle.eating.portions=The Portions
+lifestyle.eating.fats=The Fats
+
+lifestyle.download=Download suggestions about:
+lifestyle.physical.download.walking=Walking
+lifestyle.physical.download.cycling=Cycling
+lifestyle.physical.download.gym=Gym
+lifestyle.physical.download.swimming=Swimming
+
+lifestyle.physical.programme.title=Your prescription
+lifestyle.physical.programme.weeklyTime=Prescribed weekly time of physical activity
+lifestyle.physical.programme.weeklyTime.personal=Personal weekly time of physical activity
+lifestyle.physical.programme.frequency=Total number of activities
+lifestyle.physical.programme.title.well=Memorandum
+lifestyle.physical.programme.title.well.link=Go to your progress
+
+lifestyle.stress.download.stress=Stress Management
+print=Print
+
+lifestyle.alcohol.units=The Units
+
+slogan.m0= 
+slogan.m1=To get the most out of your exericse, try to have sessions more often and increase the time you spend exercising.
+slogan.m2=To get the most out of your exericse, try to have sessions more often and increase the time you spend exercising.
+slogan.m3=To get the most out of your exericse, try to have sessions more often and increase the time you spend exercising.
+slogan.m4=Increasing the length of your exercise sessions will help you achieve your physical activity goals. Give it a try and see what happens!
+slogan.m5=Increasing the length of your exercise sessions will help you achieve your physical activity goals. Give it a try and see what happens!
+slogan.m6=Increasing the length of your exercise sessions will help you achieve your physical activity goals. Give it a try and see what happens!
+slogan.m7=Well done on taking part in a high number of sessions! Now you have made activity a part of your routine, try and increase the time you spend in your sessions!
+slogan.m8=To get the most out of your exericse, try to have sessions more often and increase the time you spend exercising.
+slogan.m9=To get the most out of your exericse, try to have sessions more often and increase the time you spend exercising.
+slogan.m10=To get the most out of your exericse, try to have sessions more often and increase the time you spend exercising.
+slogan.m11=Increasing the length of your exercise sessions will help you achieve your physical activity goals. Give it a try and see what happens!
+slogan.m12=Increasing the length of your exercise sessions will help you achieve your physical activity goals. Give it a try and see what happens!
+slogan.m13=Increasing the length of your exercise sessions will help you achieve your physical activity goals. Give it a try and see what happens!
+slogan.m14=Well done on taking part in a high number of sessions! Now you have made activity a part of your routine, try and increase the time you spend in your sessions!
+slogan.m15=To get the most out of your exericse, try to have sessions more often and increase the time you spend exercising.
+slogan.m16=To get the most out of your exericse, try to have sessions more often and increase the time you spend exercising.
+slogan.m17=To get the most out of your exericse, try to have sessions more often and increase the time you spend exercising.
+slogan.m18=Increasing the length of your exercise sessions will help you achieve your physical activity goals. Give it a try and see what happens!
+slogan.m19=Increasing the length of your exercise sessions will help you achieve your physical activity goals. Give it a try and see what happens!
+slogan.m20=Increasing the length of your exercise sessions will help you achieve your physical activity goals. Give it a try and see what happens!
+slogan.m21=Well done on taking part in a high number of sessions! Now you have made activity a part of your routine, try and increase the time you spend in your sessions!
+slogan.m22=You have completed some excellent long sessions! To help reach your physical activity goal why not try having more regular, shorter exercise sessions
+slogan.m23=You have completed some excellent long sessions! To help reach your physical activity goal why not try having more regular, shorter exercise sessions
+slogan.m24=You have completed some excellent long sessions! To help reach your physical activity goal why not try having more regular, shorter exercise sessions
+slogan.m25=You are half way there! Try to increase the number of sessions and the amount of time you spend in each one. You have come this far-you can do it!
+slogan.m26=You are half way there! Try to increase the number of sessions and the amount of time you spend in each one. You have come this far-you can do it!
+slogan.m27=Congratulations on joining in on several sessions! To help reach your physical activity goal why not try and make these sessions longer? This will help you be more regularly active and really make the session count!
+slogan.m28=Well done on taking part in a high number of sessions! Now you have made activity a part of your routine, try and increase the time you spend in your sessions!
+slogan.m29=You have completed some excellent long sessions! To help reach your physical activity goal why not try having more regular, shorter exercise sessions
+slogan.m30=You have completed some excellent long sessions! To help reach your physical activity goal why not try having more regular, shorter exercise sessions
+slogan.m31=You have completed some excellent long sessions! To help reach your physical activity goal why not try having more regular, shorter exercise sessions
+slogan.m32=You are half way there! Try to increase the number of sessions and the amount of time you spend in each one. You have come this far-you can do it!
+slogan.m33=You are half way there! Try to increase the number of sessions and the amount of time you spend in each one. You have come this far-you can do it!
+slogan.m34=Congratulations on joining in on several sessions! To help reach your physical activity goal why not try and make these sessions longer? This will help you be more regularly active and really make the session count!
+slogan.m35=Well done on taking part in a high number of sessions! Now you have made activity a part of your routine, try and increase the time you spend in your sessions!
+slogan.m36=You have completed some excellent long sessions! To help reach your physical activity goal why not try having more regular, shorter exercise sessions
+slogan.m37=You have completed some excellent long sessions! To help reach your physical activity goal why not try having more regular, shorter exercise sessions
+slogan.m38=You have completed some excellent long sessions! To help reach your physical activity goal why not try having more regular, shorter exercise sessions
+slogan.m39=Congratulations on reaching your physical activity goals! Keep this winning streak up-you can do it.
+slogan.m40=Congratulations on reaching your physical activity goals! Keep this winning streak up-you can do it.
+slogan.m41=Congratulations on reaching your physical activity goals! Keep this winning streak up-you can do it.
+slogan.m42=GREAT!!!
+slogan.m43=Well done on completing some great sessions! It is important to be regularly active throughout your week-why not try and achieve your physical activity goal by having more regular, shorter exercise sessions.
+slogan.m44=Well done on completing some great sessions! It is important to be regularly active throughout your week-why not try and achieve your physical activity goal by having more regular, shorter exercise sessions.
+slogan.m45=Well done on completing some great sessions! It is important to be regularly active throughout your week-why not try and achieve your physical activity goal by having more regular, shorter exercise sessions.
+slogan.m46=Well done on completing some great sessions! It is important to be regularly active throughout your week-why not try and achieve your physical activity goal by having more regular, shorter exercise sessions.
+slogan.m47=Well done on completing some great sessions! It is important to be regularly active throughout your week-why not try and achieve your physical activity goal by having more regular, shorter exercise sessions.
+slogan.m48=Well done on completing some great sessions! It is important to be regularly active throughout your week-why not try and achieve your physical activity goal by having more regular, shorter exercise sessions.
+slogan.m49=YOU ARE AWESOME!

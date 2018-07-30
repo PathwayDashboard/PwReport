@@ -1,0 +1,227 @@
+package it.eng.pathway.hdms.connection;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
+import io.swagger.client.ApiException;
+import io.swagger.client.api.ActiveLifeStyleProgressApi;
+import io.swagger.client.api.ExerClassSessionProgressApi;
+import io.swagger.client.api.ExerGameSessionProgressApi;
+import io.swagger.client.model.ActiveLifeStyleProgress;
+import io.swagger.client.model.ActiveLifestylePASessionSS;
+import io.swagger.client.model.ExerClassSessionProgress;
+import io.swagger.client.model.ExerClassSessionss;
+import io.swagger.client.model.ExerGameSessionProgress;
+import io.swagger.client.model.GenericPostputResult;
+import it.eng.pathway.fake.model.ActiveLifestylePASession;
+import it.eng.pathway.fake.model.BehaviouralChangeProgress;
+import it.eng.pathway.fake.model.CardiacRehabilitationProgress;
+import it.eng.pathway.fake.model.ExerClassSession;
+import it.eng.pathway.fake.model.ExerGameSession;
+import it.eng.pathway.fake.model.ExerciseSession;
+import it.eng.pathway.utility.PwLogger;
+
+public class BCProgress {
+	
+	private static Properties prop;
+	private static String filename = "config.properties";
+	
+	public static BehaviouralChangeProgress getCompleteCRProgress(String patientNumber, String xSessionId) throws ApiException, IOException{
+		
+		
+		ExerClassSessionProgress classes=getClassProgress(patientNumber, xSessionId);
+		ExerGameSessionProgress games=getGameProgress(patientNumber, xSessionId);
+		ActiveLifeStyleProgress pa=getPAProgress(patientNumber, xSessionId);
+		
+		CardiacRehabilitationProgress ourProgress=new CardiacRehabilitationProgress();
+		ArrayList<ExerciseSession> engSessions=new ArrayList<ExerciseSession>();
+		ourProgress.setExerciseSession(engSessions);
+		
+//		CLASS
+		if(classes!=null){
+			List<ExerClassSessionss> hdmsList = classes.getExerClassSessionsss();
+			if (hdmsList!=null){
+				PwLogger.logger.fine("ExerClasses: "+hdmsList.size());
+				for (ExerClassSessionss curr : hdmsList) {
+					ExerClassSession currEng=new ExerClassSession(curr);
+					PwLogger.logger.fine(curr.toString());
+					engSessions.add(currEng);
+				}
+			}
+		}
+		
+//		GAME
+		//		dovrebbe essere una lista di games
+		if (games!=null){
+			PwLogger.logger.fine("ExerGames: 1");/*+hdmsList.size());*/
+			PwLogger.logger.fine(games.toString());
+			ExerGameSession game=new ExerGameSession(games);
+			engSessions.add(game);
+			PwLogger.logger.fine(game.toString());
+		}
+		
+//		PA
+		if (pa!=null){
+			List<ActiveLifestylePASessionSS> pas = pa.getActiveLifestylePASessionSSs();
+			if (pas!=null){
+				PwLogger.logger.fine("PAs: "+pas.size());
+				for (ActiveLifestylePASessionSS curr : pas) {
+					PwLogger.logger.fine(curr.toString());
+					ActiveLifestylePASession engPa=new ActiveLifestylePASession(curr);
+					engSessions.add(engPa);
+				}
+			}
+		}
+		
+		
+		return null;
+	}
+	
+
+	public static ExerClassSessionProgress getClassProgress(String patientNumber, String xSessionId) throws ApiException, IOException{
+//		try {
+//			InetAddress iaddr=InetAddress.getLocalHost();
+//			String address=String.valueOf(iaddr);
+//			if (!address.startsWith("wellness")){
+//				PwLogger.logger.fine("SQUIDMAN proxy set");
+//				System.setProperty("http.proxyHost", "localhost");
+//				System.setProperty("http.proxyPort", "13128");
+//			}
+//		} catch (UnknownHostException e) {
+//			e.printStackTrace();
+//		}
+		
+		prop = new Properties();
+		InputStream inputStream = BCProgress.class.getClassLoader().getResourceAsStream(filename);
+		prop.load(inputStream);
+		
+		ExerClassSessionProgressApi api=new ExerClassSessionProgressApi();
+		api.getApiClient().setBasePath(prop.getProperty("HDMSURL"));
+		PwLogger.logger.fine("Connecting to... "+api.getApiClient().getBasePath());
+		
+		ExerClassSessionProgress result=null;
+		try {
+			result= api.exerClassSessionProgressGetExerClassSessionProgress(patientNumber, xSessionId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public static ExerGameSessionProgress getGameProgress(String patientNumber, String xSessionId) throws ApiException, IOException{
+//		try {
+//			InetAddress iaddr=InetAddress.getLocalHost();
+//			String address=String.valueOf(iaddr);
+//			if (!address.startsWith("wellness")){
+//				PwLogger.logger.fine("SQUIDMAN proxy set");
+//				System.setProperty("http.proxyHost", "localhost");
+//				System.setProperty("http.proxyPort", "13128");
+//			}
+//		} catch (UnknownHostException e) {
+//			e.printStackTrace();
+//		}
+		
+		prop = new Properties();
+		InputStream inputStream = BCProgress.class.getClassLoader().getResourceAsStream(filename);
+		prop.load(inputStream);
+		
+		ExerGameSessionProgressApi api=new ExerGameSessionProgressApi();
+		api.getApiClient().setBasePath(prop.getProperty("HDMSURL"));
+		PwLogger.logger.fine("Connecting to... "+api.getApiClient().getBasePath());
+		
+		ExerGameSessionProgress result=null;
+		try {
+			result = api.exerGameSessionProgressGetExerGameSessionProgress(patientNumber, xSessionId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public static ActiveLifeStyleProgress getPAProgress(String patientNumber, String xSessionId) throws ApiException, IOException{
+//		try {
+//			InetAddress iaddr=InetAddress.getLocalHost();
+//			String address=String.valueOf(iaddr);
+//			if (!address.startsWith("wellness")){
+//				PwLogger.logger.fine("SQUIDMAN proxy set");
+//				System.setProperty("http.proxyHost", "localhost");
+//				System.setProperty("http.proxyPort", "13128");
+//			}
+//		} catch (UnknownHostException e) {
+//			e.printStackTrace();
+//		}
+		
+		prop = new Properties();
+		InputStream inputStream = BCProgress.class.getClassLoader().getResourceAsStream(filename);
+		prop.load(inputStream);
+		
+		ActiveLifeStyleProgressApi api=new ActiveLifeStyleProgressApi();
+		api.getApiClient().setBasePath(prop.getProperty("HDMSURL"));
+		PwLogger.logger.fine("Connecting to... "+api.getApiClient().getBasePath());
+		
+		ActiveLifeStyleProgress result=null;
+		try {
+			result = api.activeLifeStyleProgressGetActiveLifeStyleProgress(patientNumber, xSessionId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public static String savePA(String patientNumber, String xSessionId, ActiveLifestylePASessionSS paSession) throws ApiException, IOException{
+		PwLogger.printMethod();
+		prop = new Properties();
+		InputStream inputStream = BCProgress.class.getClassLoader().getResourceAsStream(filename);
+		prop.load(inputStream);
+		
+		ActiveLifeStyleProgressApi api=new ActiveLifeStyleProgressApi();
+		api.getApiClient().setBasePath(prop.getProperty("HDMSURL"));
+		PwLogger.logger.fine("Connecting to... "+api.getApiClient().getBasePath());
+		
+		GenericPostputResult result = api.activeLifeStyleProgressPostActiveLifeStyleProgress(patientNumber, paSession, xSessionId);
+		PwLogger.logger.fine(result.getResult());
+		return result.getResult();
+	}
+	
+	public static String saveExerClass(String patientNumber, String xSessionId, ExerClassSessionss exClass) throws ApiException, IOException{
+		PwLogger.printMethod();
+		prop = new Properties();
+		InputStream inputStream = BCProgress.class.getClassLoader().getResourceAsStream(filename);
+		prop.load(inputStream);
+		
+		ExerClassSessionProgressApi api=new ExerClassSessionProgressApi();
+		api.getApiClient().setBasePath(prop.getProperty("HDMSURL"));
+		PwLogger.logger.fine("Connecting to... "+api.getApiClient().getBasePath());
+	
+		GenericPostputResult result = null;
+		result = api.exerClassSessionProgressPostExerClassSessionProgress(patientNumber, exClass, xSessionId);
+		PwLogger.logger.fine(result.getResult());
+		
+		return result.getResult();
+	}
+
+
+	public static String saveExerGame(String patientNumber, String xSessionId, ExerGameSessionProgress exGame) throws ApiException, IOException {
+		PwLogger.printMethod();
+		prop = new Properties();
+		InputStream inputStream = BCProgress.class.getClassLoader().getResourceAsStream(filename);
+		prop.load(inputStream);
+		
+		ExerGameSessionProgressApi api=new ExerGameSessionProgressApi();
+		api.getApiClient().setBasePath(prop.getProperty("HDMSURL"));
+		PwLogger.logger.fine("Connecting to... "+api.getApiClient().getBasePath());
+	
+		GenericPostputResult result = null;
+		result = api.exerGameSessionProgressPutExerGameSessionProgress(patientNumber, exGame, xSessionId);
+		PwLogger.logger.fine(result.getResult());
+		
+		return result.getResult();
+	}
+	
+}

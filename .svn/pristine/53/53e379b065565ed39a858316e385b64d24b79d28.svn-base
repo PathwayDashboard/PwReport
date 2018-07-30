@@ -1,0 +1,52 @@
+package it.eng.pathway.frontend.business;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import it.eng.pathway.frontend.dao.DocumentDAO;
+import it.eng.pathway.frontend.model.Document;
+
+@Service
+public class DocumentBusiness {
+
+	@Autowired
+	private DocumentDAO documentDAO;
+	
+	private static final String DEF_LANGUAGE="en";
+
+	public List<Document> getDocuments(String dimension, String locale) {
+		 List<Document> docs= documentDAO.getDocuments(dimension, locale);
+		 if (docs==null || docs.size()<1){
+			 docs=documentDAO.getDocuments(dimension, DEF_LANGUAGE);
+		 }
+		 return docs;
+	}
+
+	public List<Document> getAllDocuments(String locale) {
+		List<Document> docs=documentDAO.getAllDocuments(locale);
+		 if (docs==null || docs.size()<1){
+			 docs=documentDAO.getAllDocuments(DEF_LANGUAGE);
+		 }
+		 return docs;
+	}
+
+	public void create(Document doc) {
+		documentDAO.create(doc);
+	}
+
+	public Document getDocument(Integer documentId) {
+		return documentDAO.getDocument(documentId);
+	}
+
+	public void remove(Integer documentId) {
+		documentDAO.removeDocument(documentId);
+	}
+	
+
+	
+	
+}

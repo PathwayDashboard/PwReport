@@ -1,0 +1,315 @@
+kcal.total=Totaal verbrande kcal
+date.format=yyyy-MM-dd
+date.read=dd-MM-yyyy hh\:mm
+kcal.avg=Gemiddeld verbrande kcal
+bpm.avg=Gemiddelde hartslag [bpm]
+bpm.max=Maximum hartslag [bpm]
+steps.avg=Dagelijks gemiddeld aantal stappen
+sessions.number=Aantal sessies
+sessions.duration.total=Duur van de sessies (totaal in minuten)
+sessions.duration.avg=Duur van de sessies (gemiddeld in minuten)
+esempio=Je hebt vaak getraind maar niet de vooropgestelde duur gehaald. Verhoog de duur van je training en verminder de frequentie
+activity=Fysieke activiteit
+diet=Gezonde voeding
+alcohol=Alcohol
+smoke=Roken
+stress=Welbevinden
+medication=Medicatie trouw
+healthy=Mijn gezonde levensstijl
+healthy.recom=Aanbevelingen
+healthy.tips=Tips
+healthy.info=Bijkomende informatie
+healthy.recipes=Recepten
+healthy.peers=Vraag het aan lotgenoten
+healthy.expert=Vraag het aan een expert
+healthy.goal=Jouw doel
+error.msg=Sorry...het ligt niet aan jou, maar aan ons.
+edit=Bewerk
+outdoor.title=Voeg een buitenactiviteit toe
+dashboard.title=PATHway Dashboard
+sessions.title=Sessie
+steps.total=10.000
+msg.welldone=Goed gedaan!
+msg.saved=De sessie die je selecteerde zijn opgeslaan in <b>PATHway</b>
+close=Sluiten
+save=Opslaan
+minutes=[minuten]
+unit.kcal=[kcal]
+unit.minutes=[minuten]
+error.expired=Sessie verlopen. Log opnieuw in.
+from=Van:
+to=Naar:
+error.dates=<b>Controleer het uur.</b> De eindtijd is eerder dan de begintijd
+details=Klik hier voor meer informatie
+welcome=Welkom  
+hdmsNotIntegrated=HDMS integratieparameter is fout. Contacteer de WebApp Admin om het aan te zetten.  
+hdms.error.msg=[ERROR] Sorry voor het ongemak, maar we ervaren momenteel netwerkproblemen. Probeer later opnieuw en als het probleem blijft voortduren, contacteer dan het PATHway team.
+error.msg.tester=<br>
+hr.of.label= of 
+
+dashboard.label.all=Alles
+dashboard.label.class=Klas
+dashboard.label.game=Game
+dashboard.label.pa=Active levensstijl
+dashboard.label.range1=Deze week
+dashboard.label.range2=Vorige week
+dashboard.label.range3=Vorige maand
+dashboard.label.range4=Custom
+dashboard.label.filter=Filter
+dashboard.label.todo=Te doen
+dashboard.label.todo.title=Opdrachtenlijst voor deze week
+dashboard.label.chart.sessions.label=Sessie kaart
+dashboard.label.todo.class=Exerklas
+dashboard.label.todo.game=Exergame
+dashboard.label.todo.pa=Fysieke activiteit
+
+dashboard.label.chart.weekly.x=Week
+dashboard.label.chart.weekly.y=Minuten
+dashboard.label.chart.weekly.goal=Wekelijks doel
+dashboard.label.chart.weekly.duration=Duur
+session.label.title=Sessie
+session.label.hr.minmax=Hartslag [min/max]
+session.label.chart.bpm.title=Hartslag samenvatting
+session.label.chart.bpm.max=Maximum hartslag
+session.label.chart.bpm.min=Minimum hartslag
+session.label.chart.bpm.values=Jouw hartslag
+session.label.chart.bpm.achieved=Doel BEREIKT
+session.label.chart.bpm.notReached=Doel NIET BEREIKT
+session.label.chart.bpm.exceeded=Doel OVERSCHREDEN
+session.chart.info.1=Het volgende diagram toont de hartslag die <b>jij</b> hebt bereikt (<i><b>
+session.chart.info.2=</b></i>)<br>De ideale zone voor iedere fase is ook weergegeven, ideaal tussen <i><b>  
+session.chart.info.3=</b></i> en <i><b>  
+session.chart.info.4=</b></i><br> Als je de muis over de grafiek beweegt kan je zien of je binnen de ideale zone bent gebleven of niet.  
+
+session.label.summary.title=Samenvatting
+session.label.gauge.wu.title=Opwarming
+session.label.gauge.st.title=Stretching
+session.label.gauge.ae.title=Aeroob
+session.label.gauge.cd.title=Cool Down
+session.label.gauge.rx.title=Relax
+session.label.gauge.title=Sessie fases
+session.label.status.title=Status: 
+session.label.satisfaction.title=tevredenheid: 
+session.label.totalDuration.title=Totale Duur:
+session.label.rpe.title=Waargenomen inspanning
+session.label.hr.title=Hartslag
+session.label.hrchart.title=Hartslag kaart
+session.label.hrchart.timeOnTarget.title=Hartslag - Tijd binnen de zone
+session.label.hrchart.timeOnTarget.values=Tijd binnen de zone
+session.label.hrchart.goal.values=Doelsession.label.hrchart.unit=Hartslag
+session.label.hrchart.targetzone=Optimale zone
+
+session.label.pie.onTarget=In de zonesession.label.pie.outOfTarget=Buiten de zone
+
+
+session.label.gauge.wu.title.duration=Duur van de opwarming (totaal in minuten)
+session.label.gauge.wu.title.hr=Opwarmingshartslag (gem in spm)
+session.label.gauge.st.title.duration=Duur van stretching (totaal in minuten)
+session.label.gauge.st.title.hr=Stretchingshartslag (gem in spm)
+session.label.gauge.ae.title.duration=Duur van aerobe fase (totaal in minuten)
+session.label.gauge.ae.title.hr=Hartslag aerobe fase (gem in spm)
+session.label.gauge.cd.title.duration=Duur van de cooldown (totaal in minuten)
+session.label.gauge.cd.title.hr=Cool down hartslag (gem in spm)
+session.label.gauge.rx.title.duration=Relaxatieduur (totaal in minuten)
+session.label.gauge.rx.title.hr=Relaxatiehartslag (gem in spm)
+
+
+outdoor.tagged.title=Activiteiten opgenomen met de Microsoft Band &#174;
+outdoor.notTagged.title=Activiteiten opgenomen met de Microsoft Band &#174; <b>maar onbekend</b>
+outdoor.notMonitored.title=Onopgenomen activiteit
+
+outdoor.tagged.info=De volgende activiteiten werden opgenomen door je toestel <b>Microsoft Band &#174;</b> <br>Kies degenen die je wil verzenden <b>naar PATHway</b> en klik op de <i>Opslaan in PATHway</i> knop
+outdoor.notTagged.info=De <b>Microsoft Band &#174;</b> nam de volgende data op, maar je gaf niet aan welke activiteit je deed (bv. wandelen, lopen, etc...)<br>Klik op de knop "<b>Benoem een activiteit</b>" om het nu te doen!
+outdoor.notMonitored.info=Hier heb je de mogelijkheid om een fysieke activiteit toe te voegen die je deed <b>zonder dat je de Microsoft Band droeg &#174;</b> (bv. zwemmen)<br>Klik op de knop om verder te gaan
+
+outdoor.save.monitored.tagged=Sla op in PATHway
+outdoor.save.monitored.tagged.checked=Sla de aangeduide activiteiten op in PATHway
+outdoor.add.notTagged=Duidt een activiteit aan
+outdoor.add.notTagged.title=Kies het tijdsinterval
+outdoor.add.notTagged.infos=Nadat je het tijdsinterval hebt gekozen, klik op de knop om een samenvatting van de activiteit te creëeren
+outdoor.add.notTagged.button=Creëer een samenvatting van de activiteit
+outdoor.add.notMonitored.button=Voeg een onopgenomen activiteit toe
+
+outdoor.saved=Opgeslagen activiteiten
+outdoor.duration=Duur: 
+outdoor.hr=Gemiddelde hartslag: 
+outdoor.energy=Energieverbruik: 
+outdoor.steps=Aantal stappen: 
+outdoor.type=Type: 
+outdoor.notes=Opmerkingen bij de activiteit: 
+outdoor.notes.hint=Schrijf hier je opmerkingen over de sessie
+outdoor.intensity=Intensity
+outdoor.intensity.light=Licht
+outdoor.intensity.moderate=Matig
+outdoor.intensity.vigorous=Hoog
+outdoor.info.1=Je laatste activiteit dateert van 
+outdoor.info.2=Voeg de sessies toe die je in de volgende dagen hebt gedaan
+outdoor.getfromms=De volgende dag
+outdoor.intensity.description.light=Lichte activiteiten kosten weinig moeite en je ademhaling blijft bijna normaal (bv. je normaal wandeltempo)
+outdoor.intensity.description.moderate=Matige activiteiten vragen aan matige inspanning en je ademt zwaarder dan normaal(bv. goed doorstappen)
+outdoor.intensity.description.vigorous=Hoog intense activiteiten vragen een zware lichamelijke inspanning en maken je ademhaling veel zwaarder dan normaal (bv. lopen)
+
+hover.kcal=kcal is de eenheid voor energie
+hover.bpm=spm (Slagen Per Minuut) is de eenheid voor hartslag 
+hover.hr=HR (Hartslag) Is de snelheid waarmee het hart slaat, uitgedrukt in aantal slage per minuut (spm)
+
+day.1 =Ma.
+day.2 =Di.
+day.3 =Woe.
+day.4 =Do.
+day.5 =Vrij.
+day.6 =Zat.
+day.7 =Zo.
+
+lifestyle.veg.event=Groente
+lifestyle.fat.event=Vet
+lifestyle.salt.event=Zout
+
+lifestyle.cig.event=Sigaretten
+
+lifestyle.alc.event=Alcohol
+
+lifestyle.eating.plate=Het bord
+lifestyle.eating.portions=De porties
+lifestyle.eating.fats=De vetten
+
+lifestyle.download=Download suggesties over:
+lifestyle.physical.download.walking=Wandelen
+lifestyle.physical.download.cycling=Fietsen
+lifestyle.physical.download.gym=Fitness
+lifestyle.physical.download.swimming=Zwemmen
+
+lifestyle.physical.programme.title=Jouw voorschrift
+lifestyle.physical.programme.weeklyTime=Voorgeschreven wekelijkse fysieke activiteitsduur
+lifestyle.physical.programme.weeklyTime.personal=Persoonlijke fysieke activiteitsduur
+lifestyle.physical.programme.frequency=Totaal aantal activiteiten
+lifestyle.physical.programme.title.well=Memorandum
+lifestyle.physical.programme.title.well.link=Ga naar jouw vooruitgang
+
+lifestyle.stress.download.stress=Omgaan met stress
+print=Print
+
+lifestyle.alcohol.units=De eenheden
+
+slogan.m0= 
+slogan.m1=Om meer uit je training te halen probeer je best meer sessies te doen en de duur van een sessie te verlengen.
+slogan.m2=Om meer uit je training te halen probeer je best meer sessies te doen en je sessie langer te laten duren.
+slogan.m3=Om meer uit je training te halen probeer je best meer sessies te doen en je sessie langer te laten duren.
+slogan.m4=De duur van je sessie verlengen zal je helpen om je fysieke activiteitsdoel te halen. Probeer het eens en kijk wat er gebeurt!
+slogan.m5=De duur van je sessie verlengen zal je helpen in het bereiken van je fysieke activiteitsdoel. Probeer het eens en kijk wat er gebeurt!
+slogan.m6=De duur van je sessie verlengen zal je helpen bij het bereiken van je fysieke activiteitsdoel.Probeer het eens en kijk wat er gebeurt!
+slogan.m7=Proficiat met het aantal sessies dat je hebt gedaan! Nu moet je proberen om activiteit een deel van je routine te maken, probeer de duur van je sessies te verlengen!
+slogan.m8=Probeer vaker en langere sessies te doen om meer uit je training te halen.
+slogan.m9=Probeer vaker en langere sessies te doen om meer uit je training te halen.
+slogan.m10=Probeer vaker en langere sessies te doen om meer uit je training te halen.
+slogan.m11=De duur van je sessie verlengen zal je helpen bij het behalen van je fysieke activiteitsdoel. Probeer het eens en kijk wat er gebeurt!
+slogan.m12=De duur van je sessie verlengen zal je helpen bij het bereiken van je fysieke activiteitsdoel. Probeer het eens en kijk wat er gebeurt!
+slogan.m13=De duur van je sessie verlengen zal je helpen bij het behalen van je fysieke activiteitsdoel. Probeer het eens en kijk wat er gebeurt!
+slogan.m14=Proficiat met het doen van een hoog aantal sessies! Nu moet je activeit alleen nog een deel van je routinge maken, probeer langere sessies te doen!
+slogan.m15=Probeer meer en langere sessies te hebben om meer uit je training te halen.
+slogan.m16=Probeer meer en langere sessies te hebben om meer uit je training te halen.
+slogan.m17=Probeer meer en langere sessies te hebben om meer uit je training te halen.
+slogan.m18=De duur van je sessies verlengen zal je helpen bij het bereiken van je fysieke activiteitsdoel. Probeer het eens en kijk wat er gebeurt!
+slogan.m19=De duur van je sessies verlengen zal je helpen bij het bereiken van je fysieke activiteitsdoel. Probeer het eens en kijk wat er gebeurt!
+slogan.m20=De duur van je sessies verlengen zal je helpen bij het bereiken van je fysieke activiteitsdoel. Probeer het eens en kijk wat er gebeurt!
+slogan.m21=Proficiat met het doen van een hoog aantal sessies! Nu moet je training alleen nog een deel van je routinge maken, probeer de duur per sessie te verhogen!
+slogan.m22=je hebt enkele uitstekende lange sessies gedaan! om je doel te halen kan je proberen om langere sessies op regelmatige basis te doen
+slogan.m23=Je hebt enkele uistekende lange sessies gedaan! Om je doel te halen kan je proberen meer kortere sessies te doen op regelmatige basis
+slogan.m24=Je hebt enkele uistekende lange sessies gedaan! Om je doel te halen kan je proberen meer kortere sessies te doen op regelmatige basis
+slogan.m25=Je bent halfweg! Probeer het aantal sessie en de duur per sessie te verhogen. Je bent al zover gekomen-je kan het!
+slogan.m26=Je bent halfweg! Probeer het aantal sessie en de duur per sessie te verhogen. Je bent al zover gekomen-je kan het!
+slogan.m27=Proficiat met het doen van enkele sessies! Om je fysieke activiteitsdoel te halen kan je misschien proberen deze sessies langer te maken? Dit zal er voor zorgen dat de sessies echt doorwegen!
+slogan.m28=Proficiat met het doen van een hoog aantal sessies! Nu activteit een deel van je routine is, probeer de duur van je sessie te verlengen!
+slogan.m29=Je hebt enkele uistekende lange sessies gedaan! Je kan proberen regelmatiger kortere sessies te doen om je fysieke activiteitsdoel te behalen
+slogan.m30=Je hebt enkele uitstekende lange sessies gedaan! Je kan proberen regelmatiger kortere sessies te doen om fysieke activiteitsdoel te behalen
+slogan.m31=Je hebt enkele uitstekende lange sessies gedaan! Je kan proberen regelmatiger kortere sessies te doen om fysieke activiteitsdoel te behalen
+slogan.m32=Je bent halfweg! Probeer het aantal sessies en de duur per sessie te verhogen. Je ben zover gekomen-je kan het!
+slogan.m33=Je bent halfweg! Probeer het aantal sessies en de duur per sessie te verhogen. Je ben zover gekomen-je kan het!
+slogan.m34=Proficiat met het doen van enkele sessies! Probeer misschien je sessies langer te maken om je fysieke activiteitsdoel te behalen? Dit zal je regelmatiger actief maken en ervoor zorgen dat de sessie meer doorweegt!
+slogan.m35=Proficiat met het doen van een hoog aantal sessies! Nu fysieke activiteit een deel van je routine is, probeer de tijdsduur per sessie te verhogen!
+slogan.m36=Je hebt enkele uitstekende lange sessies gedaan! Probeer regelmatiger kortere sessies te doen om je fysieke activiteitsdoel te behalen
+slogan.m37=Je hebt enkele uitstekende lange sessies gedaan! Probeer regelmatiger kortere sessies te doen om je fysieke activiteitsdoel te behalen
+slogan.m38=Je hebt enkele uitstekende lange sessies gedaan! Probeer regelmatiger kortere sessies te doen om je fysieke activiteitsdoel te behalen
+slogan.m39=Proficiat met het bereiken van je fysieke activiteitsdoel! Hou dit ritme vol-je kan het.
+slogan.m40=Proficiat met het bereiken van je fysieke activiteitsdoel! Hou dit ritme vol-je kan het.
+slogan.m41=Proficiat met het bereiken van je fysieke activiteitsdoel! Hou dit ritme vol-je kan het.
+slogan.m42=GEWELDIG!!!
+slogan.m43=Proficiat met het doen van enkele goede sessies! het is belangrijk om doorheen de week regelmatig actief te zijn-waarom probeer je het doel niet te halen door regelmatiger kortere sessies te doen?
+slogan.m44=Proficiat met het doen van enkele goede sessies! het is belangrijk om doorheen de week regelmatig actief te zijn-waarom probeer je het doel niet te halen door regelmatiger kortere sessies te doen?Proficiat met het doen van enkele goede sessies! het is belangrijk om doorheen de week regelmatig actief te zijn-waarom probeer je het doel niet te halen door regelmatiger kortere sessies te doen?
+slogan.m47=Proficiat met het doen van enkele goede sessies! het is belangrijk om doorheen de week regelmatig actief te zijn-waarom probeer je het doel niet te halen door regelmatiger kortere sessies te doen?
+slogan.m49=JE BENT GEWELDIG!
+
+aNothingAtAll=0 - Helemaal niets
+bVeryVeryWeak=0.5 - Zeer zeer zwak
+cVeryWeak=1 - Zeer zwak
+dWeak=2 - Zwak
+eModerate=3 - Matig
+fSomewhatStrong=4 - Een beetje zwaar
+gStrong=5 - Zwaar
+h=6
+iVeryStrong=7 - Zeer zwaar
+j=8
+k=9
+lMaximal=10 - Maximaal
+
+aNotAtAllEnjoyable=1 - Helemaal niet leuk
+b2=2
+c3=3
+d4=4
+eVeryEnjoyable=5 - Heel erg leuk
+
+completed=Voltooid
+incompleted_stopped=Gestopt
+incompleted_paues_timeout=Time out
+prescreening_failed=Screening gefaald
+
+notAcceptable=[Niet accepteerbaar]
+
+LIGHT=Licht
+MODERATE=Matig
+VIGOROUS=Vigoreus
+
+home.period.label=Jouw dagelijks leven
+home.sessions.label=Tijdens de sessies
+
+videoUrl.type=Type
+videoUrl.url=URL
+videoUrl.add=Voeg een nieuwe video toe
+videoUrl.remove=Verwijder
+videoUrl.trash=Klik op vuilbak om te bevestigen
+videoUrl.save=Save
+
+msIntegration.hi=Hallo 
+msIntegration.result= Welkom terug bij PATHway.
+
+content.type=Section
+content.label=Title
+content.fileToUpload=Bestand opladen
+content.button.upload=Upload
+content.button.add=Voeg document toe
+
+error.hdms.msg.cr=Deze applicatie heeft een volledig Cardiaal revalidatieprogramma en minstens een oefenprogramma nodig. Neem contact op met uw PATHway verantwoordelijke om te kijken of al de data is ingevoerd.
+error.hdms.msg.bc=Deze applicatie heeft een volledig gedragsverandingsprogramma nodig. Neem contact op met uw PATHway verantwoordelijke om te kijken of alle data is ingevoerd.
+
+outdoor.other.options=Andere opties
+outdoor.notTagged.title.dropdown=Opgenomen activiteiten <b>maar onbekend</b>
+outdoor.notMonitored.title.dropdown=Activiteiten die <b>niet</b> zijn opgenomen
+
+outdoor.notTagged.info.dropdown=De <b>Microsoft Band &#174;</b> nam data op, maar voor sommige activiteiten heb je mogelijks het type niet gespecifieerd (bv. wandelen, lopen, etc...)<br>Klik op de knop <i>Opgenomen activiteiten <b>maar onbekend</b></i> om het nu te doen!
+outdoor.notMonitored.info.dropdown=als je fysieke activiteit deed <b>zonder de Microsoft Band te dragen &#174;</b> (bv. zwemmen)<br>Klik dan op <i>Activiteiten die <b>niet</b> zijn opgenomen</i> om verder te gaan
+outdoor.notTagged.reset=Voeg een andere activiteit toe
+
+obsolete = <b>Het trainingsprogramma lijkt verouderd.</b> Doe een Exerklas of een Exergame om meer data te genereren zodat een aangepast trainingsprogramma voor jou gemaakt kan worden
+
+session.hrs.chart.info.1=De volgende grafiek toont de hartslagen die <b>je</b> hebt bereikt tijdens de sessie (<i><b>
+session.hrs.chart.info.2=</b></i>)<br>Ook zie je op deze grafiek je ideale trainingszone per fase, dit is ideaal tussen <i><b>  
+session.hrs.chart.info.3=</b></i> en <i><b>  
+session.hrs.chart.info.4=</b></i><br> Als je met de muis over de grafiek beweegt kan je zien of je binnen de ideale zone bent gebleven of niet.
+
+session.hrs.time.info=Deze grafiek toont hoelang je in de ideale hartslagzone bent gebleven. De rode lijn weerspiegelt het te bereiken doel.
+
+session.hrs.cake.info=Deze grafieken tonen het percentage van de tijd dat je in de optimale hartslagzone zat, ten opzichte van het voorgeschreven percentage.
+
+login=Aanmelden
+logout=Afmelden
+login.please=Meld je aan om je vooruitgang te bekijken

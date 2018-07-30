@@ -1,0 +1,408 @@
+package it.eng.pathway.controller;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
+import com.google.gson.Gson;
+
+import ers.test.Utility;
+import io.swagger.client.ApiException;
+import io.swagger.client.model.BehaviouralChangeProgramPersonalGoals;
+import io.swagger.client.model.BehaviouralChangeProgramme;
+import io.swagger.client.model.CardiacRehabilitationProgramme;
+import io.swagger.client.model.ExerciseProgramme;
+import it.eng.pathway.fake.model.GoalCategoryType;
+import it.eng.pathway.frontend.business.ContentBusiness;
+import it.eng.pathway.frontend.model.Content;
+import it.eng.pathway.hdms.connection.BCProgramme;
+import it.eng.pathway.hdms.connection.CRProgramme;
+import it.eng.pathway.utility.PwLogger;
+import it.eng.pathway.utilitymodel.CustomSession;
+
+@Controller
+@SessionAttributes({"xSessionId" , "sin", "bcprogramme", "goalsByType", "programme"})
+public class Lifestyle {
+	
+private static final String FORMATTER_STRING = "yyyy-MM-dd";
+private static final String READABLE_STRING = "dd-MM-yyyy hh:mm";
+private static final String PDF_PATH = "/WEB-INF/resources/pdf/";
+	//	static ArrayList<String> labels;
+	static ArrayList<CustomSession> sessions;
+	
+	@Autowired
+	private ContentBusiness contentBusiness;
+	
+	@Autowired
+	ServletContext servletContext;
+	
+	private MessageSource msg;
+	@Autowired
+    public void AccountsController(MessageSource msgSrc) {
+     this.msg = msgSrc;
+    }
+	
+	@RequestMapping(value="/phisicalActivity", method=RequestMethod.GET)
+	public String homeRender(Model model, Locale locale){
+		Content tips=contentBusiness.find("PhysicalActivity", "Tips",locale);
+		if (tips!=null){
+			model.addAttribute("tips", tips.getHtml());
+			model.addAttribute("tipsId", tips.getId());
+		}
+		
+		Content recomm=contentBusiness.find("PhysicalActivity", "Recomm",locale);
+		if (recomm!=null){
+			model.addAttribute("recomm", recomm.getHtml());
+			model.addAttribute("recommId", recomm.getId());
+		}
+		
+		Content other=contentBusiness.find("PhysicalActivity", "Other",locale);
+		if (other!=null){
+			model.addAttribute("other", other.getHtml());
+			model.addAttribute("otherId", other.getId());
+		}
+		
+		CardiacRehabilitationProgramme programme=(CardiacRehabilitationProgramme) model.asMap().get("programme");
+		if(programme!=null){
+			ExerciseProgramme exProgramme=programme.getExerciseProgrammes().get(0);
+			model.addAttribute("exProgramme", exProgramme);
+		}
+		
+		return "physicalActivityPage";
+	}
+	
+	@RequestMapping(value="/healthy", method=RequestMethod.GET)
+	public String healthyRender(Model model, Locale locale){
+		PwLogger.printMethod();
+		String sin=(String) model.asMap().get("sin");
+		String xSessionId=(String) model.asMap().get("xSessionId");
+		
+		try {
+			BehaviouralChangeProgramme bcprogramme=BCProgramme.getProgramme(sin, xSessionId);
+			PwLogger.logger.fine(bcprogramme.toString());
+			model.addAttribute("bcprogramme", bcprogramme);
+			
+			List<BehaviouralChangeProgramPersonalGoals> goals=bcprogramme.getBehaviouralChangeProgramPersonalGoalss();
+			HashMap<Integer,List<BehaviouralChangeProgramPersonalGoals>> goalsByType = new HashMap<Integer,List<BehaviouralChangeProgramPersonalGoals>>();
+			for (BehaviouralChangeProgramPersonalGoals current : goals) {
+				int type=current.getBehaviouralChangeProgramPersonalGoalscategory();
+				List<BehaviouralChangeProgramPersonalGoals> tmp = goalsByType.get(type);
+				if (tmp==null){
+					tmp=new ArrayList<BehaviouralChangeProgramPersonalGoals>();
+				}
+				tmp.add(current);
+				goalsByType.put(type, tmp);
+			}
+			
+			model.addAttribute("goalsByType", goalsByType);
+			
+			
+		} catch (ApiException e) {
+			e.printStackTrace();
+			String tester=this.msg.getMessage("error.msg.tester", null, locale);
+			String msg=Utility.getMessage(e)+ " " + tester;
+			PwLogger.logger.fine(msg);
+			PwLogger.errorLogger.severe(msg);
+			return HomeController.showErrorMsg(msg,"FROM HDMS: "+msg, model);	
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return "healthyPage";
+	}
+	
+	@RequestMapping(value="/smoking", method=RequestMethod.GET)
+	public String smokingRender(Model model, Locale locale){
+		Content tips=contentBusiness.find("Smoking", "Tips",locale);
+		if (tips!=null){
+			model.addAttribute("tips", tips.getHtml());
+			model.addAttribute("tipsId", tips.getId());
+		}
+		
+		Content recomm=contentBusiness.find("Smoking", "Recomm",locale);
+		if (recomm!=null){
+			model.addAttribute("recomm", recomm.getHtml());
+			model.addAttribute("recommId", recomm.getId());
+		}
+		
+		Content other=contentBusiness.find("Smoking", "Other",locale);
+		if (other!=null){
+			model.addAttribute("other", other.getHtml());
+			model.addAttribute("otherId", other.getId());
+		}
+		
+		HashMap<Integer, List<BehaviouralChangeProgramPersonalGoals>> goalsByType=(HashMap<Integer, List<BehaviouralChangeProgramPersonalGoals>>) model.asMap().get("goalsByType");
+		
+		int type = GoalCategoryType.smoking.ordinal()+1;
+		List<BehaviouralChangeProgramPersonalGoals> goalsHDMS = goalsByType.get(type);
+		PwLogger.logger.fine("SMOKING GOAL");
+		if (goalsHDMS != null) {
+			for (BehaviouralChangeProgramPersonalGoals goal : goalsHDMS) {
+				PwLogger.logger.fine(goal.toString());
+			}
+		}
+		
+		
+		model.addAttribute("lang",locale.getLanguage());
+		
+		String smokingLabel=this.msg.getMessage("lifestyle.cig.event", null, locale);
+		
+		model.addAttribute("smokeEvent", smokingLabel);
+		
+		String goal1="Your goal is to stop smoking";
+		
+		ArrayList<String> goals=new ArrayList<String>();
+		goals.add(goal1);
+		
+		String goal1Q="How many <b>cigaretts</b> did you smoke today?";
+		
+		ArrayList<String> goalsQuestions=new ArrayList<String>();
+		goalsQuestions.add(goal1Q);
+		
+		ArrayList<String> goalsCategories=new ArrayList<String>();
+		goalsCategories.add(" - Cigarettes");
+		
+		Gson gson=new Gson();
+		
+		model.addAttribute("goals", goals);
+		model.addAttribute("goalsQuestions",goalsQuestions);
+		
+		model.addAttribute("goalsJs", gson.toJson(goals));
+//		model.addAttribute("goalsQuestions",gson.toJson(goalsQuestions));
+		model.addAttribute("goalsCategories",gson.toJson(goalsCategories));
+		
+		model.addAttribute("stylesheets","resources/css/fullcalendar_smoking.css");
+		
+		
+		return "smokingPage";
+	}
+	
+	@RequestMapping(value="/alcohol", method=RequestMethod.GET)
+	public String alcoholRender(Model model, Locale locale){
+		Content tips=contentBusiness.find("Alcohol", "Tips",locale);
+		if (tips!=null){
+			model.addAttribute("tips", tips.getHtml());
+			model.addAttribute("tipsId", tips.getId());
+		}
+		
+		Content recomm=contentBusiness.find("Alcohol", "Recomm",locale);
+		if (recomm!=null){
+			model.addAttribute("recomm", recomm.getHtml());
+			model.addAttribute("recommId", recomm.getId());
+		}
+		
+		Content other=contentBusiness.find("Alcohol", "Other",locale);
+		if (other!=null){
+			model.addAttribute("other", other.getHtml());
+			model.addAttribute("otherId", other.getId());
+		}
+		
+		HashMap<Integer, List<BehaviouralChangeProgramPersonalGoals>> goalsByType=(HashMap<Integer, List<BehaviouralChangeProgramPersonalGoals>>) model.asMap().get("goalsByType");
+		
+		int type = GoalCategoryType.alcohol.ordinal()+1;
+		List<BehaviouralChangeProgramPersonalGoals> goalsHDMS = goalsByType.get(type);
+		PwLogger.logger.fine("ALCOHOL GOAL");
+		if (goalsHDMS != null) {
+			for (BehaviouralChangeProgramPersonalGoals goal : goalsHDMS) {
+				PwLogger.logger.fine(goal.toString());
+			}
+		}
+		
+		model.addAttribute("lang",locale.getLanguage());
+		
+		String smokingLabel=this.msg.getMessage("lifestyle.alc.event", null, locale);
+		
+		model.addAttribute("alcEvent", smokingLabel);
+		
+		String goal1="Your goal is to reduce alcohol intake";
+		
+		ArrayList<String> goals=new ArrayList<String>();
+		goals.add(goal1);
+		
+		String goal1Q="How many <b>alcohol units</b> did you drink today?";
+		
+		ArrayList<String> goalsQuestions=new ArrayList<String>();
+		goalsQuestions.add(goal1Q);
+		
+		ArrayList<String> goalsCategories=new ArrayList<String>();
+		goalsCategories.add(" - Units");
+		
+		Gson gson=new Gson();
+		
+		model.addAttribute("goals", goals);
+		model.addAttribute("goalsQuestions",goalsQuestions);
+		
+		model.addAttribute("goalsJs", gson.toJson(goals));
+//		model.addAttribute("goalsQuestions",gson.toJson(goalsQuestions));
+		model.addAttribute("goalsCategories",gson.toJson(goalsCategories));
+		
+		model.addAttribute("stylesheets","resources/css/fullcalendar_smoking.css");
+		
+		return "alcoholPage";
+	}
+	
+	@RequestMapping(value="/diet", method=RequestMethod.GET)
+	public String dietRender(Model model, Locale locale){
+		Content tips=contentBusiness.find("Diet", "Tips",locale);
+		if (tips!=null){
+			model.addAttribute("tips", tips.getHtml());
+			model.addAttribute("tipsId", tips.getId());
+		}
+		
+		Content recomm=contentBusiness.find("Diet", "Recomm",locale);
+		if (recomm!=null){
+			model.addAttribute("recomm", recomm.getHtml());
+			model.addAttribute("recommId", recomm.getId());
+		}
+		
+		Content other=contentBusiness.find("Diet", "Other",locale);
+		if (other!=null){
+			model.addAttribute("other", other.getHtml());
+			model.addAttribute("otherId", other.getId());
+		}
+		
+		Content recipe=contentBusiness.find("Diet", "Recipe",locale);
+		if (recipe!=null){
+			model.addAttribute("recipe", recipe.getHtml());
+			model.addAttribute("recipeId", recipe.getId());
+		}
+		
+		ArrayList<String> goals=new ArrayList<>();
+		ArrayList<String> goalsQuestions=new ArrayList<>();
+		ArrayList<String> goalsCategories=new ArrayList<>();
+		
+		
+		String goal1="Your goal is to eat at least <b>5 Fruit and Veg portions</b> each day";
+		String goal2="Your goal is to  <b>reduce the amount of saturated fat</b> you eat each day";
+		String goal3="Your goal is to  <b>reduce the amount of salt</b> you eat each day";
+		goals.add(goal1);
+		goals.add(goal2);
+		goals.add(goal3);
+		
+//		FROM HDMS
+//		BehaviouralChangeProgramme bcprogramme=(BehaviouralChangeProgramme) model.asMap().get("bcprogramme");
+		HashMap<Integer, List<BehaviouralChangeProgramPersonalGoals>> goalsByType=(HashMap<Integer, List<BehaviouralChangeProgramPersonalGoals>>) model.asMap().get("goalsByType");
+		
+		int type = GoalCategoryType.eating.ordinal()+1;
+		List<BehaviouralChangeProgramPersonalGoals> goalsHDMS = goalsByType.get(type);
+		PwLogger.logger.fine("EATING GOAL");
+		if (goalsHDMS != null) {
+			for (BehaviouralChangeProgramPersonalGoals goal : goalsHDMS) {
+				PwLogger.logger.fine(goal.toString());
+				goals.add("FROM HDMS - "+goal.getBehaviouralChangeProgramPersonalGoalsdescription());
+				goalsQuestions.add("FROM HDMS - "+" no question related");
+			}
+		}
+		
+		model.addAttribute("lang",locale.getLanguage());
+		
+		String vegLabel=this.msg.getMessage("lifestyle.veg.event", null, locale);
+		String fatLabel=this.msg.getMessage("lifestyle.fat.event", null, locale);
+		String saltLabel=this.msg.getMessage("lifestyle.salt.event", null, locale);
+		
+		model.addAttribute("vegEvent", vegLabel);
+		model.addAttribute("fatEvent", fatLabel);
+		model.addAttribute("saltEvent", saltLabel);
+		
+		
+		
+		String goal1Q="How many portions of <b>Fruit and Veg</b> did you eat today?";
+		String goal2Q="How many courses containing <b>saturated fats</b> had you today?";
+		String goal3Q="How many teaspoons of <b>salt</b> did you use today?";
+		
+		goalsQuestions.add(goal1Q);
+		goalsQuestions.add(goal2Q);
+		goalsQuestions.add(goal3Q);
+		
+		goalsCategories.add(" - Veg");
+		goalsCategories.add(" - Fat");
+		goalsCategories.add(" - Salt");
+		goalsCategories.add(" - HDMS");
+		
+		Gson gson=new Gson();
+		
+		model.addAttribute("goals", goals);
+		model.addAttribute("goalsQuestions",goalsQuestions);
+		
+		model.addAttribute("goalsJs", gson.toJson(goals));
+//		model.addAttribute("goalsQuestions",gson.toJson(goalsQuestions));
+		model.addAttribute("goalsCategories",gson.toJson(goalsCategories));
+		
+		return "dietPage";
+	}
+	
+	@RequestMapping(value="/stress", method=RequestMethod.GET)
+	public String stressRender(Model model, Locale locale){
+		
+		Content tips=contentBusiness.find("Stress", "Tips",locale);
+		if (tips!=null){
+			model.addAttribute("tips", tips.getHtml());
+			model.addAttribute("tipsId", tips.getId());
+		}
+		
+		Content recomm=contentBusiness.find("Stress", "Recomm",locale);
+		if (recomm!=null){
+			model.addAttribute("recomm", recomm.getHtml());
+			model.addAttribute("recommId", recomm.getId());
+		}
+		
+		Content other=contentBusiness.find("Stress", "Other",locale);
+		if (other!=null){
+			model.addAttribute("other", other.getHtml());
+			model.addAttribute("otherId", other.getId());
+		}
+		
+		return "stressPage";
+	}
+	
+	
+	@RequestMapping(value = "/getpdf/{file_name}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> getFile(@PathVariable("file_name") String filename, Model model, Locale locale) {
+		String completefilename=filename+"_"+locale.toString()+".pdf";
+		File toDownload = new File( servletContext.getRealPath(PDF_PATH)+"/"+completefilename );
+		if (!toDownload.exists()){
+			completefilename=filename+"_en.pdf"; //ipotizzo che quello in inglese esista sempre
+			toDownload = new File( servletContext.getRealPath(PDF_PATH)+"/"+completefilename );
+		}
+		byte[] pdfBytes={1};
+		try {
+			pdfBytes = Files.readAllBytes(toDownload.toPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+//		FileSystemResource toRet= new FileSystemResource(toDownload);
+//		return toRet;
+		
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.parseMediaType("application/pdf"));
+	    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+	    ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(pdfBytes, headers, HttpStatus.OK);
+	    return response;
+	}
+	
+}

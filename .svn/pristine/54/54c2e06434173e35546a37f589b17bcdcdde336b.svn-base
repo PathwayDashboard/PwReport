@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>PwReport</display-name>
+  
+  <context-param>
+    <param-name>defaultHtmlEscape</param-name>
+    <param-value>true</param-value>
+</context-param>
+  
+  <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/spring-business-context.xml</param-value>
+    </context-param>
+     <listener>
+  			 <listener-class>
+     		   org.springframework.web.context.ContextLoaderListener
+  			</listener-class>
+		</listener> 
+    
+  
+  <welcome-file-list>
+<!--     <welcome-file>index.jsp</welcome-file> -->
+<welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+  
+  	<servlet>
+        <servlet-name>pathway</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+         <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/spring-mvc-context.xml</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+ 
+    <servlet-mapping>
+        <servlet-name>pathway</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    
+   	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/WEB-INF/pages/template/error.jsp</location>
+	</error-page>
+	
+	   <error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/pages/template/error.jsp</location>
+	</error-page>
+	
+     <persistence-context-ref>
+        <persistence-context-ref-name>PWFEEM/EntityManager</persistence-context-ref-name>
+        <persistence-unit-name>PWFEPU</persistence-unit-name>
+    </persistence-context-ref>
+    
+<!--      <persistence-unit-ref> -->
+<!--         <persistence-unit-ref-name>persistence/PWFEPU</persistence-unit-ref-name> -->
+<!--         <persistence-unit-name>PWFEPU</persistence-unit-name> -->
+<!--     </persistence-unit-ref> -->
+    
+       
+    
+</web-app>

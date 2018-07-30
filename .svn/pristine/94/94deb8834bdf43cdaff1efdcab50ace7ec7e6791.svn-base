@@ -1,0 +1,701 @@
+<script>
+	var gauge1 = new JustGage();
+	var gauge2 = new JustGage();
+	var gauge3 = new JustGage();
+
+	var gauge4;
+	var gauge5;
+	var gauge6;
+
+	var variables = [ gauge1, gauge2, gauge3 ];
+	var amcharts = [ gauge4, gauge5, gauge6 ];
+
+	$(document).ready(
+			function() {
+				
+				
+				var today = new Date();
+				var week = new Date();
+				week.setDate(week.getDate() - 7);
+				var month = new Date();
+				month.setDate(month.getDate() - 30);
+				var start;
+				var end;
+
+					thisWeek();
+				$("#todo").show();
+				$('[data-toggle="popover"]').popover({
+					title : 'Default title value',
+					html : true
+				});
+				
+				$(document).ready(function(){
+				    $('[data-toggle="tooltip"]').tooltip(); 
+				});
+
+				// 	$("#title").hide().html("From: "+toStringDDMMYYYY(week.toJSON().slice(0,10))+" To: "+toStringDDMMYYYY(today.toJSON().slice(0,10))).fadeIn('fast'),
+
+				$('.input-daterange').datepicker({
+					format : "dd-mm-yyyy",
+					todayBtn : true,
+					clearBtn : true
+				});
+
+				$('#output').hide();
+
+				$('#this').click(function() {
+					$("#todo").show()
+					thisWeek();
+				});
+
+				// 	$('#this').click(function ()
+				//             {
+				// 		$("#this").addClass("active");
+				// 		$("#week").removeClass("active"),
+				// 		$("#month").removeClass("active"),
+				// 		$("#custom").removeClass("active"),
+				//     	start=new Date(Date.parse(startString));
+				//     	end=new Date(Date.parse(endString));
+				//     	$("#title").hide().html("From: "+toStringDDMMYYYY(start.toJSON().slice(0,10))+" To: "+toStringDDMMYYYY(end.toJSON().slice(0,10))).fadeIn('fast');
+
+				// 		$('#output').hide(),
+				// 		$.ajax({
+				//             type: "get",
+				//             url: "ajaxgauges/"+start.toJSON().slice(0,10)+"/"+end.toJSON().slice(0,10),
+				//             success: function(msg){ 
+				//             	var map=JSON.parse(msg);
+				//             	refreshGauges(map);
+				//             }
+				//         }),
+				//         $.ajax({
+				//             type: "get",
+				//             url: "linegraph/"+start.toJSON().slice(0,10)+"/"+end.toJSON().slice(0,10),
+				//             success: function(msg){ 
+				//             	var map=JSON.parse(msg);
+				//             	creaC3LineDynamic("#c3chartD",map);
+				//             }
+				//         })
+				// 		});
+
+				$('#week').click(
+						function() {
+							loading();
+							monthView(false);
+							$("#this").removeClass("active");
+							$("#week").addClass("active"), $("#month")
+									.removeClass("active"), $("#custom")
+									.removeClass("active"), $("#todo").hide(),
+									$("#title").hide().html(
+													toStringDDMMYYYY(week
+															.toJSON().slice(0,
+																	10))
+													+ '&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;'
+													+ toStringDDMMYYYY(today
+															.toJSON().slice(0,
+																	10)))
+											.fadeIn('fast'),
+
+									$('#output').hide(), $.ajax({
+										type : "get",
+										url : "ajaxgauges/"
+												+ week.toJSON().slice(0, 10)
+												+ "/"
+												+ today.toJSON().slice(0, 10),
+										success : function(msg) {
+											var map = JSON.parse(msg);
+											refreshGauges(map);
+										}
+									}), $
+											.ajax({
+												type : "get",
+												url : "linegraph/"
+														+ week.toJSON().slice(
+																0, 10)
+														+ "/"
+														+ today.toJSON().slice(
+																0, 10),
+												success : function(msg) {
+													var map = JSON.parse(msg);
+													creaC3LineDynamic(
+															"#c3chartD", map);
+												}
+											}), $.ajax({
+										type : "get",
+										url : "filterLabels/"
+												+ week.toJSON().slice(0, 10)
+												+ "/"
+												+ today.toJSON().slice(0, 10),
+										success : function(msg) {
+											var arrayFromServer = JSON
+													.parse(msg);
+											refreshDates(arrayFromServer);
+										}
+									}), $.ajax({
+										type : "get",
+										url : "ajaxBoxes/" + week.toJSON().slice(0, 10) + "/"
+												+ today.toJSON().slice(0, 10),
+										success : function(msg) {
+											var map = JSON.parse(msg);
+											refreshBoxes(map);
+										}
+									})
+						});
+
+				$('#month').click(
+						function() {
+////						3 - All
+////						0 - Class
+////						1 - Game
+////						2 - Active
+							var id=3;
+							if ($("allPill").hasClass("active")) id=3;
+							else if ($("classPill").hasClass("active")) id=0;
+							else if ($("gamePill").hasClass("active")) id=1;
+							else if ($("activePill").hasClass("active")) id=2;
+							
+							loading();
+							monthView(true);
+							$("#this").removeClass("active");
+							$("#week").removeClass("active"), $("#month")
+									.addClass("active"), $("#custom")
+									.removeClass("active"), $("#todo").hide(),
+									$("#title").hide().html(
+											 toStringDDMMYYYY(month
+															.toISOString()
+															.slice(0, 10))
+													+ '&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;'
+													+ toStringDDMMYYYY(today
+															.toISOString()
+															.slice(0, 10)))
+											.fadeIn('fast'), $('#output')
+											.hide(), $.ajax({
+												type : "get",
+												url : "weeklyChart/"
+														+ month.toJSON().slice(0, 10)
+														+ "/"
+														+ today.toJSON().slice(0, 10) 
+														+ "?id="
+														+ id,
+												//             data: "input=" +$('#ip').val()+"&output="+$('#op').val(),
+												success : function(msg) {
+													var map = JSON.parse(msg);
+// 													refreshGauges(map);
+													createWeeklyChart(map);
+												}
+									}), $
+											.ajax({
+												type : "get",
+												url : "linegraph/"
+														+ month.toJSON().slice(
+																0, 10)
+														+ "/"
+														+ today.toJSON().slice(
+																0, 10),
+												success : function(msg) {
+													var map = JSON.parse(msg);
+													creaC3LineDynamic(
+															"#c3chartD", map);
+												}
+											}), $.ajax({
+										type : "get",
+										url : "filterLabels/"
+												+ month.toJSON().slice(0, 10)
+												+ "/"
+												+ today.toJSON().slice(0, 10),
+										success : function(msg) {
+											var arrayFromServer = JSON
+													.parse(msg);
+											refreshDates(arrayFromServer);
+										}
+									}), $.ajax({
+										type : "get",
+										url : "ajaxBoxes/" + month.toJSON().slice(0, 10) + "/"
+												+ today.toJSON().slice(0, 10),
+										success : function(msg) {
+											var map = JSON.parse(msg);
+											refreshBoxes(map);
+										}
+									})
+						});
+
+				$('#custom').click(
+						function() {
+							$("#this").removeClass("active");
+							$("#week").removeClass("active"), $("#month")
+									.removeClass("active"), $("#custom")
+									.addClass("active"), $("#title").hide()
+							$("#todo").hide()
+							$('#output').show()
+						});
+
+				$('#filter').click(
+						function() {
+							loading();
+							var start = parseDDMMYYYY($('#start').val());
+							var end = parseDDMMYYYY($('#end').val());
+							$("#title").hide().html(
+									"From: " + $('#start').val() + " To: "
+											+ $('#end').val()).fadeIn('fast'),
+									$.ajax({
+										type : "get",
+										url : "ajaxgauges/"
+												+ start.toJSON().slice(0, 10)
+												+ "/"
+												+ end.toJSON().slice(0, 10),
+										success : function(msg) {
+											var map = JSON.parse(msg);
+											refreshGauges(map);
+										}
+									}), $
+											.ajax({
+												type : "get",
+												url : "linegraph/"
+														+ start.toJSON().slice(
+																0, 10)
+														+ "/"
+														+ end.toJSON().slice(0,
+																10),
+												success : function(msg) {
+													var map = JSON.parse(msg);
+													creaC3LineDynamic(
+															"#c3chartD", map);
+												}
+											}), $.ajax({
+										type : "get",
+										url : "filterLabels/"
+												+ start.toJSON().slice(0, 10)
+												+ "/"
+												+ end.toJSON().slice(0, 10),
+										success : function(msg) {
+											var arrayFromServer = JSON
+													.parse(msg);
+											refreshDates(arrayFromServer);
+										}
+									}), $.ajax({
+										type : "get",
+										url : "ajaxBoxes/" + start.toJSON().slice(0, 10) + "/"
+												+ end.toJSON().slice(0, 10),
+										success : function(msg) {
+											var map = JSON.parse(msg);
+											refreshBoxes(map);
+										}
+									})
+						});
+
+				$('#allPill').click(
+						function() {
+							loading();
+							$("#allPill").addClass("active"), $("#classPill")
+									.removeClass("active"), $("#gamePill")
+									.removeClass("active"), $("#activePill")
+									.removeClass("active");
+
+							$.ajax({
+								type : "get",
+								url : "gaugesFiltered/3",
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									refreshGauges(map);
+								}
+							}), $.ajax({
+								type : "get",
+								url : "lineFiltered/3",
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									creaC3LineDynamic("#c3chartD", map);
+								}
+							}), $.ajax({
+								type : "get",
+								url : "boxesFiltered/3",
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									refreshBoxes(map);
+								}
+							}),$.ajax({
+								type : "get",
+								url : "weeklyChart/"
+										+ month.toJSON().slice(0, 10)
+										+ "/"
+										+ today.toJSON().slice(0, 10) 
+										+ "?id="
+										+ 3,
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									createWeeklyChart(map);
+								}
+					})
+						});
+
+				$('#classPill').click(
+						function() {
+							loading();
+							$("#allPill").removeClass("active"),
+									$("#classPill").addClass("active"), $(
+											"#gamePill").removeClass("active"),
+									$("#activePill").removeClass("active");
+
+							$.ajax({
+								type : "get",
+								url : "gaugesFiltered/0",
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									refreshGauges(map);
+								}
+							}), $.ajax({
+								type : "get",
+								url : "lineFiltered/0",
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									creaC3LineDynamic("#c3chartD", map);
+								}
+							}), $.ajax({
+								type : "get",
+								url : "boxesFiltered/0",
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									refreshBoxes(map);
+								}
+							}),$.ajax({
+								type : "get",
+								url : "weeklyChart/"
+										+ month.toJSON().slice(0, 10)
+										+ "/"
+										+ today.toJSON().slice(0, 10) 
+										+ "?id="
+										+ 0,
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									createWeeklyChart(map);
+								}
+							})
+						});
+
+				$('#gamePill').click(
+						function() {
+							loading();
+							$("#allPill").removeClass("active"),
+									$("#classPill").removeClass("active"), $(
+											"#gamePill").addClass("active"), $(
+											"#activePill")
+											.removeClass("active");
+
+							$.ajax({
+								type : "get",
+								url : "gaugesFiltered/1",
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									refreshGauges(map);
+								}
+							}), $.ajax({
+								type : "get",
+								url : "lineFiltered/1",
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									creaC3LineDynamic("#c3chartD", map);
+								}
+							}), $.ajax({
+								type : "get",
+								url : "boxesFiltered/1",
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									refreshBoxes(map);
+								}
+							}),$.ajax({
+								type : "get",
+								url : "weeklyChart/"
+										+ month.toJSON().slice(0, 10)
+										+ "/"
+										+ today.toJSON().slice(0, 10) 
+										+ "?id="
+										+ 1,
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									createWeeklyChart(map);
+								}
+							})
+						});
+
+				$('#activePill').click(
+						function() {
+							loading();
+							$("#allPill").removeClass("active"),
+									$("#classPill").removeClass("active"), $(
+											"#gamePill").removeClass("active"),
+									$("#activePill").addClass("active");
+
+							$.ajax({
+								type : "get",
+								url : "gaugesFiltered/2",
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									refreshGauges(map);
+								}
+							}), $.ajax({
+								type : "get",
+								url : "lineFiltered/2",
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									creaC3LineDynamic("#c3chartD", map);
+								}
+							}), $.ajax({
+								type : "get",
+								url : "boxesFiltered/2",
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									refreshBoxes(map);
+								}
+							}),$.ajax({
+								type : "get",
+								url : "weeklyChart/"
+										+ month.toJSON().slice(0, 10)
+										+ "/"
+										+ today.toJSON().slice(0, 10) 
+										+ "?id="
+										+ 2,
+								success : function(msg) {
+									var map = JSON.parse(msg);
+									createWeeklyChart(map);
+								}
+							})
+						});
+				
+				$('#readIt').click(
+						function() {
+							var text = $("#slogan").text();
+							var msg = new SpeechSynthesisUtterance(text);
+						    window.speechSynthesis.speak(msg);
+						});
+			
+			});
+
+	function refreshGauges(gauges) {
+		var map = gauges;
+		var keys = Object.keys(map);
+		var tot = keys.length;
+		for (var i = 0; i < tot; i++) {
+			popolaAmGauge(keys[i], map[keys[i]], i);
+
+			var titleId = '#' + keys[i] + "Title";
+			var title = map[keys[i]].title;
+			$(titleId).text(title);
+		}
+		
+		$.ajax({
+			type : "get",
+			url : "refreshSlogan",
+			success : function(msg) {
+				var msg = msg;
+				$("#slogan").text(msg);
+			}
+		});
+		
+	}
+
+	function refreshDates(arrayFromServer) {
+		var array = arrayFromServer;
+		$('#dateList').children().remove();
+		for (var i = 0; i < array.length; i++) {
+			var type = array[i].type;
+			var icon = "";
+			if (type == "CLASS") {
+				icon = "<i class=\"fa fa-graduation-cap fa-fw\"></i>";
+				// 			icon="<span class=\"glyphicon glyphicon-education\" aria-hidden=\"true\"></span>";
+			} else if (type == "GAME") {
+				icon = "<i class=\"fa fa-gamepad fa-fw\"></i>";
+			} else if (type == "ACTIVE") {
+				icon = "<i class=\"fa fa-futbol-o fa-fw\"></i>";
+			}
+			$('#dateList').append(
+					"<li> <a href=\"singleSessionGauges.html?id=" + i + "\">"+ icon + " " + array[i].date + "</a></li>");
+		}
+
+	}
+	
+	function refreshBoxes(mapfromserver) {
+		var map=mapfromserver;
+		
+		if (map == null){
+// 			alert("null object detected");
+			$('#overlay').fadeOut(300, function() { $(this).remove(); })
+		}else{
+		
+		var totalKcal=map.totalKcal;
+		var avgKcal=map.avgKcal;
+		var avgHR=map.avgHR;
+		var avgSteps=map.avgSteps;
+		var hrMin=map.hrMin;
+		var maxHR=map.maxHR;
+		var totalSessions=map.totalSessions!=null ? map.totalSessions : 0;
+		
+		$('#totalKcal').children().remove();
+		$('#totalKcal').html(totalKcal);
+		
+		$('#avgKcal').children().remove();
+		$('#avgKcal').html(avgKcal);
+		
+		$('#hr').children().remove();
+		$('#hr').html(avgHR);
+		
+		$('#steps').children().remove();
+		$('#steps').html(avgSteps);
+		
+		$('#totalSessions').children().remove();
+		$('#totalSessions').html(totalSessions);
+		
+		if (hrMin>0){
+			$('#hrMin').children().remove();
+			$('#hrMin').html(hrMin);
+			$('#hrMin').show();
+			$('#of').show();
+		}else{
+			$('#hrMin').hide();
+			$('#of').hide();
+		}
+		
+		
+		$('#maxHR').children().remove();
+		$('#maxHR').html(maxHR);
+		
+		
+		if (avgHR>=hrMin){
+			$('#panelHR').removeClass("panel-red");
+			$('#panelHR').addClass("panel-success");
+			$('#pollicione').show();
+		}else{
+			$('#panelHR').addClass("panel-red");
+			$('#panelHR').removeClass("panel-success");
+			$('#pollicione').hide();
+		}
+// 		$('#overlay').remove();
+		$('#overlay').fadeOut(300, function() { $(this).remove(); })
+		}
+
+	}
+
+	function thisWeek() {
+		monthView(false);
+		$("#divNumberOfSessions").show();
+		$("#this").addClass("active");
+		$("#week").removeClass("active"), $("#month").removeClass("active"), $(
+				"#custom").removeClass("active"), $('#output').hide(),
+		loading();
+		$.ajax({
+			type : "get",
+			url : "rangeThisWeek",
+			success : function(msg) {
+				if (msg==="null"){
+					refreshBoxes(null);					
+				}else{
+					var array = JSON.parse(msg);
+					var startString = array[0];
+					var endString = array[1];
+
+					start = new Date(Date.parse(startString));
+					end = new Date(Date.parse(endString));
+
+					$("#title").hide().html(
+							toStringDDMMYYYY(start.toJSON().slice(0, 10))
+									+ '&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;'
+									+ toStringDDMMYYYY(end.toJSON().slice(0, 10)))
+							.fadeIn('fast');
+					$.ajax({
+						type : "get",
+						url : "ajaxgauges/" + start.toJSON().slice(0, 10) + "/"
+								+ end.toJSON().slice(0, 10),
+						success : function(msg) {
+							var map = JSON.parse(msg);
+							refreshGauges(map);
+						}
+					}), $.ajax({
+						type : "get",
+						url : "linegraph/" + start.toJSON().slice(0, 10) + "/"
+								+ end.toJSON().slice(0, 10),
+						success : function(msg) {
+							var map = JSON.parse(msg);
+							creaC3LineDynamic("#c3chartD", map);
+						}
+					}), $.ajax({
+						type : "get",
+						url : "filterLabels/" + start.toJSON().slice(0, 10) + "/"
+								+ end.toJSON().slice(0, 10),
+						success : function(msg) {
+							var arrayFromServer = JSON.parse(msg);
+							refreshDates(arrayFromServer);
+						}
+					}), $.ajax({
+						type : "get",
+						url : "ajaxBoxes/" + start.toJSON().slice(0, 10) + "/"
+								+ end.toJSON().slice(0, 10),
+						success : function(msg) {
+								
+									var map = JSON.parse(msg);
+									refreshBoxes(map);
+						}
+					})
+				}
+			}
+		});
+	}
+	
+	
+// 	var loading = function() {
+	function loading(){
+        // add the overlay with loading image to the page
+        var over = '<div id="overlay">' +
+            '<i id="loading" class="fa fa-spinner fa-pulse fa-5x"></i>' + 
+            '</div>';
+        $(over).appendTo('body');
+//         $(over).fadeIn(150, function() { $(this).appendTo('body'); })
+//         '<img id="loading" src="http://bit.ly/pMtW1K">' +
+        
+        // click on the overlay to remove it
+        //$('#overlay').click(function() {
+        //    $(this).remove();
+        //});
+
+        // hit escape to close the overlay
+        $(document).keyup(function(e) {
+            if (e.which === 27) {
+                $('#overlay').remove();
+            }
+        });
+    };
+    
+    
+    function createWeeklyChart(data) {
+		var map = data;
+		var weeksLabels=map.labels;
+		var weeksGoal=map.goals;
+		var weeksTot=map.values;
+		var xlabel=map.xTitle;
+		var yLabel=map.yTitle;
+		
+		creaC3LineDynamicWeekly("#c3chartDduration", weeksLabels,weeksGoal,weeksTot, xlabel, yLabel);
+		
+		$.ajax({
+			type : "get",
+			url : "refreshSlogan",
+			success : function(msg) {
+				var msg = msg;
+				$("#slogan").text(msg);
+			}
+		});
+		
+	}
+    
+    function monthView(visible){
+    	if (visible){
+    		$("#divTotalDuration").hide();
+    		$("#divNumberOfSessions").hide();
+			$("#divWeeklyChart").show();
+			$("#numberOfSessionsBox").show();
+    	}else{
+    		$("#divTotalDuration").show();
+    		$("#divNumberOfSessions").show();
+			$("#divWeeklyChart").hide();
+			$("#numberOfSessionsBox").hide();
+    	}
+    }
+
+	
+</script>
